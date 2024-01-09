@@ -1,7 +1,7 @@
 import { Layout } from "antd";
-import { MoonIcon, SunIcon } from "../Icons";
+import { MoonIcon, SunIcon } from "@/components/Icons";
 import { Button } from "antd";
-import Logo from "../Logo";
+import Logo from "@/components/Logo";
 const { Header } = Layout;
 
 const MainHeader = ({ collapsed, mode, changeMode, onCollapsed }) => {
@@ -38,7 +38,7 @@ const MainHeader = ({ collapsed, mode, changeMode, onCollapsed }) => {
             changeMode();
           }}
         >
-          {mode === "dark" ? (
+          {mode === "light" ? (
             <SunIcon className={"fill-dark "} />
           ) : (
             <MoonIcon className={"fill-dark "} />

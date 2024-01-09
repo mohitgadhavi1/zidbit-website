@@ -31,7 +31,7 @@ const ImagePreview = () => {
   };
 
   return (
-    <div className="w-full h-[50%] top-[20%] bg-gray-500 flex absolute " onMouseUp={handleMouseUp}  onTouchEnd={handleMouseUp}>
+    <div className="w-full h-[70%] select-none  bg-gray-400 rounded-xl flex absolute p-2 " onMouseUp={handleMouseUp}  onTouchEnd={handleMouseUp}>
       <div
         className="relative  w-full h-full  aspect-[70/45] m-auto overflow-hidden select-none"
         onMouseMove={handleMove}
@@ -40,7 +40,7 @@ const ImagePreview = () => {
         onTouchStart={handleMouseDown}
       >
         <Image
-          className="w-full h-full object-contain"
+          className="w-full h-full object-contain "
           alt=""
           fill
           priority

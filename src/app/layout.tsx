@@ -7,7 +7,7 @@ import {ImageProvider} from "@/context/imageContext"
 import {DarkModeProvider} from "@/context/darkModeContext"
 import Head from 'next/head'
 import { AntdRegistry } from '@ant-design/nextjs-registry';
-import Layout from '@/components/layout/Layout'
+import Layout from '@/ui/layout/Layout'
 
 const inter = Inter({ subsets: ['latin'] })
 

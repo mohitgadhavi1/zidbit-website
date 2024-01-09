@@ -1,7 +1,7 @@
 "use client"
 // import Layout from '@/components/Layout'
 import ImageUploader from '@/components/ImageUploader'
-import EditImage from '@/components/editor/EditImage'
+import EditImage from '@/ui/editor/EditImage'
 import { useImageContext } from '@/context/imageContext'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
@@ -18,11 +18,10 @@ useEffect(()=>{
 },[image])
 
   return (
-    <main className="font-mont dark:bg-dark flex flex-col  bg-light w-full h-screen items-center"> 
+    <main className="font-mont  dark:bg-dark flex flex-col  bg-light w-full h-full min-h-[80vh] items-center"> 
       
- {/* <Layout className="pt-16  sm:pt-8"> */}
 <EditImage/>
- {/* </Layout> */}
+
 
    </main> 
 )

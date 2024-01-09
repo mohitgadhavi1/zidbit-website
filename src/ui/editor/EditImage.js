@@ -5,14 +5,15 @@ import Toolbar from "./Toolbar";
 import { useImageContext } from "@/context/imageContext";
 import ImagePreview from "./ImagePreview";
 import Image from "next/image";
-import Button from "../Button";
-import { IoMdDownload } from "react-icons/io";
 import bgTransparentImage from "public/transparent-bg-img.jpg";
 import { GoZoomIn } from "react-icons/go";
 import { GoZoomOut } from "react-icons/go";
+import { Button } from "antd";
+import { DownloadOutlined } from "@ant-design/icons";
+import CropImage from "./CropImage";
 
 function EditImage() {
-  const [image, setImage] = useImageContext();
+  const [src, setSrc] = useImageContext();
   const [openPreview, setOpenPreview] = useState(false);
   const [zoomLevel, setZoomLevel] = useState(1);
   const [dragging, setDragging] = useState(false);
@@ -47,7 +48,10 @@ function EditImage() {
   const handleTouchStart = (e) => {
     const touch = e.touches[0];
     setDragging(true);
-    setDragStart({ x: touch.clientX - position.x, y: touch.clientY - position.y });
+    setDragStart({
+      x: touch.clientX - position.x,
+      y: touch.clientY - position.y,
+    });
   };
 
   const handleTouchMove = (e) => {
@@ -64,11 +68,19 @@ function EditImage() {
     setDragging(false);
   };
 
-  console.log("dragStart", dragStart);
+  const handleDownloadClick = () => {
+    const downloadLink = document.createElement("a");
+    downloadLink.href = src;
+    downloadLink.download = "image.jpg";
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+  };
 
   return (
-    <div className="h-full relative top-0   ">
-      {openPreview ? (
+    <div className="h-full   w-full min-h-[80vh]  ">
+         <CropImage />
+      {/* {openPreview ? (
         <ImagePreview />
       ) : (
         <div
@@ -76,54 +88,63 @@ function EditImage() {
           onMouseUp={handleMouseUp}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
-          className="h-[50%] top-[20%] absolute w-full   overflow-hidden  "
+          className="h-[70%] p-2  absolute w-full bg-gray-400 flex justify-center items-center  overflow-hidden  rounded-xl"
         >
           <Image
-          onSelect={false}
             src={bgTransparentImage}
-            className="-z-10"
+            className="-z-10 w-full h-full"
             fill
             priority
             alt=""
           />
+         
           <GoZoomOut
             onClick={handleZoomOut}
             className="cursor-pointer z-10 absolute bottom-0 left-0 border-2 border-dark rounded-lg  text-2xl p-1 m-2"
           />
-          {image && (
-            <Image
-              style={{
-                transform: `scale(${zoomLevel})`,
-                // transformOrigin: 'top left',
-                cursor: dragging ? "grabbing" : "grab",
-              }}
+          {src && (
+            <img
               onMouseDown={handleMouseDown}
               onTouchStart={handleTouchStart}
-              className=" object-contain"
-              src={image}
-     fill
+              className="h-full select-none "
+              src={src}
               // priority
               alt=""
             />
           )}
+
           <GoZoomIn
             onClick={handleZoomIn}
             className="cursor-pointer z-10 absolute bottom-0 right-0 border-2 border-dark rounded-lg  text-2xl p-1 m-2 "
           />
         </div>
-      )}
-      <div className="absolute w-full bottom-[15%] flex justify-between items-center">
-        <MdCompare
+      )} */}
+
+      {/* <div className="absolute w-full  bottom-[15%] flex justify-between items-center">
+        <Button
+          type="primary"
           onClick={() => setOpenPreview(!openPreview)}
-          className="text-3xl dark:text-light cursor-pointer"
+          icon={
+            <MdCompare
+
+            // className="text-3xl dark:text-light cursor-pointer"
+            />
+          }
         />
         <Button
-          className={"   "}
-          // onClick={}
-          buttonName={<IoMdDownload />}
-        />
-      </div>
-      <Toolbar className="absolute bottom-0" />
+          type="primary"
+          shape="round"
+          onClick={() => handleDownloadClick()}
+          icon={<DownloadOutlined />}
+          // size={size}
+        >
+          Download
+        </Button>
+      </div> */}
+      {/* <div className="min-h-[50vh]"> */}
+     
+      {/* </div> */}
+      {/* <Toolbar className="absolute bottom-0" /> */}
     </div>
   );
 }
