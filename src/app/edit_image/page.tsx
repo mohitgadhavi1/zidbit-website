@@ -12,7 +12,7 @@ function Page() {
 
 
 useEffect(()=>{
-  if(!image){
+  if(!image.original){
     router.push("/");
   }
 },[image])

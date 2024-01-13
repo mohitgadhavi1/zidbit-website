@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useRef } from "react"
+import React, { useState, useRef } from "react";
 import ReactCrop, {
   centerCrop,
   makeAspectCrop,
@@ -11,7 +11,13 @@ import { canvasPreview } from "./canvasPreview";
 import { useDebounceEffect } from "./useDebounceEffect";
 import "react-image-crop/dist/ReactCrop.css";
 import { useImageContext } from "@/context/imageContext";
+import { MdOutlineDone, MdOutlineClose } from "react-icons/md";
+import { Button } from "antd";
+import { DownloadOutlined } from "@ant-design/icons";
+import { imgPreview } from "./imgPreview";
+import { IoIosReturnLeft } from "react-icons/io";
 
+import Tools from "./Tools";
 function centerAspectCrop(
   mediaWidth: number,
   mediaHeight: number,
@@ -21,7 +27,7 @@ function centerAspectCrop(
     makeAspectCrop(
       {
         unit: "%",
-        width: 90,
+        width: 50,
       },
       aspect,
       mediaWidth,
@@ -34,7 +40,6 @@ function centerAspectCrop(
 
 export default function CropImage() {
   const [imgSrc, setImgSrc] = useImageContext();
-  // const [imgSrc, setImgSrc] = useState("");
   const previewCanvasRef = useRef<HTMLCanvasElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
   const hiddenAnchorRef = useRef<HTMLAnchorElement>(null);
@@ -44,8 +49,7 @@ export default function CropImage() {
   const [scale, setScale] = useState(1);
   const [rotate, setRotate] = useState(0);
   const [aspect, setAspect] = useState<number | undefined>(16 / 9);
-
- 
+  const [isCroppedSave, setIsCroppedSave] = useState<boolean>(false);
 
   function onImageLoad(e: React.SyntheticEvent<HTMLImageElement>) {
     if (aspect) {
@@ -54,13 +58,12 @@ export default function CropImage() {
     }
   }
 
-  async function onDownloadCropClick() {
+  async function onSaveImage() {
     const image = imgRef.current;
     const previewCanvas = previewCanvasRef.current;
     if (!image || !previewCanvas || !completedCrop) {
       throw new Error("Crop canvas does not exist");
     }
-
     // This will size relative to the uploaded image
     // size. If you want to size according to what they
     // are looking at on screen, remove scaleX + scaleY
@@ -96,32 +99,38 @@ export default function CropImage() {
     if (blobUrlRef.current) {
       URL.revokeObjectURL(blobUrlRef.current);
     }
+    setImgSrc({
+      ...imgSrc,
+      latest: URL.createObjectURL(blob),
+    });
     blobUrlRef.current = URL.createObjectURL(blob);
-    hiddenAnchorRef.current!.href = blobUrlRef.current;
+    setIsCroppedSave(true);
+  }
+
+  async function onDownloadCropClick() {
+    // blobUrlRef.current = imgSrc.latest;
+    hiddenAnchorRef.current!.href = imgSrc.latest;
     hiddenAnchorRef.current!.click();
   }
 
-  useDebounceEffect(
-    async () => {
-      if (
-        completedCrop?.width &&
-        completedCrop?.height &&
-        imgRef.current &&
-        previewCanvasRef.current
-      ) {
-        // We use canvasPreview as it's much faster than imgPreview.
-        canvasPreview(
-          imgRef.current,
-          previewCanvasRef.current,
-          completedCrop,
-          scale,
-          rotate
-        );
-      }
-    },
-    100,
-    [completedCrop, scale, rotate]
-  );
+  async function getCanvasPreview() {
+    if (
+      completedCrop?.width &&
+      completedCrop?.height &&
+      imgRef.current &&
+      previewCanvasRef.current
+    ) {
+      // We use canvasPreview as it's much faster than imgPreview.
+      canvasPreview(
+        imgRef.current,
+        previewCanvasRef.current,
+        completedCrop,
+        scale,
+        rotate
+      );
+    }
+  }
+  useDebounceEffect(getCanvasPreview, 100, [completedCrop, scale, rotate]);
 
   function handleToggleAspectClick() {
     if (aspect) {
@@ -140,18 +149,31 @@ export default function CropImage() {
   }
 
   return (
-    <div className="flex flex-col  overflow-auto  w-full h-full">
-      <div className="bg-gray-400 rounded-xl p-2 h-[70%]  flex   justify-center items-center  overflow-hidden ">
-        <div className=" h-full w-auto   ">
-          {!!imgSrc && (
+    <div className="flex flex-col h-full  overflow-auto    w-full ">
+      <div className="bg-gray-400 rounded-xl p-4 h-[70vh]  flex   justify-center items-center overflow-hidden ">
+        <div className=" h-auto w-auto  max-h-full   max-w-full  overflow-auto  ">
+          {imgSrc.latest ? (
+            <img
+              // ref={imgRef}
+              alt="Cropped Image"
+              src={imgSrc.latest}
+              className="select-none m-0 max-h-full  max-w-full "
+              // style={{ transform: `scale(${scale}) rotate(${rotate}deg)` }}
+              onLoad={onImageLoad}
+            />
+          ) : (
             <ReactCrop
               style={{
-                height: "100%",
-                display: "inline-flex",
+                maxHeight: "100%",
+                maxWidth: "100%",
+                height: "auto",
                 width: "auto",
-                maxWidth: "fit-content",
-                padding: 0,
-                margin: 0,
+
+                // display: "flex",
+                // justifyContent: `center`,
+                // alignItems: "center",
+                // padding: 0,
+                // margin: 0,
               }}
               crop={crop}
               onChange={(_, percentCrop) => setCrop(percentCrop)}
@@ -164,8 +186,8 @@ export default function CropImage() {
               <img
                 ref={imgRef}
                 alt="Crop me"
-                src={imgSrc}
-                className="select-none m-0  h-full w-auto "
+                src={imgSrc.original}
+                className="select-none m-0  max-h-full h-auto w-auto  max-w-full "
                 style={{ transform: `scale(${scale}) rotate(${rotate}deg)` }}
                 onLoad={onImageLoad}
               />
@@ -173,7 +195,74 @@ export default function CropImage() {
           )}
         </div>
       </div>
-
+      {!isCroppedSave ? (
+        <div className="w-full  flex justify-between items-center my-2">
+          <Button
+            type="primary"
+            danger
+            shape="round"
+            onClick={() => {
+              setImgSrc({
+                original: null,
+                latest: null,
+              });
+            }}
+            icon={<MdOutlineClose />}
+          >
+            Cancel
+          </Button>
+          <Tools
+            aspect={aspect}
+            rotate={rotate}
+            handleToggleAspectClick={handleToggleAspectClick}
+            scale={scale}
+            imgSrc={imgSrc}
+            onChangeScale={(val) => setScale(val)}
+            onChangeRotate={(val) => setRotate(val)}
+            // onChangeAspect={(val) => setAspect(val)}
+          />
+          <Button
+            shape="round"
+            style={{ backgroundColor: "#00BF00" }}
+            type="primary"
+            onClick={onSaveImage}
+            icon={<MdOutlineDone />}
+          >
+            Done
+          </Button>
+        </div>
+      ) : (
+        <div className="w-full flex justify-between my-2">
+          <Button
+            icon={<IoIosReturnLeft />}
+            onClick={() => {
+              setIsCroppedSave(false);
+              setImgSrc({ ...imgSrc, latest: null });
+            }}
+          >
+            back
+          </Button>
+          <Button
+            type="primary"
+            icon={<DownloadOutlined />}
+            onClick={onDownloadCropClick}
+          >
+            Download
+            <a
+              href="#hidden"
+              ref={hiddenAnchorRef}
+              download
+              style={{
+                position: "absolute",
+                top: "-200vh",
+                visibility: "hidden",
+              }}
+            >
+              Hidden download
+            </a>
+          </Button>
+        </div>
+      )}
       <CropedImagePreview
         completedCrop={completedCrop}
         previewCanvasRef={previewCanvasRef}
@@ -193,7 +282,7 @@ function CropedImagePreview({
   return (
     <div>
       {!!completedCrop && (
-        <div>
+        <div className="hidden">
           <div>
             <canvas
               ref={previewCanvasRef}
@@ -205,78 +294,8 @@ function CropedImagePreview({
               }}
             />
           </div>
-          <div>
-            <button onClick={onDownloadCropClick}>Download Crop</button>
-
-            <a
-              href="#hidden"
-              ref={hiddenAnchorRef}
-              download
-              style={{
-                position: "absolute",
-                top: "-200vh",
-                visibility: "hidden",
-              }}
-            >
-              Hidden download
-            </a>
-          </div>
         </div>
       )}
     </div>
   );
 }
-
-function CropImageTools({
-  aspect,
-  rotate,
-  handleToggleAspectClick,
-  scale,
-  imgSrc,
-}) {
-  return (
-    <div>
-      <div>
-        <label htmlFor="scale-input">Scale: </label>
-        <input
-          id="scale-input"
-          type="number"
-          step="0.1"
-          value={scale}
-          disabled={!imgSrc}
-          onChange={(e) => setScale(Number(e.target.value))}
-        />
-      </div>
-      <div>
-        <label htmlFor="rotate-input">Rotate: </label>
-        <input
-          id="rotate-input"
-          type="number"
-          value={rotate}
-          disabled={!imgSrc}
-          onChange={(e) =>
-            setRotate(Math.min(180, Math.max(-180, Number(e.target.value))))
-          }
-        />
-      </div>
-      <div>
-        <button onClick={handleToggleAspectClick}>
-          Toggle aspect {aspect ? "off" : "on"}
-        </button>
-      </div>
-    </div>
-  );
-}
-
-
-
-// function onSelectFile(e: React.ChangeEvent<HTMLInputElement>) {
-//   if (e.target.files && e.target.files.length > 0) {
-//     setCrop(undefined); // Makes crop preview update between images.
-//     const reader = new FileReader();
-//     reader.addEventListener("load", () =>
-//       setImgSrc(reader.result?.toString() || "")
-//     );
-//     reader.readAsDataURL(e.target.files[0]);
-//   }
-// }

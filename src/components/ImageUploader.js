@@ -19,7 +19,7 @@ const ImageUploader = () => {
       reader.onload = (e) => {
         const imageDataUrl = e.target.result;
         // setimage(imageDataUrl);
-        setImage(imageDataUrl);
+        setImage({ original: imageDataUrl, latest: null });
       };
       reader.readAsDataURL(file);
     }
@@ -85,7 +85,9 @@ const ImageUploader = () => {
         onClick={handleButtonClick}
         buttonName="Upload Image"
       /> */}
-      <p className={`text-2xs text-typo-secondary !mt-4 text-center ${repeatedText}`}>
+      <p
+        className={`text-2xs text-typo-secondary !mt-4 text-center ${repeatedText}`}
+      >
         By uploading an image or URL you agree to our{" "}
         <a
           target="_blank"

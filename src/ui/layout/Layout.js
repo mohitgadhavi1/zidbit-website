@@ -16,26 +16,28 @@ import MainSider from "./MainSidebar";
 const { useBreakpoint } = Grid;
 const MainLayout = ({ children }) => {
   const screens = useBreakpoint();
-  console.log(screens);
+  // console.log(screens);
   const [mode, setMode] = useThemeSwicher();
   const [collapsed, setCollapsed] = useState(false);
-  console.log(mode);
+  // console.log(mode);
 
   return (
     <ConfigProvider
-      theme={{
-        // ...customTheme,
-        // token: {
-        // dark: "#1b1b1b",
-        // light: "#f5f5f5",
-        // primary: "#B63E96", // 240,86,199
-        // primaryDark: "#58E6D9", // 80,230,217
-        // },
-        algorithm: mode === "light" ? darkAlgorithm : defaultAlgorithm,
-      }}
+      theme={
+        {
+          // ...customTheme,
+          // token: {
+          // dark: "#1b1b1b",
+          // light: "#f5f5f5",
+          // primary: "#B63E96", // 240,86,199
+          // primaryDark: "#58E6D9", // 80,230,217
+          // },
+          // algorithm: mode === "light" ? darkAlgorithm : defaultAlgorithm,
+        }
+      }
     >
       {screens.md === true ? (
-        <Layout style={{ minHeight: "100vh" }}>
+        <Layout style={{ minHeight: "100vh", maxWidth: "100vw" }}>
           <MainHeader
             collapsed={collapsed}
             onCollapsed={() => setCollapsed(!collapsed)}
@@ -55,7 +57,7 @@ const MainLayout = ({ children }) => {
               <Content
                 style={{
                   padding: "1%",
-     
+
                   backgroundColor: `${
                     mode === "light" ? "#f5f5f5" : "#1b1b1b"
                   }`,
@@ -87,7 +89,7 @@ const MainLayout = ({ children }) => {
 };
 export default MainLayout;
 
-function MainContent({ children,mode }) {
+function MainContent({ children, mode }) {
   return (
     <Content
       style={{

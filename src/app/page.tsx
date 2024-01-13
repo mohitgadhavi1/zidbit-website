@@ -9,7 +9,7 @@ export default function Home() {
   const [image, setImage] = useImageContext();
 
   useEffect(()=>{
-    if (image){
+    if (image.original){
       router.push("/edit_image");
     }
   },[image])

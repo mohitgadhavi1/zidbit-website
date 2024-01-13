@@ -78,7 +78,7 @@ function EditImage() {
   };
 
   return (
-    <div className="h-full   w-full min-h-[80vh]  ">
+    <div className="h-full  w-full min-h-[80vh]  ">
          <CropImage />
       {/* {openPreview ? (
         <ImagePreview />
