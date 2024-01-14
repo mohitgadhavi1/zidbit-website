@@ -6,8 +6,7 @@ import { useImageContext } from "@/context/imageContext";
 import ImagePreview from "./ImagePreview";
 import Image from "next/image";
 import bgTransparentImage from "public/transparent-bg-img.jpg";
-import { GoZoomIn } from "react-icons/go";
-import { GoZoomOut } from "react-icons/go";
+
 import { Button } from "antd";
 import { DownloadOutlined } from "@ant-design/icons";
 import CropImage from "./CropImage";

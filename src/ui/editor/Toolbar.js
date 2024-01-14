@@ -20,7 +20,7 @@ function Toolbar({ className, toolOptions }) {
   border-dark/25 dark:border-light/25 font-medium text-lg overflow-x-auto ${className}`}
     >
     
-        <Button shape="circle" type="primary" style={{alignSelf:"center"}} icon={<MdOutlineRotate90DegreesCw />} />
+       
     
         {toolOptions.map((item, index) => (
           <ToolbarOption key={index} text={item.title}>
