@@ -54,23 +54,13 @@ const MainLayout = ({ children }) => {
             />
 
             <Layout>
-              <Content
-                style={{
-                  padding: "1%",
-
-                  backgroundColor: `${
-                    mode === "light" ? "#f5f5f5" : "#1b1b1b"
-                  }`,
-                }}
-              >
-                {children}
-              </Content>
-              <MainFooter mode={mode} />
+            <MainContent mode={mode}>{children}</MainContent>
+              {/* <MainFooter mode={mode} /> */}
             </Layout>
           </Layout>
         </Layout>
       ) : (
-        <Layout style={{ minHeight: "100vh" }}>
+        <Layout style={{ minHeight: "100vh" ,maxWidth: "100vw"}}>
           <MainHeader
             collapsed={collapsed}
             onCollapsed={() => setCollapsed(!collapsed)}
@@ -81,7 +71,7 @@ const MainLayout = ({ children }) => {
           />
 
           <MainContent mode={mode}>{children}</MainContent>
-          <MainFooter mode={mode} />
+          {/* <MainFooter mode={mode} /> */}
         </Layout>
       )}
     </ConfigProvider>
@@ -94,8 +84,9 @@ function MainContent({ children, mode }) {
     <Content
       style={{
         padding: "1%",
-
-        backgroundColor: `${mode === "light" ? "#f5f5f5" : "#1b1b1b"}`,
+        // backgroundColor: "blue",
+       
+     backgroundColor: `${mode === "light" ? "#f5f5f5" : "#1b1b1b"}`,
       }}
     >
       {children}

@@ -19,7 +19,7 @@ export default function Home() {
         
  
  
-   return (  <main className="font-mont dark:bg-dark flex flex-col   bg-light w-full h-full  min-h-[80vh]  items-center justify-center"> 
+   return (  <main className="font-mont  flex flex-col    w-full h-full  min-h-[80vh]  items-center justify-center"> 
    <ImageUploader/>
    </main> 
 
