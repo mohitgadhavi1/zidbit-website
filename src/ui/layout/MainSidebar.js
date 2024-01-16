@@ -9,7 +9,6 @@ import { IoColorFilterOutline } from "react-icons/io5";
 import { MdOutlineFilterFrames, MdOutlineTextFields } from "react-icons/md";
 import { FaCropSimple } from "react-icons/fa6";
 
-
 const MainSider = ({ collapsed, onCollapsed, mode }) => {
   return (
     <Sider
@@ -18,21 +17,25 @@ const MainSider = ({ collapsed, onCollapsed, mode }) => {
       collapsible
       collapsed={collapsed}
       width="15%"
+      // theme={`${mode}`}
       style={{
+        borderRight:"1px solid #A6ACB5",
         textAlign: "center",
         backgroundColor: `${mode === "light" ? "#f5f5f5" : "#1b1b1b"}`,
+       
       }}
     >
-      <div className="m-0 w-full h-full">
+      {/* <div className="m-0 w-full h-full"> */}
         <Menu
-          //   theme="dark"
-          style={{ height: "100%" }}
+            // theme={`${mode}`}
+
+          style={{ height: "100%",backgroundColor:"transparent", color:`${mode === "dark" ? "#f5f5f5" : "#1b1b1b"}` }}
           mode="inline"
           defaultSelectedKeys={["1"]}
           items={[
             {
               key: "1",
-              icon:   <FaCropSimple />,
+              icon: <FaCropSimple />,
               label: "Crop",
             },
             {
@@ -52,7 +55,7 @@ const MainSider = ({ collapsed, onCollapsed, mode }) => {
             },
           ]}
         />
-      </div>
+      {/* </div> */}
     </Sider>
   );
 };

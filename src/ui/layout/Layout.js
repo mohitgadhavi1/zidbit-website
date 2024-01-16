@@ -37,7 +37,7 @@ const MainLayout = ({ children }) => {
       }
     >
       {screens.md === true ? (
-        <Layout style={{ minHeight: "100vh", maxWidth: "100vw" }}>
+        <Layout style={{ minHeight: "100vh", maxWidth: "100vw",color:`${mode === "dark" ? "#f5f5f5" : "#1b1b1b"}` }}>
           <MainHeader
             collapsed={collapsed}
             onCollapsed={() => setCollapsed(!collapsed)}
@@ -60,7 +60,7 @@ const MainLayout = ({ children }) => {
           </Layout>
         </Layout>
       ) : (
-        <Layout style={{ minHeight: "100vh" ,maxWidth: "100vw"}}>
+        <Layout style={{ minHeight: "100vh" ,maxWidth: "100vw",color:`${mode === "dark" ? "#f5f5f5" : "#1b1b1b"}` }}>
           <MainHeader
             collapsed={collapsed}
             onCollapsed={() => setCollapsed(!collapsed)}

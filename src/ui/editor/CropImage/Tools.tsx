@@ -11,9 +11,10 @@ import {
 } from "react-icons/md";
 
 function Tools({
-  aspect,
+  aspect: showAspect,
   rotate,
-  handleToggleAspectClick,
+  onChangeAspectRatio,
+  // handleToggleAspectClick,
   scale,
   imgSrc,
   onChangeScale,
@@ -21,41 +22,44 @@ function Tools({
 
   // onChangeAspect
 }) {
-  const [isToolsOpen, setIsToolsOpen] = useState(false);
-
-  return (
-    <div className="w-full h-full   flex items-center justify-center">
-      <ToolBar />
-    </div>
-  );
-}
-
-export default Tools;
-
-function ToolBar() {
-  function handleAspectButtonClick(tooltip) {
+  const [aspect, setAspect] = useState<number | null>(null);
+  function handleAspectButtonClick(
+    tooltip: string | null,
+    value: number | null
+  ) {
     switch (tooltip) {
       case "custom":
-        // Handle custom button click
+        setAspect(null);
+        onChangeAspectRatio(value);
         console.log("Custom button clicked");
         break;
       case "16:9":
+        setAspect(value);
+        onChangeAspectRatio(value);
         // Handle 16:9 button click
         console.log("16:9 button clicked");
         break;
       case "9:16":
+        setAspect(value);
+        onChangeAspectRatio(value);
         // Handle 9:16 button click
         console.log("9:16 button clicked");
         break;
       case "3:2":
+        setAspect(value);
+        onChangeAspectRatio(value);
         // Handle 3:2 button click
         console.log("3:2 button clicked");
         break;
       case "2:3":
+        setAspect(value);
+        onChangeAspectRatio(value);
         // Handle 2:3 button click
         console.log("2:3 button clicked");
         break;
       case "square":
+        setAspect(value);
+        onChangeAspectRatio(value);
         // Handle square button click
         console.log("Square button clicked");
         break;
@@ -64,7 +68,7 @@ function ToolBar() {
         console.log("Unknown button clicked");
     }
   }
-  function handleDegreeButtonClick(degree) {
+  function handleDegreeButtonClick(degree: string) {
     switch (degree) {
       case "30deg":
         // Handle 30° button click
@@ -112,17 +116,26 @@ function ToolBar() {
   ];
 
   const aspectRatioButtons = [
-    { tooltip: "custom", icon: <MdOutlineCropFree /> },
-    { tooltip: "16:9", icon: <MdCrop169 /> },
-    { tooltip: "9:16", icon: <MdCrop169 className={"rotate-90"} /> },
-    { tooltip: "3:2", icon: <MdCrop32 /> },
-    { tooltip: "2:3", icon: <MdCrop32 className={"rotate-90"} /> },
-    { tooltip: "square", icon: <MdOutlineCropDin /> },
+    { tooltip: "custom", value: null, icon: <MdOutlineCropFree /> },
+    { tooltip: "16:9", value: 1.77, icon: <MdCrop169 /> },
+    {
+      tooltip: "9:16",
+      value: 0.56,
+      icon: <MdCrop169 className={"rotate-90"} />,
+    },
+    { tooltip: "3:2", value: 1.5, icon: <MdCrop32 /> },
+    { tooltip: "2:3", value: 0.66, icon: <MdCrop32 className={"rotate-90"} /> },
+    { tooltip: "square", value: 1, icon: <MdOutlineCropDin /> },
   ];
 
   return (
     <Flex
-      style={{ width: "50%", position:"relative", height:"100%",backgroundColor:"black" }}
+      style={{
+        width: "50%",
+        position: "relative",
+        height: "100%",
+        backgroundColor: "black",
+      }}
       justify={"space-between"}
       align={"center"}
     >
@@ -140,7 +153,13 @@ function ToolBar() {
       >
         {aspectRatioButtons.map((item, i) => {
           return (
-            <FloatButton key={i} tooltip={item.tooltip} icon={item.icon} />
+            <FloatButton
+              type={item.value === showAspect ? "primary" : "default"}
+              onClick={() => handleAspectButtonClick(item.tooltip, item.value)}
+              key={i}
+              tooltip={item.tooltip}
+              icon={item.icon}
+            />
           );
         })}
       </FloatButton.Group>
@@ -157,13 +176,20 @@ function ToolBar() {
       >
         {degreeButtons.map((item, i) => {
           return (
-            <FloatButton key={i} tooltip={item.tooltip} icon={item.icon} />
+            <FloatButton
+              onClick={() => handleDegreeButtonClick(item.tooltip)}
+              key={i}
+              tooltip={item.tooltip}
+              icon={item.icon}
+            />
           );
         })}
       </FloatButton.Group>
     </Flex>
   );
 }
+
+export default Tools;
 
 // function onSelectFile(e: React.ChangeEvent<HTMLInputElement>) {
 //   if (e.target.files && e.target.files.length > 0) {

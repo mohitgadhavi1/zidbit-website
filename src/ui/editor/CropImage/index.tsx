@@ -52,7 +52,7 @@ export default function CropImage() {
   const [completedCrop, setCompletedCrop] = useState<PixelCrop>();
   const [scale, setScale] = useState(1);
   const [rotate, setRotate] = useState(0);
-  const [aspect, setAspect] = useState<number | undefined>(16 / 9);
+  const [aspect, setAspect] = useState<number | null>(1.77);
   const [isCroppedSave, setIsCroppedSave] = useState<boolean>(false);
 
   function onImageLoad(e: React.SyntheticEvent<HTMLImageElement>) {
@@ -136,11 +136,11 @@ export default function CropImage() {
   }
   useDebounceEffect(getCanvasPreview, 100, [completedCrop, scale, rotate]);
 
-  function handleToggleAspectClick() {
-    if (aspect) {
-      setAspect(undefined);
+  function handleAspectClick(val: number | null) {
+    if (val === null) {
+      setAspect(val);
     } else {
-      setAspect(16 / 9);
+      setAspect(val);
 
       if (imgRef.current) {
         const { width, height } = imgRef.current;
@@ -157,6 +157,11 @@ export default function CropImage() {
       <div className="bg-gray-400 rounded-xl p-4 h-[70vh] relative  flex   justify-center items-center overflow-hidden ">
         <FloatButton
           icon={<GoZoomIn />}
+          onClick={() => {
+            if (scale <= 5) {
+              setScale((prevVal) => prevVal + 1);
+            }
+          }}
           type="primary"
           style={{
             right: 24,
@@ -169,6 +174,11 @@ export default function CropImage() {
         />
         <FloatButton
           icon={<GoZoomOut />}
+          onClick={() => {
+            if (scale >= 2) {
+              setScale((prevVal) => prevVal - 1);
+            }
+          }}
           type="default"
           style={{
             left: 24,
@@ -221,49 +231,48 @@ export default function CropImage() {
         </div>
       </div>
       {!isCroppedSave ? (
-        
-          <Flex
-            style={{ width: "100%",margin:"4% 0 0 0" }}
-            justify={"space-between"}
-            align={"center"}
+        <Flex
+          style={{ width: "100%", margin: "4% 0 0 0" }}
+          justify={"space-between"}
+          align={"center"}
+        >
+          <Button
+            type="primary"
+            danger
+            shape="round"
+            onClick={() => {
+              setImgSrc({
+                original: null,
+                latest: null,
+              });
+            }}
+            icon={<MdOutlineClose />}
           >
-            <Button
-              type="primary"
-              danger
-              shape="round"
-              onClick={() => {
-                setImgSrc({
-                  original: null,
-                  latest: null,
-                });
-              }}
-              icon={<MdOutlineClose />}
-            >
-              Cancel
-            </Button>
+            Cancel
+          </Button>
 
-            <Tools
-              aspect={aspect}
-              rotate={rotate}
-              handleToggleAspectClick={handleToggleAspectClick}
-              scale={scale}
-              imgSrc={imgSrc}
-              onChangeScale={(val) => setScale(val)}
-              onChangeRotate={(val) => setRotate(val)}
-              // onChangeAspect={(val) => setAspect(val)}
-            />
+          <Tools
+            aspect={aspect}
+            onChangeAspectRatio={(val) => handleAspectClick(val)}
+            rotate={rotate}
+            // handleToggleAspectClick={handleToggleAspectClick}
+            scale={scale}
+            imgSrc={imgSrc}
+            onChangeScale={(val) => setScale(val)}
+            onChangeRotate={(val) => setRotate(val)}
+            // onChangeAspect={(val) => setAspect(val)}
+          />
 
-            <Button
-              shape="round"
-              style={{ backgroundColor: "#00BF00" }}
-              type="primary"
-              onClick={onSaveImage}
-              icon={<MdOutlineDone />}
-            >
-              Done
-            </Button>
-          </Flex>
-      
+          <Button
+            shape="round"
+            style={{ backgroundColor: "#00BF00" }}
+            type="primary"
+            onClick={onSaveImage}
+            icon={<MdOutlineDone />}
+          >
+            Done
+          </Button>
+        </Flex>
       ) : (
         <div className="w-full flex justify-between my-2">
           <Button
