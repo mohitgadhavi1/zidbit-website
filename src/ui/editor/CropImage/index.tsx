@@ -255,7 +255,6 @@ export default function CropImage() {
             aspect={aspect}
             onChangeAspectRatio={(val) => handleAspectClick(val)}
             rotate={rotate}
-            // handleToggleAspectClick={handleToggleAspectClick}
             scale={scale}
             imgSrc={imgSrc}
             onChangeScale={(val) => setScale(val)}

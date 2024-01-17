@@ -14,51 +14,42 @@ function Tools({
   aspect: showAspect,
   rotate,
   onChangeAspectRatio,
-  // handleToggleAspectClick,
   scale,
   imgSrc,
-  onChangeScale,
   onChangeRotate,
 
   // onChangeAspect
 }) {
-  const [aspect, setAspect] = useState<number | null>(null);
   function handleAspectButtonClick(
     tooltip: string | null,
     value: number | null
   ) {
     switch (tooltip) {
       case "custom":
-        setAspect(null);
         onChangeAspectRatio(value);
         console.log("Custom button clicked");
         break;
       case "16:9":
-        setAspect(value);
         onChangeAspectRatio(value);
         // Handle 16:9 button click
         console.log("16:9 button clicked");
         break;
       case "9:16":
-        setAspect(value);
         onChangeAspectRatio(value);
         // Handle 9:16 button click
         console.log("9:16 button clicked");
         break;
       case "3:2":
-        setAspect(value);
         onChangeAspectRatio(value);
         // Handle 3:2 button click
         console.log("3:2 button clicked");
         break;
       case "2:3":
-        setAspect(value);
         onChangeAspectRatio(value);
         // Handle 2:3 button click
         console.log("2:3 button clicked");
         break;
       case "square":
-        setAspect(value);
         onChangeAspectRatio(value);
         // Handle square button click
         console.log("Square button clicked");
@@ -68,49 +59,72 @@ function Tools({
         console.log("Unknown button clicked");
     }
   }
-  function handleDegreeButtonClick(degree: string) {
-    switch (degree) {
+  function handleDegreeButtonClick(tooltip: string | null, value: number) {
+    switch (tooltip) {
       case "30deg":
-        // Handle 30° button click
+        onChangeRotate(Math.min(180, Math.max(-180, Number(value))));
         console.log("30° button clicked");
         break;
       case "45deg":
-        // Handle 45° button click
+        onChangeRotate(Math.min(180, Math.max(-180, Number(value))));
         console.log("45° button clicked");
         break;
       case "60deg":
-        // Handle 60° button click
+        onChangeRotate(Math.min(180, Math.max(-180, Number(value))));
         console.log("60° button clicked");
         break;
       case "90deg":
-        // Handle 90° button click
+        onChangeRotate(Math.min(180, Math.max(-180, Number(value))));
         console.log("90° button clicked");
         break;
       case "120deg":
-        // Handle 120° button click
+        onChangeRotate(Math.min(180, Math.max(-180, Number(value))));
         console.log("120° button clicked");
         break;
       case "180deg":
-        // Handle 180° button click
+        onChangeRotate(Math.min(180, Math.max(-180, Number(value))));
         console.log("180° button clicked");
         break;
       default:
-        // Handle default case (if any)
+        onChangeRotate(Math.min(180, Math.max(-180, Number(0))));
         console.log("Unknown degree button clicked");
     }
   }
 
   const degreeButtons = [
-    { tooltip: "30deg", icon: <span className="text-xs font-bold">30°</span> },
-    { tooltip: "45deg", icon: <span className="text-xs font-bold">45°</span> },
-    { tooltip: "60deg", icon: <span className="text-xs font-bold">60°</span> },
-    { tooltip: "90deg", icon: <span className="text-xs font-bold">90°</span> },
+    {
+      tooltip: "0deg",
+      value: 0,
+      icon: <span className="text-xs font-bold">0°</span>,
+    },
+    {
+      tooltip: "30deg",
+      value: 30,
+      icon: <span className="text-xs font-bold">30°</span>,
+    },
+    {
+      tooltip: "45deg",
+      value: 45,
+      icon: <span className="text-xs font-bold">45°</span>,
+    },
+    {
+      tooltip: "60deg",
+      value: 60,
+      icon: <span className="text-xs font-bold">60°</span>,
+    },
+    {
+      tooltip: "90deg",
+      value: 90,
+      icon: <span className="text-xs font-bold">90°</span>,
+    },
     {
       tooltip: "120deg",
+      value: 120,
       icon: <span className="text-xs font-bold">120°</span>,
     },
     {
       tooltip: "180deg",
+      value: 180,
       icon: <span className="text-xs font-bold">180°</span>,
     },
   ];
@@ -177,7 +191,8 @@ function Tools({
         {degreeButtons.map((item, i) => {
           return (
             <FloatButton
-              onClick={() => handleDegreeButtonClick(item.tooltip)}
+              type={item.value === rotate ? "primary" : "default"}
+              onClick={() => handleDegreeButtonClick(item.tooltip, item.value)}
               key={i}
               tooltip={item.tooltip}
               icon={item.icon}
