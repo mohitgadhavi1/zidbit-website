@@ -10,7 +10,7 @@ export default function Home() {
 
   useEffect(()=>{
     if (image.original){
-      router.push("/edit_image");
+      router.replace("/edit_image");
     }
   },[image])
 

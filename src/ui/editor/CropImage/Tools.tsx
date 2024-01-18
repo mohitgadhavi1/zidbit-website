@@ -145,10 +145,12 @@ function Tools({
   return (
     <Flex
       style={{
+        display:"flex",
         width: "50%",
         position: "relative",
-        height: "100%",
-        backgroundColor: "black",
+        height: "40px",
+     
+    
       }}
       justify={"space-between"}
       align={"center"}
@@ -216,50 +218,10 @@ export default Tools;
 //     reader.readAsDataURL(e.target.files[0]);
 //   }
 // }
-{
-  /* <Toolbar
-        toolOptions={[
-          { title: "custom", icon: <MdOutlineCropFree /> },
-          { title: "16:9", icon: <MdCrop169 /> },
-          { title: "9:16", icon: <MdCrop169 className={"rotate-90"} /> },
-          { title: "3:2", icon: <MdCrop32 /> },
-          { title: "2:3", icon: <MdCrop32 className={"rotate-90"} /> },
-          { title: "squre", icon: <MdOutlineCropDin /> },
-        ]}
-      /> */
-}
 
-{
-  /* <div>
-        <label htmlFor="scale-input">Scale: </label>
-        <input
-          id="scale-input"
-          type="number"
-          step="0.1"
-          value={scale}
-          disabled={!imgSrc}
-          onChange={(e) => onChangeScale(Number(e.target.value))}
-        />
-      </div>
-      <div>
-        <label htmlFor="rotate-input">Rotate: </label>
-        <input
-          id="rotate-input"
-          type="number"
-          value={rotate}
-          disabled={!imgSrc}
-          onChange={(e) =>
-            onChangeRotate(
-              Math.min(180, Math.max(-180, Number(e.target.value)))
-            )
-          }
-        />
-      </div> */
-}
-{
   /* <div>
         <Button icon={aspect ? "off" : "on"} onClick={handleToggleAspectClick}>
           Toggle aspect {}
         </Button>
       </div> */
-}
+

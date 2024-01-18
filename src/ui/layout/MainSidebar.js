@@ -9,7 +9,7 @@ import { IoColorFilterOutline } from "react-icons/io5";
 import { MdOutlineFilterFrames, MdOutlineTextFields } from "react-icons/md";
 import { FaCropSimple } from "react-icons/fa6";
 
-const MainSider = ({ collapsed, onCollapsed, mode }) => {
+const MainSider = ({ collapsed, onCollapsed,  }) => {
   return (
     <Sider
       collapsedWidth="3%"
@@ -19,42 +19,67 @@ const MainSider = ({ collapsed, onCollapsed, mode }) => {
       width="15%"
       // theme={`${mode}`}
       style={{
-        borderRight:"1px solid #A6ACB5",
+        borderRight: "1px solid #A6ACB5",
         textAlign: "center",
-        backgroundColor: `${mode === "light" ? "#f5f5f5" : "#1b1b1b"}`,
-       
+        // backgroundColor: `${mode === "light" ? "#f5f5f5" : "#1b1b1b"}`,
       }}
     >
       {/* <div className="m-0 w-full h-full"> */}
-        <Menu
-            // theme={`${mode}`}
+      <Menu
+        // theme={`${mode}`}
 
-          style={{ height: "100%",backgroundColor:"transparent", color:`${mode === "dark" ? "#f5f5f5" : "#1b1b1b"}` }}
-          mode="inline"
-          defaultSelectedKeys={["1"]}
-          items={[
-            {
-              key: "1",
-              icon: <FaCropSimple />,
-              label: "Crop",
-            },
-            {
-              key: "2",
-              icon: <IoColorFilterOutline />,
-              label: "Filter",
-            },
-            {
-              key: "3",
-              icon: <MdOutlineTextFields />,
-              label: "Text",
-            },
-            {
-              key: "4",
+        style={{
+          height: "100%",
+          // backgroundColor: "transparent",
+          // color: `${mode === "dark" ? "#f5f5f5" : "#1b1b1b"}`,
+        }}
+        mode="inline"
+        defaultSelectedKeys={["1"]}
+        items={[
+          {
+            key: "1",
+            icon: <FaCropSimple />,
+            label: "Crop",
+          },
+          {
+            type: "divider",
+          },
+          {
+            key: "2",
+            icon: <IoColorFilterOutline />,
+            label: "Filter",
+            disabled: true,
+          },
+          {
+            key: "3",
+            icon: <MdOutlineTextFields />,
+            label: "Text",
+            disabled: true,
+          },
+          {
+            key: "4",
+            icon: <MdOutlineFilterFrames />,
+            label: "Frame",
+            disabled: true,
+          },
+          {
+            key: "sub1",
+            icon: <MdOutlineFilterFrames />,
+            label: "AI Tools",
+          
+            children: [
+             { key: "1",
               icon: <MdOutlineFilterFrames />,
-              label: "Frame",
-            },
-          ]}
-        />
+              label: "Remove Bg",
+              disabled: true,},
+              { key: "2",
+              icon: <MdOutlineFilterFrames />,
+              label: "Beauty",
+              disabled: true,},
+            ]
+          },
+        ]}
+      />
       {/* </div> */}
     </Sider>
   );

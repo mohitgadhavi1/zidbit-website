@@ -8,7 +8,7 @@ const MainFooter = ({ mode }) => {
       style={{
        
         textAlign: "center",
-        backgroundColor: `${mode === "light" ? "#f5f5f5" : "#1b1b1b"}`,
+        // backgroundColor: `${mode === "light" ? "#f5f5f5" : "#1b1b1b"}`,
       }}
     >
       <div className="w-full h-full text-dark flex justify-around items-center dark:text-light">

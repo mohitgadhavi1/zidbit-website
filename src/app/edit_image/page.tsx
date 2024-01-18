@@ -9,10 +9,13 @@ import { useEffect } from "react";
 function Page() {
   const router = useRouter();
   const [image, setImage] = useImageContext();
-
+  
   useEffect(() => {
+
+   
+
     if (!image.original) {
-      router.push("/");
+      router.replace("/");
     }
   }, [image]);
 

@@ -1,10 +1,15 @@
-import { Layout } from "antd";
+import { Layout, theme } from "antd";
 import { MoonIcon, SunIcon } from "@/components/Icons";
 import { Button } from "antd";
 import Logo from "@/components/Logo";
+import { FaThemeco } from "react-icons/fa6";
 const { Header } = Layout;
 
 const MainHeader = ({ collapsed, mode, changeMode, onCollapsed }) => {
+  const {
+    token: { colorBgContainer, borderRadiusLG },
+  } = theme.useToken();
+
   return (
     <Header
       style={{
@@ -13,7 +18,7 @@ const MainHeader = ({ collapsed, mode, changeMode, onCollapsed }) => {
         height: 64,
         padding: 0,
 
-        backgroundColor: `${mode === "light" ? "#f5f5f5" : "#1b1b1b"}`,
+        backgroundColor: colorBgContainer,
       }}
     >
       <div className="flex w-full h-full justify-between items-center ">
@@ -33,7 +38,9 @@ const MainHeader = ({ collapsed, mode, changeMode, onCollapsed }) => {
         {/* </div> */}
         <button
           className={`mr-3  flex items-center justify-center rounded-full  p-1
-            ${mode === "light" ? "bg-dark text-light" : "bg-light text-dark"} `}
+             ${
+               mode === "light" ? "bg-dark text-light" : "bg-light text-dark"
+             } `}
           onClick={() => {
             changeMode();
           }}

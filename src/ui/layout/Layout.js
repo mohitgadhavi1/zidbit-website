@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { Layout, Menu } from "antd";
 const { Footer, Sider, Content } = Layout;
 import { ConfigProvider, theme, Grid } from "antd";
-
+import customTheme from "../../../theme/themeConfig";
 import Link from "next/link";
 import useThemeSwicher from "@/components/hooks/useThemeSwicher";
 
@@ -22,22 +22,15 @@ const MainLayout = ({ children }) => {
   // console.log(mode);
 
   return (
-    <ConfigProvider
-      theme={
-        {
-          // ...customTheme,
-          // token: {
-          // dark: "#1b1b1b",
-          // light: "#f5f5f5",
-          // primary: "#B63E96", // 240,86,199
-          // primaryDark: "#58E6D9", // 80,230,217
-          // },
-          // algorithm: mode === "light" ? darkAlgorithm : defaultAlgorithm,
-        }
-      }
-    >
+    <ConfigProvider theme={customTheme(mode)}>
       {screens.md === true ? (
-        <Layout style={{ minHeight: "100vh", maxWidth: "100vw",color:`${mode === "dark" ? "#f5f5f5" : "#1b1b1b"}` }}>
+        <Layout
+          style={{
+            minHeight: "100vh",
+            maxWidth: "100vw",
+            // color: `${mode === "dark" ? "#f5f5f5" : "#1b1b1b"}`,
+          }}
+        >
           <MainHeader
             collapsed={collapsed}
             onCollapsed={() => setCollapsed(!collapsed)}
@@ -54,13 +47,19 @@ const MainLayout = ({ children }) => {
             />
 
             <Layout>
-            <MainContent mode={mode}>{children}</MainContent>
+              <MainContent mode={mode}>{children}</MainContent>
               {/* <MainFooter mode={mode} /> */}
             </Layout>
           </Layout>
         </Layout>
       ) : (
-        <Layout style={{ minHeight: "100vh" ,maxWidth: "100vw",color:`${mode === "dark" ? "#f5f5f5" : "#1b1b1b"}` }}>
+        <Layout
+          style={{
+            minHeight: "100vh",
+            maxWidth: "100vw",
+            // color: `${mode === "dark" ? "#f5f5f5" : "#1b1b1b"}`,
+          }}
+        >
           <MainHeader
             collapsed={collapsed}
             onCollapsed={() => setCollapsed(!collapsed)}
@@ -84,9 +83,9 @@ function MainContent({ children, mode }) {
     <Content
       style={{
         padding: "1%",
-        // backgroundColor: "blue",
-       
-     backgroundColor: `${mode === "light" ? "#f5f5f5" : "#1b1b1b"}`,
+   
+
+        // backgroundColor: `${mode === "light" ? "#f5f5f5" : "#1b1b1b"}`,
       }}
     >
       {children}

@@ -39,15 +39,17 @@ export default function RootLayout({
         />
       </Head>
       <html lang="en">
+      <AntdRegistry>
         <DarkModeProvider>
           <ImageProvider>
             <body className={`  ${inter.className}`}>
-              <AntdRegistry>
+             
                 <Layout>{children}</Layout>
-              </AntdRegistry>
+            
             </body>
           </ImageProvider>
         </DarkModeProvider>
+        </AntdRegistry>
       </html>
     </>
   );
