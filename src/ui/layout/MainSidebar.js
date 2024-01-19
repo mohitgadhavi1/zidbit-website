@@ -1,4 +1,4 @@
-import { Layout, Menu } from "antd";
+import { Button, Divider, Layout, Menu } from "antd";
 const { Sider } = Layout;
 import {
   UploadOutlined,
@@ -8,8 +8,19 @@ import {
 import { IoColorFilterOutline } from "react-icons/io5";
 import { MdOutlineFilterFrames, MdOutlineTextFields } from "react-icons/md";
 import { FaCropSimple } from "react-icons/fa6";
+import { v4 as uuidv4 } from "uuid";
+import MainFooter from "./MainFooter";
+import { Space, Typography } from "antd";
+import Link from "next/link";
+import { currentYear } from "@/helper/quiclFuncs";
+const { Text } = Typography;
 
-const MainSider = ({ collapsed, onCollapsed,  }) => {
+const MainSider = ({ collapsed, mode, onCollapsed }) => {
+  const uniqueKey = () => {
+    return uuidv4();
+  };
+
+
   return (
     <Sider
       collapsedWidth="3%"
@@ -37,7 +48,7 @@ const MainSider = ({ collapsed, onCollapsed,  }) => {
         defaultSelectedKeys={["1"]}
         items={[
           {
-            key: "1",
+            key: uniqueKey(),
             icon: <FaCropSimple />,
             label: "Crop",
           },
@@ -45,42 +56,54 @@ const MainSider = ({ collapsed, onCollapsed,  }) => {
             type: "divider",
           },
           {
-            key: "2",
+            key: uniqueKey(),
             icon: <IoColorFilterOutline />,
             label: "Filter",
             disabled: true,
           },
           {
-            key: "3",
+            key: uniqueKey(),
             icon: <MdOutlineTextFields />,
             label: "Text",
             disabled: true,
           },
           {
-            key: "4",
+            key: uniqueKey(),
             icon: <MdOutlineFilterFrames />,
             label: "Frame",
             disabled: true,
           },
           {
-            key: "sub1",
+            key: uniqueKey(),
             icon: <MdOutlineFilterFrames />,
             label: "AI Tools",
-          
+
             children: [
-             { key: "1",
-              icon: <MdOutlineFilterFrames />,
-              label: "Remove Bg",
-              disabled: true,},
-              { key: "2",
-              icon: <MdOutlineFilterFrames />,
-              label: "Beauty",
-              disabled: true,},
-            ]
+              {
+                key: uniqueKey(),
+                icon: <MdOutlineFilterFrames />,
+                label: "Remove Bg",
+                disabled: true,
+              },
+              {
+                key: uniqueKey(),
+                icon: <MdOutlineFilterFrames />,
+                label: "Beauty",
+                disabled: true,
+              },
+            ],
           },
         ]}
       />
-      {/* </div> */}
+
+      <div className="absolute bottom-0 mx-auto my-2 flex w-full flex-col">
+        <Divider />
+        <div className="flex justify-around">
+        <Link href={"/tos"}> Terms & Conditons</Link>
+        <Link href={"/privacy-policy"}> Privacy Policy</Link>
+        </div>
+        <Text type="secondary">© {currentYear} zidbit </Text>
+      </div>
     </Sider>
   );
 };

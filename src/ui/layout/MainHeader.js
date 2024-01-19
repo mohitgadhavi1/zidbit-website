@@ -21,8 +21,8 @@ const MainHeader = ({ collapsed, mode, changeMode, onCollapsed }) => {
         backgroundColor: colorBgContainer,
       }}
     >
-      <div className="flex w-full h-full justify-between items-center ">
-        <Button
+      <div className="flex w-full h-full justify-between items-center px-4">
+        {/* <Button
           type="text"
           //   icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
           icon={<MenuButton collapsed={collapsed} />}
@@ -32,7 +32,7 @@ const MainHeader = ({ collapsed, mode, changeMode, onCollapsed }) => {
             width: 64,
             height: 64,
           }}
-        />
+        /> */}
         {/* <div className="absolute left-[50%] top-1 translate-x-[-50%]"> */}
         <Logo />
         {/* </div> */}

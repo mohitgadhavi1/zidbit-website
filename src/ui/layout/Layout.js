@@ -23,56 +23,25 @@ const MainLayout = ({ children }) => {
 
   return (
     <ConfigProvider theme={customTheme(mode)}>
-      {screens.md === true ? (
-        <Layout
-          style={{
-            minHeight: "100vh",
-            maxWidth: "100vw",
-            // color: `${mode === "dark" ? "#f5f5f5" : "#1b1b1b"}`,
+      <Layout
+        style={{
+          minHeight: "100vh",
+          maxWidth: "100vw",
+          // color: `${mode === "dark" ? "#f5f5f5" : "#1b1b1b"}`,
+        }}
+      >
+        <MainHeader
+          collapsed={collapsed}
+          onCollapsed={() => setCollapsed(!collapsed)}
+          changeMode={() => {
+            setMode(mode === "dark" ? "light" : "dark");
           }}
-        >
-          <MainHeader
-            collapsed={collapsed}
-            onCollapsed={() => setCollapsed(!collapsed)}
-            changeMode={() => {
-              setMode(mode === "dark" ? "light" : "dark");
-            }}
-            mode={mode}
-          />
-          <Layout style={{ borderRadius: 8 }}>
-            <MainSider
-              collapsed={collapsed}
-              onCollapsed={() => setCollapsed(!collapsed)}
-              mode={mode}
-            />
+          mode={mode}
+        />
 
-            <Layout>
-              <MainContent mode={mode}>{children}</MainContent>
-              {/* <MainFooter mode={mode} /> */}
-            </Layout>
-          </Layout>
-        </Layout>
-      ) : (
-        <Layout
-          style={{
-            minHeight: "100vh",
-            maxWidth: "100vw",
-            // color: `${mode === "dark" ? "#f5f5f5" : "#1b1b1b"}`,
-          }}
-        >
-          <MainHeader
-            collapsed={collapsed}
-            onCollapsed={() => setCollapsed(!collapsed)}
-            changeMode={() => {
-              setMode(mode === "dark" ? "light" : "dark");
-            }}
-            mode={mode}
-          />
-
-          <MainContent mode={mode}>{children}</MainContent>
-          {/* <MainFooter mode={mode} /> */}
-        </Layout>
-      )}
+        <MainContent mode={mode}>{children}</MainContent>
+        <MainFooter mode={mode} />
+      </Layout>
     </ConfigProvider>
   );
 };
@@ -83,7 +52,6 @@ function MainContent({ children, mode }) {
     <Content
       style={{
         padding: "1%",
-   
 
         // backgroundColor: `${mode === "light" ? "#f5f5f5" : "#1b1b1b"}`,
       }}
@@ -92,3 +60,32 @@ function MainContent({ children, mode }) {
     </Content>
   );
 }
+
+{/* <Layout
+style={{
+  minHeight: "100vh",
+  maxWidth: "100vw",
+  // color: `${mode === "dark" ? "#f5f5f5" : "#1b1b1b"}`,
+}}
+>
+<MainHeader
+  collapsed={collapsed}
+  onCollapsed={() => setCollapsed(!collapsed)}
+  changeMode={() => {
+    setMode(mode === "dark" ? "light" : "dark");
+  }}
+  mode={mode}
+/>
+<Layout style={{ borderRadius: 8 }}>
+  <MainSider
+    collapsed={collapsed}
+    onCollapsed={() => setCollapsed(!collapsed)}
+    mode={mode}
+  />
+
+  <Layout>
+    <MainContent mode={mode}>{children}</MainContent>
+  
+  </Layout>
+</Layout>
+</Layout> */}

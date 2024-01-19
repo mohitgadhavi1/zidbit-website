@@ -11,18 +11,19 @@ const customIcons = {
   5: <SmileOutlined />,
 };
 
-function FeedbackForm(isOpen, handleOk, handleCancel) {
+function FeedbackForm({isOpen, handleOk, handleCancel}) {
+ 
   return (
     <>
       <Modal
         title="Give Us Your FeedBack"
         open={isOpen}
-        onOk={handleOk}
-        onCancel={handleCancel}
+        onOk={()=> handleOk()}
+        onCancel={()=> handleCancel()}
       >
         <br />
         <Rate
-        style={{fontSize:"55px"}}
+          style={{ fontSize: "55px" }}
           defaultValue={3}
           character={({ index = 0 }) => customIcons[index + 1]}
         />

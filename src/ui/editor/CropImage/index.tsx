@@ -19,9 +19,10 @@ import { IoIosReturnLeft } from "react-icons/io";
 import { MdExpandLess } from "react-icons/md";
 import { GoZoomIn } from "react-icons/go";
 import { GoZoomOut } from "react-icons/go";
+import Tools, { AspectRatioCard, RotationCard } from "./Tools";
+import FeedbackForm from "@/components/FeedbackForm";
+const { useBreakpoint } = Grid;
 
-import Tools from "./Tools";
-import FeedbackForm from "@/components/FeedbackForm"
 function centerAspectCrop(
   mediaWidth: number,
   mediaHeight: number,
@@ -41,7 +42,7 @@ function centerAspectCrop(
     mediaHeight
   );
 }
-const { useBreakpoint } = Grid;
+
 export default function CropImage() {
   const screens = useBreakpoint();
   const [imgSrc, setImgSrc] = useImageContext();
@@ -56,7 +57,7 @@ export default function CropImage() {
   const [aspect, setAspect] = useState<number | null>(1.77);
   const [isCroppedSave, setIsCroppedSave] = useState<boolean>(false);
   const [openFeedbackForm, setOpenFeedbackForm] = useState(false);
-console.log(openFeedbackForm)
+
   function onImageLoad(e: React.SyntheticEvent<HTMLImageElement>) {
     if (aspect) {
       const { width, height } = e.currentTarget;
@@ -153,112 +154,155 @@ console.log(openFeedbackForm)
       }
     }
   }
-
+  // console.log(screens);
   return (
-    <div className="flex flex-col items-center   h-full   overflow-auto  w-full ">
-      <Flex justify="center" align="center" gap={15}>
-        <div className="bg-gray-400 rounded-xl p-4 h-[70vh] xs:w-full md:5/6 sm:w-10/12 lg:w-3/6 w-2/6 relative  flex   justify-center items-center overflow-hidden ">
-          {!imgSrc.latest && (
-            <FloatButton
-              icon={<GoZoomIn />}
-              onClick={() => {
-                if (scale <= 5) {
-                  setScale((prevVal) => prevVal + 1);
-                }
-              }}
-              type="primary"
-              style={{
-                right: 24,
-                position: "absolute",
-              }}
-            />
-          )}
-          {!imgSrc.latest && (
-            <FloatButton
-              icon={<GoZoomOut />}
-              onClick={() => {
-                if (scale >= 2) {
-                  setScale((prevVal) => prevVal - 1);
-                }
-              }}
-              type="default"
-              style={{
-                left: 24,
-                position: "absolute",
-              }}
-            />
-          )}
-
-          <div className=" h-auto w-auto  max-h-full   max-w-full  overflow-auto  ">
-            {imgSrc.latest ? (
-              <img
-                // ref={imgRef}
-                alt="Cropped Image"
-                src={imgSrc.latest}
-                className="select-none m-0 max-h-full  max-w-full "
-                // style={{ transform: `scale(${scale}) rotate(${rotate}deg)` }}
-                onLoad={onImageLoad}
-              />
-            ) : (
-              <ReactCrop
-                style={{
-                  maxHeight: "100%",
-                  maxWidth: "100%",
-                  height: "auto",
-                  width: "auto",
-                  overflow: "auto",
+    <>
+      {" "}
+      <FeedbackForm
+        isOpen={openFeedbackForm}
+        handleOk={() => setOpenFeedbackForm(false)}
+        handleCancel={() => setOpenFeedbackForm(false)}
+      />
+      <div className="flex flex-col items-center   h-full   overflow-auto  w-full ">
+        <Flex
+          justify="center"
+          align="center"
+          vertical={screens.md ? false : true}
+          gap={15}
+        >
+          <div className="bg-gray-400 rounded-xl p-4 h-[70vh] w-full  relative  flex   justify-center items-center overflow-hidden ">
+            {!imgSrc.latest && (
+              <FloatButton
+                icon={<GoZoomIn />}
+                onClick={() => {
+                  if (scale <= 5) {
+                    setScale((prevVal) => prevVal + 1);
+                  }
                 }}
-                crop={crop}
-                onChange={(_, percentCrop) => setCrop(percentCrop)}
-                onComplete={(c) => setCompletedCrop(c)}
-                aspect={aspect}
-                // minWidth={400}
-                minHeight={100}
-                // circularCrop
-              >
+                type="primary"
+                style={{
+                  right: 24,
+                  position: "absolute",
+                }}
+              />
+            )}
+            {!imgSrc.latest && (
+              <FloatButton
+                icon={<GoZoomOut />}
+                onClick={() => {
+                  if (scale >= 2) {
+                    setScale((prevVal) => prevVal - 1);
+                  }
+                }}
+                type="default"
+                style={{
+                  left: 24,
+                  position: "absolute",
+                }}
+              />
+            )}
+
+            <div className=" h-auto w-auto  max-h-full   max-w-full  overflow-auto  ">
+              {imgSrc.latest ? (
                 <img
-                  ref={imgRef}
-                  alt="To be Cropped Image"
-                  src={imgSrc.original}
-                  className="select-none m-0  max-h-full  w-auto h-auto overflow-auto   max-w-full "
-                  style={{ transform: `scale(${scale}) rotate(${rotate}deg)` }}
+                  // ref={imgRef}
+                  alt="Cropped Image"
+                  src={imgSrc.latest}
+                  className="select-none m-0 max-h-full  max-w-full "
+                  // style={{ transform: `scale(${scale}) rotate(${rotate}deg)` }}
                   onLoad={onImageLoad}
                 />
-              </ReactCrop>
-            )}
+              ) : (
+                <ReactCrop
+                  style={{
+                    maxHeight: "100%",
+                    maxWidth: "100%",
+                    height: "auto",
+                    width: "auto",
+                    overflow: "auto",
+                  }}
+                  crop={crop}
+                  onChange={(_, percentCrop) => setCrop(percentCrop)}
+                  onComplete={(c) => setCompletedCrop(c)}
+                  aspect={aspect}
+                  // minWidth={400}
+                  minHeight={100}
+                  // circularCrop
+                >
+                  <img
+                    ref={imgRef}
+                    alt="To be Cropped Image"
+                    src={imgSrc.original}
+                    className="select-none m-0  max-h-full  w-auto h-auto overflow-auto   max-w-full "
+                    style={{
+                      transform: `scale(${scale}) rotate(${rotate}deg)`,
+                    }}
+                    onLoad={onImageLoad}
+                  />
+                </ReactCrop>
+              )}
+            </div>
           </div>
-        </div>
-        <Flex vertical gap={5}>
-          <Card
-            title="Aspect Ratio"
-            bordered={false}
+          <Flex
             style={{
-              width: 300,
+              width: "100%",
             }}
+            vertical={
+              screens.xs ||
+              screens.md ||
+              screens.lg ||
+              screens.xl ||
+              screens.xxl
+                ? true
+                : false
+            }
+            align="center"
+            gap={5}
           >
-            <p>Card content</p>
-            <p>Card content</p>
-            <p>Card content</p>
-          </Card>
-          <Card
-            title="Rotate"
-            bordered={false}
-            style={{
-              width: 300,
-            }}
-          >
-            <p>Card content</p>
-            <p>Card content</p>
-            <p>Card content</p>
-          </Card>
-          <Card
-            bordered={false}
-            style={{
-              width: 300,
-            }}
-          >
-            {!isCroppedSave ? (
-              <Flex justify={"space-between"} align={"center"}>
+            <AspectRatioCard
+              aspect={aspect}
+              onChangeAspectRatio={(val) => handleAspectClick(val)}
+            />
+            <RotationCard
+              rotate={rotate}
+              onChangeRotate={(val) => setRotate(val)}
+            />
+            <Card
+              title="Aspect Ratio"
+              bordered={false}
+              style={{
+                width: "100%",
+                height: "50%",
+              }}
+            >
+              {/* <Tools
+                aspect={aspect}
+                onChangeAspectRatio={(val) => handleAspectClick(val)}
+                rotate={rotate}
+                onChangeScale={(val) => setScale(val)}
+                onChangeRotate={(val) => setRotate(val)}
+                // onChangeAspect={(val) => setAspect(val)}
+              /> */}
+            </Card>
+            <Card
+              title="Rotate"
+              bordered={false}
+              style={{
+                width: "100%",
+              }}
+            >
+              <p>Card content</p>
+              <p>Card content</p>
+              <p>Card content</p>
+            </Card>
+
+            <Card
+              bordered={false}
+              style={{
+                width: "100%",
+              }}
+            >
+              <Flex justify="space-between">
                 <Button
                   type="primary"
                   danger
@@ -273,6 +317,7 @@ console.log(openFeedbackForm)
                 >
                   Cancel
                 </Button>
+
                 <Button
                   shape="round"
                   style={{ backgroundColor: "#00BF00" }}
@@ -283,161 +328,120 @@ console.log(openFeedbackForm)
                   Done
                 </Button>
               </Flex>
+            </Card>
+          </Flex>
+        </Flex>
+        {/* {!isCroppedSave ? (
+          <Flex
+            style={{ width: "100%", margin: "4% 0 0 0" }}
+            justify={"space-between"}
+            align={"center"}
+          >
+            {screens.md === true ? (
+              <Button
+                type="primary"
+                danger
+                shape="round"
+                onClick={() => {
+                  setImgSrc({
+                    original: null,
+                    latest: null,
+                  });
+                }}
+                icon={<MdOutlineClose />}
+              >
+                Cancel
+              </Button>
             ) : (
-              <div className="w-full flex justify-between my-2">
-                <Button
-                  icon={<IoIosReturnLeft />}
-                  onClick={() => {
-                    setIsCroppedSave(false);
-                    setImgSrc({ ...imgSrc, latest: null });
-                  }}
-                >
-                  back
-                </Button>
-                <Button
-                  type="primary"
-                  icon={<DownloadOutlined />}
-                  onClick={onDownloadCropClick}
-                >
-                  Download
-                  <a
-                    href="#hidden"
-                    ref={hiddenAnchorRef}
-                    download
-                    style={{
-                      position: "absolute",
-                      top: "-200vh",
-                      visibility: "hidden",
-                    }}
-                  >
-                    Hidden download
-                  </a>
-                </Button>
-              </div>
+              <Button
+                type="primary"
+                danger
+                size="large"
+                shape="circle"
+                onClick={() => {
+                  setImgSrc({
+                    original: null,
+                    latest: null,
+                  });
+                }}
+                icon={<MdOutlineClose />}
+              />
             )}
-          </Card>
-        </Flex>
-      </Flex>
-      {!isCroppedSave ? (
-        <Flex
-          style={{ width: "100%", margin: "4% 0 0 0" }}
-          justify={"space-between"}
-          align={"center"}
-        >
-          {screens.md === true ? (
-            <Button
-              type="primary"
-              danger
-              shape="round"
-              onClick={() => {
-                setImgSrc({
-                  original: null,
-                  latest: null,
-                });
-              }}
-              icon={<MdOutlineClose />}
-            >
-              Cancel
-            </Button>
-          ) : (
-            <Button
-              type="primary"
-              danger
-              size="large"
-              shape="circle"
-              onClick={() => {
-                setImgSrc({
-                  original: null,
-                  latest: null,
-                });
-              }}
-              icon={<MdOutlineClose />}
-            />
-          )}
 
-          <Tools
-            aspect={aspect}
-            onChangeAspectRatio={(val) => handleAspectClick(val)}
-            rotate={rotate}
-            scale={scale}
-            imgSrc={imgSrc}
-            onChangeScale={(val) => setScale(val)}
-            onChangeRotate={(val) => setRotate(val)}
-            // onChangeAspect={(val) => setAspect(val)}
-          />
-
-          {screens.md === true ? (
-            <Button
-              shape="round"
-              style={{ backgroundColor: "#00BF00" }}
-              type="primary"
-              onClick={onSaveImage}
-              icon={<MdOutlineDone />}
-            >
-              Done
-            </Button>
-          ) : (
-            <Button
-              shape="circle"
-              size="large"
-              style={{ backgroundColor: "#00BF00" }}
-              type="primary"
-              onClick={onSaveImage}
-              icon={<MdOutlineDone />}
+            <Tools
+              aspect={aspect}
+              onChangeAspectRatio={(val) => handleAspectClick(val)}
+              rotate={rotate}
+              scale={scale}
+              imgSrc={imgSrc}
+              onChangeScale={(val) => setScale(val)}
+              onChangeRotate={(val) => setRotate(val)}
+              // onChangeAspect={(val) => setAspect(val)}
             />
-          )}
-        </Flex>
-      ) : (
-        <div className="w-full flex justify-between my-2">
-          <Button
-            icon={<IoIosReturnLeft />}
-            onClick={() => {
-              setIsCroppedSave(false);
-              setImgSrc({ ...imgSrc, latest: null });
-            }}
-          >
-            back
-          </Button>
-          <Button
-            type="primary"
-            icon={<DownloadOutlined />}
-            onClick={() => setOpenFeedbackForm(true)}
-          >
-            Download
-            <a
-              href="#hidden"
-              ref={hiddenAnchorRef}
-              download
-              style={{
-                position: "absolute",
-                top: "-200vh",
-                visibility: "hidden",
+
+            {screens.md === true ? (
+              <Button
+                shape="round"
+                style={{ backgroundColor: "#00BF00" }}
+                type="primary"
+                onClick={onSaveImage}
+                icon={<MdOutlineDone />}
+              >
+                Done
+              </Button>
+            ) : (
+              <Button
+                shape="circle"
+                size="large"
+                style={{ backgroundColor: "#00BF00" }}
+                type="primary"
+                onClick={onSaveImage}
+                icon={<MdOutlineDone />}
+              />
+            )}
+          </Flex>
+        ) : (
+          <div className="w-full flex justify-between my-2">
+            <Button
+              icon={<IoIosReturnLeft />}
+              onClick={() => {
+                setIsCroppedSave(false);
+                setImgSrc({ ...imgSrc, latest: null });
               }}
             >
-              Hidden download
-            </a>
-          </Button>
-        </div>
-      )}
-      <CropedImagePreview
-        completedCrop={completedCrop}
-        previewCanvasRef={previewCanvasRef}
-        hiddenAnchorRef={hiddenAnchorRef}
-      />
-      <FeedbackForm
-        isOpen={openFeedbackForm}
-        handleOk={() => setOpenFeedbackForm(false)}
-        handleCancel={() => setOpenFeedbackForm(false)}
-      />
-    </div>
+              back
+            </Button>
+            <Button
+              type="primary"
+              icon={<DownloadOutlined />}
+              // onClick={() => setOpenFeedbackForm(true)}
+            >
+              Download
+              <a
+                href="#hidden"
+                ref={hiddenAnchorRef}
+                download
+                style={{
+                  position: "absolute",
+                  top: "-200vh",
+                  visibility: "hidden",
+                }}
+              >
+                Hidden download
+              </a>
+            </Button>
+          </div>
+        )} */}
+        <CropedImagePreview
+          completedCrop={completedCrop}
+          previewCanvasRef={previewCanvasRef}
+        />
+      </div>
+    </>
   );
 }
 
-function CropedImagePreview({
-  completedCrop,
-  previewCanvasRef,
-  hiddenAnchorRef,
-}) {
+function CropedImagePreview({ completedCrop, previewCanvasRef }) {
   return (
     <div>
       {!!completedCrop && (
