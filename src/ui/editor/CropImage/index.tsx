@@ -19,7 +19,7 @@ import { IoIosReturnLeft } from "react-icons/io";
 import { MdExpandLess } from "react-icons/md";
 import { GoZoomIn } from "react-icons/go";
 import { GoZoomOut } from "react-icons/go";
-import Tools, { AspectRatioCard, RotationCard } from "./Tools";
+import  { AspectRatioCard, RotationCard } from "./Tools";
 import FeedbackForm from "@/components/FeedbackForm";
 const { useBreakpoint } = Grid;
 
@@ -54,7 +54,7 @@ export default function CropImage() {
   const [completedCrop, setCompletedCrop] = useState<PixelCrop>();
   const [scale, setScale] = useState(1);
   const [rotate, setRotate] = useState(0);
-  const [aspect, setAspect] = useState<number | null>(1.77);
+  const [aspect, setAspect] = useState<number | undefined>(1);
   const [isCroppedSave, setIsCroppedSave] = useState<boolean>(false);
   const [openFeedbackForm, setOpenFeedbackForm] = useState(false);
 
@@ -139,8 +139,8 @@ export default function CropImage() {
   }
   useDebounceEffect(getCanvasPreview, 100, [completedCrop, scale, rotate]);
 
-  function handleAspectClick(val: number | null) {
-    if (val === null) {
+  function handleAspectClick(val: number | undefined) {
+    if (val === undefined) {
       setAspect(val);
     } else {
       setAspect(val);
@@ -214,26 +214,28 @@ export default function CropImage() {
                 />
               ) : (
                 <ReactCrop
-                  style={{
-                    maxHeight: "100%",
-                    maxWidth: "100%",
-                    height: "auto",
-                    width: "auto",
-                    overflow: "auto",
-                  }}
+                  // style={{
+                  //   maxHeight: "100%",
+                  //   maxWidth: "100%",
+                  //   height: "auto",
+                  //   width: "auto",
+                  //   overflow: "auto",
+                  // }}
                   crop={crop}
                   onChange={(_, percentCrop) => setCrop(percentCrop)}
                   onComplete={(c) => setCompletedCrop(c)}
-                  aspect={aspect}
-                  // minWidth={400}
+                  aspect={1}
+                  minWidth={100}
                   minHeight={100}
-                  // circularCrop
+              
+                  // ruleOfThirds
+                  circularCrop={true}
                 >
                   <img
                     ref={imgRef}
                     alt="To be Cropped Image"
                     src={imgSrc.original}
-                    className="select-none m-0  max-h-full  w-auto h-auto overflow-auto   max-w-full "
+                    className="select-none m-0  "
                     style={{
                       transform: `scale(${scale}) rotate(${rotate}deg)`,
                     }}
@@ -260,75 +262,87 @@ export default function CropImage() {
             gap={5}
           >
             <AspectRatioCard
-              aspect={aspect}
+              showAspect={aspect}
               onChangeAspectRatio={(val) => handleAspectClick(val)}
             />
             <RotationCard
               rotate={rotate}
               onChangeRotate={(val) => setRotate(val)}
             />
-            <Card
-              title="Aspect Ratio"
-              bordered={false}
-              style={{
-                width: "100%",
-                height: "50%",
-              }}
-            >
-              {/* <Tools
-                aspect={aspect}
-                onChangeAspectRatio={(val) => handleAspectClick(val)}
-                rotate={rotate}
-                onChangeScale={(val) => setScale(val)}
-                onChangeRotate={(val) => setRotate(val)}
-                // onChangeAspect={(val) => setAspect(val)}
-              /> */}
-            </Card>
-            <Card
-              title="Rotate"
-              bordered={false}
-              style={{
-                width: "100%",
-              }}
-            >
-              <p>Card content</p>
-              <p>Card content</p>
-              <p>Card content</p>
-            </Card>
-
-            <Card
-              bordered={false}
-              style={{
-                width: "100%",
-              }}
-            >
-              <Flex justify="space-between">
-                <Button
-                  type="primary"
-                  danger
-                  shape="round"
-                  onClick={() => {
-                    setImgSrc({
-                      original: null,
-                      latest: null,
-                    });
-                  }}
-                  icon={<MdOutlineClose />}
-                >
-                  Cancel
-                </Button>
-
-                <Button
-                  shape="round"
-                  style={{ backgroundColor: "#00BF00" }}
-                  type="primary"
-                  onClick={onSaveImage}
-                  icon={<MdOutlineDone />}
-                >
-                  Done
-                </Button>
-              </Flex>
-            </Card>
+            {(screens.xs ||
+              screens.md ||
+              screens.lg ||
+              screens.xl ||
+              screens.xxl) && (
+              <Card
+                bordered={false}
+                style={{
+                  width: "100%",
+                }}
+              >
+                <Flex justify="space-between">
+                  {!isCroppedSave ? (
+                    <>
+                      {" "}
+                      <Button
+                        type="primary"
+                        danger
+                        shape="round"
+                        onClick={() => {
+                          setImgSrc({
+                            original: null,
+                            latest: null,
+                          });
+                        }}
+                        icon={<MdOutlineClose />}
+                      >
+                        Cancel
+                      </Button>
+                      <Button
+                        shape="round"
+                        style={{ backgroundColor: "#00BF00" }}
+                        type="primary"
+                        onClick={onSaveImage}
+                        icon={<MdOutlineDone />}
+                      >
+                        Done
+                      </Button>{" "}
+                    </>
+                  ) : (
+                    <>
+                      <Button
+                        icon={<IoIosReturnLeft />}
+                        onClick={() => {
+                          setIsCroppedSave(false);
+                          setImgSrc({ ...imgSrc, latest: null });
+                        }}
+                      >
+                        back
+                      </Button>
+                      <Button
+                        type="primary"
+                        icon={<DownloadOutlined />}
+                        // onClick={() => setOpenFeedbackForm(true)}
+                      >
+                        Download
+                        <a
+                          href="#hidden"
+                          ref={hiddenAnchorRef}
+                          download
+                          style={{
+                            position: "absolute",
+                            // top: "-200vh",
+                            visibility: "hidden",
+                          }}
+                        >
+                          Hidden download
+                        </a>
+                      </Button>
+                    </>
+                  )}
+                </Flex>
+              </Card>
+            )}
           </Flex>
         </Flex>
         {/* {!isCroppedSave ? (
