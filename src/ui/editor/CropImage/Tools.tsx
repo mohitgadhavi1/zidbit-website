@@ -61,8 +61,7 @@ const aspectRatioButtons = [
   { tooltip: "square", value: 1, icon: <MdOutlineCropDin /> },
 ];
 
-
-
+//@ts-ignore
 export function AspectRatioCard({ onChangeAspectRatio, showAspect }) {
   function handleAspectButtonClick(
     tooltip: string | null,
@@ -115,10 +114,10 @@ export function AspectRatioCard({ onChangeAspectRatio, showAspect }) {
       {aspectRatioButtons.map((item, i) => {
         return (
           <Button
-          
-          style={{margin:"0.5em"}}
-          size="large"
+            style={{ margin: "0.5em" }}
+            size="large"
             type={item.value === showAspect ? "primary" : "default"}
+            //@ts-ignore
             onClick={() => handleAspectButtonClick(item.tooltip, item.value)}
             key={i}
             // tooltip={item.tooltip}
@@ -130,7 +129,7 @@ export function AspectRatioCard({ onChangeAspectRatio, showAspect }) {
     </Card>
   );
 }
-
+//@ts-ignore
 export function RotationCard({ onChangeRotate, rotate }) {
   function handleDegreeButtonClick(tooltip: string | null, value: number) {
     switch (tooltip) {
@@ -170,17 +169,14 @@ export function RotationCard({ onChangeRotate, rotate }) {
       bordered={false}
       style={{
         width: "100%",
-       
       }}
     >
       {" "}
       {degreeButtons.map((item, i) => {
         return (
-       
-        
           <Button
-          style={{margin:"0.5em"}}
-          size="large"
+            style={{ margin: "0.5em" }}
+            size="large"
             type={item.value === rotate ? "primary" : "default"}
             onClick={() => handleDegreeButtonClick(item.tooltip, item.value)}
             key={i}
@@ -188,9 +184,6 @@ export function RotationCard({ onChangeRotate, rotate }) {
             shape="circle"
             icon={item.icon}
           />
-         
-       
-       
         );
       })}
     </Card>

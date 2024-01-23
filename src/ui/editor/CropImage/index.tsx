@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, RefObject } from "react";
 import ReactCrop, {
   centerCrop,
   makeAspectCrop,
@@ -19,7 +19,7 @@ import { IoIosReturnLeft } from "react-icons/io";
 import { MdExpandLess } from "react-icons/md";
 import { GoZoomIn } from "react-icons/go";
 import { GoZoomOut } from "react-icons/go";
-import  { AspectRatioCard, RotationCard } from "./Tools";
+import { AspectRatioCard, RotationCard } from "./Tools";
 import FeedbackForm from "@/components/FeedbackForm";
 const { useBreakpoint } = Grid;
 
@@ -160,7 +160,10 @@ export default function CropImage() {
       {" "}
       <FeedbackForm
         isOpen={openFeedbackForm}
-        handleOk={() => setOpenFeedbackForm(false)}
+        handleOk={() => {
+          onDownloadCropClick();
+          setOpenFeedbackForm(false);
+        }}
         handleCancel={() => setOpenFeedbackForm(false)}
       />
       <div className="flex flex-col items-center   h-full   overflow-auto  w-full ">
@@ -224,12 +227,11 @@ export default function CropImage() {
                   crop={crop}
                   onChange={(_, percentCrop) => setCrop(percentCrop)}
                   onComplete={(c) => setCompletedCrop(c)}
-                  aspect={1}
+                  aspect={aspect}
                   minWidth={100}
                   minHeight={100}
-              
-                  // ruleOfThirds
-                  circularCrop={true}
+                  ruleOfThirds
+                  circularCrop={false}
                 >
                   <img
                     ref={imgRef}
@@ -263,11 +265,13 @@ export default function CropImage() {
           >
             <AspectRatioCard
               showAspect={aspect}
-              onChangeAspectRatio={(val) => handleAspectClick(val)}
+              onChangeAspectRatio={(val: number | undefined) =>
+                handleAspectClick(val)
+              }
             />
             <RotationCard
               rotate={rotate}
-              onChangeRotate={(val) => setRotate(val)}
+              onChangeRotate={(val: number) => setRotate(val)}
             />
             {(screens.xs ||
               screens.md ||
@@ -322,7 +326,7 @@ export default function CropImage() {
                       <Button
                         type="primary"
                         icon={<DownloadOutlined />}
-                        // onClick={() => setOpenFeedbackForm(true)}
+                        onClick={() => setOpenFeedbackForm(true)}
                       >
                         Download
                         <a
@@ -331,7 +335,7 @@ export default function CropImage() {
                           download
                           style={{
                             position: "absolute",
-                            // top: "-200vh",
+                            top: "-200vh",
                             visibility: "hidden",
                           }}
                         >
@@ -455,7 +459,9 @@ export default function CropImage() {
   );
 }
 
-function CropedImagePreview({ completedCrop, previewCanvasRef }) {
+
+//@ts-ignore
+function CropedImagePreview({ completedCrop , previewCanvasRef }) {
   return (
     <div>
       {!!completedCrop && (

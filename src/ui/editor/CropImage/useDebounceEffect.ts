@@ -6,7 +6,9 @@ export function useDebounceEffect(
   deps?: DependencyList,
 ) {
   useEffect(() => {
+       
     const t = setTimeout(() => {
+        //@ts-ignore 
       fn.apply(undefined, deps)
     }, waitTime)
 
