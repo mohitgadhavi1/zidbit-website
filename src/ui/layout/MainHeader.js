@@ -1,4 +1,4 @@
-import { Layout, theme } from "antd";
+import { Flex, Layout, theme } from "antd";
 import { MoonIcon, SunIcon } from "@/components/Icons";
 import { Button } from "antd";
 import Logo from "@/components/Logo";
@@ -36,21 +36,26 @@ const MainHeader = ({ collapsed, mode, changeMode, onCollapsed }) => {
         {/* <div className="absolute left-[50%] top-1 translate-x-[-50%]"> */}
         <Logo />
         {/* </div> */}
-        <button
-          className={`mr-3  flex items-center justify-center rounded-full  p-1
+        <Flex gap={15}>
+          <Button shape="round">Signin</Button>
+          <Button shape="round" type="primary">Signup</Button>
+
+          <button
+            className={`mr-3  flex items-center justify-center rounded-full  p-1
              ${
                mode === "light" ? "bg-dark text-light" : "bg-light text-dark"
              } `}
-          onClick={() => {
-            changeMode();
-          }}
-        >
-          {mode === "light" ? (
-            <SunIcon className={"fill-dark "} />
-          ) : (
-            <MoonIcon className={"fill-dark "} />
-          )}
-        </button>
+            onClick={() => {
+              changeMode();
+            }}
+          >
+            {mode === "light" ? (
+              <SunIcon className={"fill-dark "} />
+            ) : (
+              <MoonIcon className={"fill-dark "} />
+            )}
+          </button>
+        </Flex>
       </div>
     </Header>
   );

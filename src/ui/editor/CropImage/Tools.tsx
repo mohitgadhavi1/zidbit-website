@@ -103,12 +103,10 @@ export function AspectRatioCard({ onChangeAspectRatio, showAspect }) {
     }
   }
   return (
-    <Card
-      title="Aspect Ratio"
-      bordered={false}
+    <Flex
       style={{
         width: "100%",
-        height: "50%",
+
       }}
     >
       {aspectRatioButtons.map((item, i) => {
@@ -126,7 +124,7 @@ export function AspectRatioCard({ onChangeAspectRatio, showAspect }) {
           />
         );
       })}
-    </Card>
+    </Flex>
   );
 }
 //@ts-ignore
@@ -164,9 +162,7 @@ export function RotationCard({ onChangeRotate, rotate }) {
   }
 
   return (
-    <Card
-      title="Rotate"
-      bordered={false}
+    <Flex
       style={{
         width: "100%",
       }}
@@ -186,6 +182,6 @@ export function RotationCard({ onChangeRotate, rotate }) {
           />
         );
       })}
-    </Card>
+    </Flex>
   );
 }
