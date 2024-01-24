@@ -43,6 +43,13 @@ function centerAspectCrop(
   );
 }
 
+interface TabContent {
+  tab1: Element;
+  tab2: Element;
+
+  [key: string]: Element;
+}
+
 const toolList = [
   {
     key: "tab1",
@@ -70,7 +77,7 @@ export default function CropImage() {
   const [isCroppedSave, setIsCroppedSave] = useState<boolean>(false);
   const [openFeedbackForm, setOpenFeedbackForm] = useState(false);
 
-  const onTab1Change = (key) => {
+  const onTab1Change = (key: string) => {
     setActiveTabKey1(key);
   };
   const tabContent = {
@@ -206,8 +213,9 @@ export default function CropImage() {
           gap={15}
         >
           <Card
-   extra={<>
-     <Flex justify="space-between">
+            extra={
+              <>
+                <Flex justify="space-between">
                   {!isCroppedSave ? (
                     <>
                       {" "}
@@ -268,7 +276,8 @@ export default function CropImage() {
                     </>
                   )}
                 </Flex>
-   </>}
+              </>
+            }
             hoverable
             style={{
               backgroundColor: "gray",
@@ -365,6 +374,7 @@ export default function CropImage() {
               activeTabKey={activeTabKey1}
               onTabChange={onTab1Change}
             >
+              {/* @ts-ignore */}
               {tabContent[activeTabKey1]}
             </Card>
 
@@ -378,9 +388,7 @@ export default function CropImage() {
                 style={{
                   width: "100%",
                 }}
-              >
-              
-              </Card>
+              ></Card>
             )}
           </Flex>
         </Flex>
