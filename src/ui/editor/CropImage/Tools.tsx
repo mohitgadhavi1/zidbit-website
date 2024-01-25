@@ -103,11 +103,8 @@ export function AspectRatioCard({ onChangeAspectRatio, showAspect }) {
     }
   }
   return (
-    <Flex
-      style={{
-        width: "100%",
-
-      }}
+    <Flex 
+    wrap="wrap" 
     >
       {aspectRatioButtons.map((item, i) => {
         return (
@@ -163,9 +160,7 @@ export function RotationCard({ onChangeRotate, rotate }) {
 
   return (
     <Flex
-      style={{
-        width: "100%",
-      }}
+    wrap="wrap" 
     >
       {" "}
       {degreeButtons.map((item, i) => {

@@ -23,8 +23,8 @@ function Footer() {
           draggable="false"
           href="/tos"
         >
-     
         </a> */}
+      
         <Link href="/" className="underline">
           Privacy Policy
         </Link>

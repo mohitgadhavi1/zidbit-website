@@ -1,11 +1,13 @@
-import { Flex, Layout, theme } from "antd";
+import { Flex, Grid, Layout, theme } from "antd";
 import { MoonIcon, SunIcon } from "@/components/Icons";
 import { Button } from "antd";
 import Logo from "@/components/Logo";
 import { FaThemeco } from "react-icons/fa6";
+import HeaderMenu from "@/components/headerMenu";
 const { Header } = Layout;
-
+const { useBreakpoint } = Grid;
 const MainHeader = ({ collapsed, mode, changeMode, onCollapsed }) => {
+  const screens = useBreakpoint();
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -21,7 +23,7 @@ const MainHeader = ({ collapsed, mode, changeMode, onCollapsed }) => {
         backgroundColor: colorBgContainer,
       }}
     >
-      <div className="flex w-full h-full justify-between items-center px-4">
+      <div className="flex w-full h-full justify-between items-center px-4 ">
         {/* <Button
           type="text"
           //   icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
@@ -36,9 +38,18 @@ const MainHeader = ({ collapsed, mode, changeMode, onCollapsed }) => {
         {/* <div className="absolute left-[50%] top-1 translate-x-[-50%]"> */}
         <Logo />
         {/* </div> */}
+        {/* <div className="bg-black w-1/2">
+          <HeaderMenu />
+        </div> */}
         <Flex gap={15}>
-          <Button shape="round">Signin</Button>
-          <Button shape="round" type="primary">Signup</Button>
+          {screens.md && (
+            <>
+              <Button shape="round">Signin</Button>
+              <Button shape="round" type="primary">
+                Signup
+              </Button>{" "}
+            </>
+          )}
 
           <button
             className={`mr-3  flex items-center justify-center rounded-full  p-1

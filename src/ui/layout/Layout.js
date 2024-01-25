@@ -19,27 +19,31 @@ const MainLayout = ({ children }) => {
   // console.log(screens);
   const [mode, setMode] = useThemeSwicher();
   const [collapsed, setCollapsed] = useState(false);
-  // console.log(mode);
 
   return (
     <ConfigProvider theme={customTheme(mode)}>
       <Layout
         style={{
-          minHeight: "100vh",
           maxWidth: "100vw",
           // color: `${mode === "dark" ? "#f5f5f5" : "#1b1b1b"}`,
         }}
       >
-        <MainHeader
-          collapsed={collapsed}
-          onCollapsed={() => setCollapsed(!collapsed)}
-          changeMode={() => {
-            setMode(mode === "dark" ? "light" : "dark");
+        <Layout
+          style={{
+            minHeight: "100vh",
           }}
-          mode={mode}
-        />
+        >
+          <MainHeader
+            collapsed={collapsed}
+            onCollapsed={() => setCollapsed(!collapsed)}
+            changeMode={() => {
+              setMode(mode === "dark" ? "light" : "dark");
+            }}
+            mode={mode}
+          />
 
-        <MainContent mode={mode}>{children}</MainContent>
+          <MainContent mode={mode}>{children}</MainContent>
+        </Layout>
         <MainFooter mode={mode} />
       </Layout>
     </ConfigProvider>
@@ -61,7 +65,8 @@ function MainContent({ children, mode }) {
   );
 }
 
-{/* <Layout
+{
+  /* <Layout
 style={{
   minHeight: "100vh",
   maxWidth: "100vw",
@@ -88,4 +93,5 @@ style={{
   
   </Layout>
 </Layout>
-</Layout> */}
+</Layout> */
+}

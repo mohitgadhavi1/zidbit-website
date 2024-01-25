@@ -12,7 +12,7 @@ import { useDebounceEffect } from "./useDebounceEffect";
 import "react-image-crop/dist/ReactCrop.css";
 import { useImageContext } from "@/context/imageContext";
 import { MdOutlineDone, MdOutlineClose } from "react-icons/md";
-import { Button, Card, Flex, FloatButton, Grid } from "antd";
+import { Button, Card, Flex, FloatButton, Grid, Space } from "antd";
 import { DownloadOutlined } from "@ant-design/icons";
 import { imgPreview } from "./imgPreview";
 import { IoIosReturnLeft } from "react-icons/io";
@@ -205,8 +205,9 @@ export default function CropImage() {
         }}
         handleCancel={() => setOpenFeedbackForm(false)}
       />
-      <div className="flex flex-col items-center   h-full   overflow-auto  w-full ">
+      <div className="flex flex-col items-center   h-full  w-full ">
         <Flex
+          style={{ width: "100%" }}
           justify="center"
           align="center"
           vertical={screens.md ? false : true}
@@ -214,148 +215,140 @@ export default function CropImage() {
         >
           <Card
             extra={
-              <>
-                <Flex justify="space-between">
-                  {!isCroppedSave ? (
-                    <>
-                      {" "}
-                      <Button
-                        type="primary"
-                        danger
-                        shape="round"
-                        onClick={() => {
-                          setImgSrc({
-                            original: null,
-                            latest: null,
-                          });
+              <Flex justify="space-between">
+                {!isCroppedSave ? (
+                  <Space>
+                    {" "}
+                    <Button
+                      type="primary"
+                      danger
+                      shape="circle"
+                      onClick={() => {
+                        setImgSrc({
+                          original: null,
+                          latest: null,
+                        });
+                      }}
+                      icon={<MdOutlineClose />}
+                    />
+                    <Button
+                      shape="circle"
+                      style={{ backgroundColor: "#00BF00" }}
+                      type="primary"
+                      onClick={onSaveImage}
+                      icon={<MdOutlineDone />}
+                    />
+                  </Space>
+                ) : (
+                  <Space>
+                    <Button
+                      icon={<IoIosReturnLeft />}
+                      onClick={() => {
+                        setIsCroppedSave(false);
+                        setImgSrc({ ...imgSrc, latest: null });
+                      }}
+                    />
+
+                    <Button
+                      type="primary"
+                      icon={<DownloadOutlined />}
+                      onClick={() => setOpenFeedbackForm(true)}
+                    >
+                      Download
+                      <a
+                        href="#hidden"
+                        ref={hiddenAnchorRef}
+                        download
+                        style={{
+                          position: "absolute",
+                          top: "-200vh",
+                          visibility: "hidden",
                         }}
-                        icon={<MdOutlineClose />}
                       >
-                        Cancel
-                      </Button>
-                      <Button
-                        shape="round"
-                        style={{ backgroundColor: "#00BF00" }}
-                        type="primary"
-                        onClick={onSaveImage}
-                        icon={<MdOutlineDone />}
-                      >
-                        Done
-                      </Button>{" "}
-                    </>
-                  ) : (
-                    <>
-                      <Button
-                        icon={<IoIosReturnLeft />}
-                        onClick={() => {
-                          setIsCroppedSave(false);
-                          setImgSrc({ ...imgSrc, latest: null });
-                        }}
-                      >
-                        back
-                      </Button>
-                      <Button
-                        type="primary"
-                        icon={<DownloadOutlined />}
-                        onClick={() => setOpenFeedbackForm(true)}
-                      >
-                        Download
-                        <a
-                          href="#hidden"
-                          ref={hiddenAnchorRef}
-                          download
-                          style={{
-                            position: "absolute",
-                            top: "-200vh",
-                            visibility: "hidden",
-                          }}
-                        >
-                          Hidden download
-                        </a>
-                      </Button>
-                    </>
-                  )}
-                </Flex>
-              </>
+                        Hidden download
+                      </a>
+                    </Button>
+                  </Space>
+                )}
+              </Flex>
             }
             hoverable
             style={{
               backgroundColor: "gray",
-              width: "70vw",
+              width: `${screens.md ? "70%" : "100%"}`,
               height: 500,
-              // display: "flex",
-              // justifyContent: "center",
-              // alignItems: "center",
             }}
           >
-            {!imgSrc.latest && (
-              <FloatButton
-                icon={<GoZoomIn />}
-                onClick={() => {
-                  if (scale <= 5) {
-                    setScale((prevVal) => prevVal + 1);
-                  }
-                }}
-                type="primary"
-                style={{
-                  right: 24,
-                  position: "absolute",
-                }}
-              />
-            )}
-            {!imgSrc.latest && (
-              <FloatButton
-                icon={<GoZoomOut />}
-                onClick={() => {
-                  if (scale >= 2) {
-                    setScale((prevVal) => prevVal - 1);
-                  }
-                }}
-                type="default"
-                style={{
-                  left: 24,
-                  position: "absolute",
-                }}
-              />
-            )}
-
-            {imgSrc.latest ? (
-              <img
-                // ref={imgRef}
-                alt="Cropped Image"
-                src={imgSrc.latest}
-                className="select-none m-0  "
-                // style={{ transform: `scale(${scale}) rotate(${rotate}deg)` }}
-                onLoad={onImageLoad}
-              />
-            ) : (
-              <ReactCrop
-                crop={crop}
-                onChange={(_, percentCrop) => setCrop(percentCrop)}
-                onComplete={(c) => setCompletedCrop(c)}
-                aspect={aspect}
-                minWidth={100}
-                minHeight={100}
-                ruleOfThirds
-                circularCrop={false}
-              >
-                <img
-                  ref={imgRef}
-                  alt="To be Cropped Image"
-                  src={imgSrc.original}
-                  className="select-none  "
-                  style={{
-                    width: 400,
-                    transform: `scale(${scale}) rotate(${rotate}deg)`,
+            <Flex justify="center" align="center">
+              {!imgSrc.latest && (
+                <FloatButton
+                  icon={<GoZoomIn />}
+                  onClick={() => {
+                    if (scale <= 5) {
+                      setScale((prevVal) => prevVal + 1);
+                    }
                   }}
+                  type="primary"
+                  style={{
+                    right: 24,
+                    position: "absolute",
+                  }}
+                />
+              )}
+              {!imgSrc.latest && (
+                <FloatButton
+                  icon={<GoZoomOut />}
+                  onClick={() => {
+                    if (scale >= 2) {
+                      setScale((prevVal) => prevVal - 1);
+                    }
+                  }}
+                  type="default"
+                  style={{
+                    left: 24,
+                    position: "absolute",
+                  }}
+                />
+              )}
+
+              {imgSrc.latest ? (
+                <img
+                  // ref={imgRef}
+                  alt="Cropped Image"
+                  src={imgSrc.latest}
+                  className="select-none m-0  "
+                  // style={{ transform: `scale(${scale}) rotate(${rotate}deg)` }}
                   onLoad={onImageLoad}
                 />
-              </ReactCrop>
-            )}
+              ) : (
+                <ReactCrop
+                  crop={crop}
+                  onChange={(_, percentCrop) => setCrop(percentCrop)}
+                  onComplete={(c) => setCompletedCrop(c)}
+                  aspect={aspect}
+                  minWidth={100}
+                  minHeight={100}
+                  ruleOfThirds
+                  circularCrop={false}
+                >
+                  <img
+                    ref={imgRef}
+                    alt="To be Cropped Image"
+                    src={imgSrc.original}
+                    className="select-none  "
+                    style={{
+                      width: 400,
+                      transform: `scale(${scale}) rotate(${rotate}deg)`,
+                    }}
+                    onLoad={onImageLoad}
+                  />
+                </ReactCrop>
+              )}
+            </Flex>
           </Card>
           <Flex
             style={{
-              width: screens.md ? "50%" : "100%",
+              width: screens.md ? "30%" : "100%",
             }}
             vertical={
               screens.xs ||
@@ -370,6 +363,7 @@ export default function CropImage() {
             gap={5}
           >
             <Card
+              style={{ width: "100%" }}
               tabList={toolList}
               activeTabKey={activeTabKey1}
               onTabChange={onTab1Change}
@@ -377,19 +371,6 @@ export default function CropImage() {
               {/* @ts-ignore */}
               {tabContent[activeTabKey1]}
             </Card>
-
-            {(screens.xs ||
-              screens.md ||
-              screens.lg ||
-              screens.xl ||
-              screens.xxl) && (
-              <Card
-                bordered={false}
-                style={{
-                  width: "100%",
-                }}
-              ></Card>
-            )}
           </Flex>
         </Flex>
         <CropedImagePreview

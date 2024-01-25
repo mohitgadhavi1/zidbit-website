@@ -1,9 +1,12 @@
 import { currentYear } from "@/helper/quiclFuncs";
-import { Layout, Typography, theme } from "antd";
+import { Divider, Flex, Grid, Layout, Typography, theme } from "antd";
 import Link from "next/link";
 const { Footer } = Layout;
 
+const { useBreakpoint } = Grid;
+
 const MainFooter = ({ mode }) => {
+  const screens = useBreakpoint();
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -15,13 +18,42 @@ const MainFooter = ({ mode }) => {
       }}
     >
       <div className="w-full flex justify-around xs:flex-col-reverse">
+     
         <Typography.Text type="secondary">
           © {currentYear} zidbit{" "}
         </Typography.Text>
-        <div className="flex justify-around xs:w-full w-1/2">
-          <Link href={"/tos"}> Terms & Conditons</Link>
-          <Link href={"/privacy-policy"}> Privacy Policy</Link>
-        </div>
+      
+        <Flex wrap="wrap" vertical={!screens.md} gap={30}>
+          <Link className="hover:underline" href={"/career"}>
+            {" "}
+            Work with Us
+          </Link>
+          
+          <Link className="hover:underline" href={"/pricing"}>
+            {" "}
+            Pricing
+          </Link>
+          
+          <Link className="hover:underline" href={"/product-update"}>
+            {" "}
+            Updates{" "}
+          </Link>
+         
+          <Link className="hover:underline" href={"/contact"}>
+            {" "}
+            Contact Us
+          </Link>
+          
+          <Link className="hover:underline" href={"/tos"}>
+            {" "}
+            Terms & Conditons
+          </Link>
+          
+          <Link className="hover:underline" href={"/privacy-policy"}>
+            {" "}
+            Privacy Policy
+          </Link>
+        </Flex>
       </div>
     </Footer>
   );
