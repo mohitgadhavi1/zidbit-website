@@ -3,7 +3,7 @@ import { MoonIcon, SunIcon } from "@/components/Icons";
 import { Button } from "antd";
 import Logo from "@/components/Logo";
 import { FaThemeco } from "react-icons/fa6";
-import HeaderMenu from "@/components/headerMenu";
+// import HeaderMenu from "@/components/HeaderMenu";
 const { Header } = Layout;
 const { useBreakpoint } = Grid;
 const MainHeader = ({ collapsed, mode, changeMode, onCollapsed }) => {
