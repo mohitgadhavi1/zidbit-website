@@ -8,6 +8,7 @@ import { DarkModeProvider } from "@/context/darkModeContext";
 import Head from "next/head";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import Layout from "@/ui/layout/Layout";
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -50,6 +51,7 @@ export default function RootLayout({
           </ImageProvider>
         </DarkModeProvider>
         </AntdRegistry>
+        <GoogleAnalytics gaId="G-FHSD6SKWF7" />
       </html>
     </>
   );
