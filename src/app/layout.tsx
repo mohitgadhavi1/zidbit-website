@@ -8,7 +8,7 @@ import { DarkModeProvider } from "@/context/darkModeContext";
 import Head from "next/head";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import Layout from "@/ui/layout/Layout";
-import { GoogleAnalytics } from '@next/third-parties/google'
+// import { GoogleAnalytics } from '@next/third-parties/google'
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,6 +25,19 @@ export default function RootLayout({
   return (
     <>
       <Head>
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-FHSD6SKWF7"
+        ></script>
+        <script
+          dangerouslySetInnerHTML={{
+            //@ts-ignore
+            _html: `  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-FHSD6SKWF7');`,
+          }}
+        ></script>
         <link
           rel="icon"
           type="image/png"
@@ -40,18 +53,15 @@ export default function RootLayout({
         />
       </Head>
       <html lang="en">
-      <AntdRegistry>
-        <DarkModeProvider>
-          <ImageProvider>
-            <body className={`  ${inter.className}`}>
-             
+        <AntdRegistry>
+          <DarkModeProvider>
+            <ImageProvider>
+              <body className={`  ${inter.className}`}>
                 <Layout>{children}</Layout>
-            
-            </body>
-          </ImageProvider>
-        </DarkModeProvider>
+              </body>
+            </ImageProvider>
+          </DarkModeProvider>
         </AntdRegistry>
-        <GoogleAnalytics gaId="G-FHSD6SKWF7" />
       </html>
     </>
   );
