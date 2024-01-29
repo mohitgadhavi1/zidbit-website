@@ -3,6 +3,7 @@ import { MoonIcon, SunIcon } from "@/components/Icons";
 import { Button } from "antd";
 import Logo from "@/components/Logo";
 import { FaThemeco } from "react-icons/fa6";
+import Link from "next/link";
 // import HeaderMenu from "@/components/HeaderMenu";
 const { Header } = Layout;
 const { useBreakpoint } = Grid;
@@ -36,7 +37,9 @@ const MainHeader = ({ collapsed, mode, changeMode, onCollapsed }) => {
           }}
         /> */}
         {/* <div className="absolute left-[50%] top-1 translate-x-[-50%]"> */}
-        <Logo />
+       
+          <Logo />
+
         {/* </div> */}
         {/* <div className="bg-black w-1/2">
           <HeaderMenu />

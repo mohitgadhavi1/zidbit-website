@@ -34,7 +34,7 @@ const MainFooter = ({ mode }) => {
             Pricing
           </Link>
           
-          <Link className="hover:underline" href={"/product-update"}>
+          <Link className="hover:underline" href={"/updates"}>
             {" "}
             Updates{" "}
           </Link>
