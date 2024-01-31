@@ -1,6 +1,6 @@
 import { Button, Card, Divider, Flex, FloatButton, Modal, Space } from "antd";
 import React, { useState } from "react";
-import Toolbar from "../Toolbar";
+
 import {
   MdCrop169,
   MdCrop32,
@@ -103,9 +103,7 @@ export function AspectRatioCard({ onChangeAspectRatio, showAspect }) {
     }
   }
   return (
-    <Flex 
-    wrap="wrap" 
-    >
+    <Flex vertical wrap="wrap">
       {aspectRatioButtons.map((item, i) => {
         return (
           <Button
@@ -159,9 +157,7 @@ export function RotationCard({ onChangeRotate, rotate }) {
   }
 
   return (
-    <Flex
-    wrap="wrap" 
-    >
+    <Flex wrap="wrap">
       {" "}
       {degreeButtons.map((item, i) => {
         return (

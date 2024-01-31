@@ -55,7 +55,7 @@ function MainContent({ children, mode }) {
   return (
     <Content
       style={{
-        padding: "1%",
+        // padding: "1%",
 
         // backgroundColor: `${mode === "light" ? "#f5f5f5" : "#1b1b1b"}`,
       }}

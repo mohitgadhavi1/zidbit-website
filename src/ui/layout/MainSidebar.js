@@ -1,16 +1,12 @@
 import { Button, Divider, Layout, Menu } from "antd";
 const { Sider } = Layout;
-import {
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-} from "@ant-design/icons";
+
 import { IoColorFilterOutline } from "react-icons/io5";
 import { MdOutlineFilterFrames, MdOutlineTextFields } from "react-icons/md";
 import { FaCropSimple } from "react-icons/fa6";
 import { v4 as uuidv4 } from "uuid";
-import MainFooter from "./MainFooter";
-import { Space, Typography } from "antd";
+
+import {  Typography } from "antd";
 import Link from "next/link";
 import { currentYear } from "@/helper/quiclFuncs";
 const { Text } = Typography;

@@ -1,14 +1,20 @@
-import { Flex, Grid, Layout, theme } from "antd";
+import { Avatar, Dropdown, Flex, Grid, Layout, theme } from "antd";
 import { MoonIcon, SunIcon } from "@/components/Icons";
 import { Button } from "antd";
 import Logo from "@/components/Logo";
 import { FaThemeco } from "react-icons/fa6";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { UserOutlined } from "@ant-design/icons";
+import { lightGreen } from "../../../theme/colors";
+
 // import HeaderMenu from "@/components/HeaderMenu";
 const { Header } = Layout;
 const { useBreakpoint } = Grid;
 const MainHeader = ({ collapsed, mode, changeMode, onCollapsed }) => {
   const screens = useBreakpoint();
+  const pathname = usePathname();
+  console.log(pathname);
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -37,39 +43,57 @@ const MainHeader = ({ collapsed, mode, changeMode, onCollapsed }) => {
           }}
         /> */}
         {/* <div className="absolute left-[50%] top-1 translate-x-[-50%]"> */}
-       
-          <Logo />
+
+        <Logo />
 
         {/* </div> */}
         {/* <div className="bg-black w-1/2">
           <HeaderMenu />
         </div> */}
-        <Flex gap={15}>
-          {screens.md && (
+        {screens.md && pathname === "/" ? (
+          <Flex gap={15}>
             <>
               <Button shape="round">Signin</Button>
               <Button shape="round" type="primary">
                 Signup
               </Button>{" "}
             </>
-          )}
 
-          <button
-            className={`mr-3  flex items-center justify-center rounded-full  p-1
+            <button
+              className={`mr-3  flex items-center justify-center rounded-full  p-1
              ${
                mode === "light" ? "bg-dark text-light" : "bg-light text-dark"
              } `}
-            onClick={() => {
-              changeMode();
+              onClick={() => {
+                changeMode();
+              }}
+            >
+              {mode === "light" ? (
+                <SunIcon className={"fill-dark "} />
+              ) : (
+                <MoonIcon className={"fill-dark "} />
+              )}
+            </button>
+          </Flex>
+        ) : (
+          <Dropdown
+            menu={{
+              onClick: (e) => {
+                return e.key === '2' ? changeMode() : null;
+              },
+              items: items(mode),
             }}
+            placement="bottomLeft"
           >
-            {mode === "light" ? (
-              <SunIcon className={"fill-dark "} />
-            ) : (
-              <MoonIcon className={"fill-dark "} />
-            )}
-          </button>
-        </Flex>
+            <Avatar
+              style={{
+                backgroundColor: lightGreen,
+                cursor: "pointer",
+              }}
+              icon={<UserOutlined />}
+            />
+          </Dropdown>
+        )}
       </div>
     </Header>
   );
@@ -99,5 +123,30 @@ function MenuButton({ collapsed }) {
     </div>
   );
 }
+
+const items = (mode) => [
+  {
+    key: "1",
+    label: (
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        href="https://www.antgroup.com"
+      >
+        Profile
+      </a>
+    ),
+  },
+  {
+    key: "2",
+    icon:
+      mode === "light" ? (
+        <SunIcon className={"fill-dark  w-4"} />
+      ) : (
+        <MoonIcon className={"fill-dark w-4 "} />
+      ),
+    label: mode,
+  },
+];
 
 export default MainHeader;

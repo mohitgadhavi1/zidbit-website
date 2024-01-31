@@ -1,15 +1,7 @@
 import React from "react";
-import { FaCropSimple } from "react-icons/fa6";
-import { IoColorFilterOutline } from "react-icons/io5";
-import { TbAdjustmentsHorizontal } from "react-icons/tb";
-import { MdOutlineTextFields } from "react-icons/md";
-import { PiSelectionBackgroundDuotone } from "react-icons/pi";
-import {
-  MdOutlineFilterFrames,
-  MdOutlineRotate90DegreesCw,
-} from "react-icons/md";
-import { repeatedBg, repeatedText } from "@/helper/repeatedClassName";
-import { Button, Divider } from "antd";
+
+import { repeatedText } from "@/helper/repeatedClassName";
+
 
 function Toolbar({ className, toolOptions }) {
   return (

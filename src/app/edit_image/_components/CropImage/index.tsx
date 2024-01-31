@@ -12,7 +12,7 @@ import { useDebounceEffect } from "./useDebounceEffect";
 import "react-image-crop/dist/ReactCrop.css";
 import { useImageContext } from "@/context/imageContext";
 import { MdOutlineDone, MdOutlineClose } from "react-icons/md";
-import { Button, Card, Flex, FloatButton, Grid, Space } from "antd";
+import { Button, Card, Flex, FloatButton, Grid, Layout, Space } from "antd";
 import { DownloadOutlined } from "@ant-design/icons";
 import { imgPreview } from "./imgPreview";
 import { IoIosReturnLeft } from "react-icons/io";
@@ -22,6 +22,7 @@ import { GoZoomOut } from "react-icons/go";
 import { AspectRatioCard, RotationCard } from "./Tools";
 import FeedbackForm from "@/components/FeedbackForm";
 const { useBreakpoint } = Grid;
+const { Sider, Content } = Layout;
 
 function centerAspectCrop(
   mediaWidth: number,
@@ -205,7 +206,26 @@ export default function CropImage() {
         }}
         handleCancel={() => setOpenFeedbackForm(false)}
       />
-      <div className="flex flex-col items-center   h-full  w-full ">
+      <div className="flex  items-center   h-full  w-full ">
+        <Sider
+          style={{
+            height: "100%",
+            marginRight: "1em",
+            display: "flex",
+            justifyContent: "center",
+            // background:"transparent"
+            borderRight: "1px solid #A6ACB5",
+            textAlign: "center",
+          }}
+          width="5em"
+        >
+          <AspectRatioCard
+            showAspect={aspect}
+            onChangeAspectRatio={(val: number | undefined) =>
+              handleAspectClick(val)
+            }
+          />
+        </Sider>
         <Flex
           style={{ width: "100%" }}
           justify="center"
@@ -346,7 +366,7 @@ export default function CropImage() {
               )}
             </Flex>
           </Card>
-          <Flex
+          {/* <Flex
             style={{
               width: screens.md ? "30%" : "100%",
             }}
@@ -368,10 +388,10 @@ export default function CropImage() {
               activeTabKey={activeTabKey1}
               onTabChange={onTab1Change}
             >
-              {/* @ts-ignore */}
+            
               {tabContent[activeTabKey1]}
             </Card>
-          </Flex>
+          </Flex> */}
         </Flex>
         <CropedImagePreview
           completedCrop={completedCrop}
