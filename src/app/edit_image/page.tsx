@@ -1,7 +1,7 @@
 "use client";
 // import Layout from '@/components/Layout'
 import ImageUploader from "@/components/ImageUploader";
-import { Layout, Menu } from "antd";
+import { Layout, Menu, theme } from "antd";
 const { Sider, Content } = Layout;
 import { useImageContext } from "@/context/imageContext";
 import { useRouter } from "next/navigation";
@@ -14,9 +14,12 @@ import { v4 as uuidv4 } from "uuid";
 import CropImage from "./_components/CropImage";
 import { AspectRatioCard } from "./_components/CropImage/Tools";
 
+
+
 function Page() {
   const router = useRouter();
   const [image, setImage] = useImageContext();
+
 
   const uniqueKey = () => {
     return uuidv4();
