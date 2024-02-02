@@ -1,14 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Footer from "@/components/Footer";
-// import Navbar from '@/components/Navbar'
 import { ImageProvider } from "@/context/imageContext";
 import { DarkModeProvider } from "@/context/darkModeContext";
 import Head from "next/head";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
-import Layout from "@/ui/layout/Layout";
-// import { GoogleAnalytics } from '@next/third-parties/google'
+import Layout from "@/components/ui/layout";
+import { ConvexClientProvider } from "../../providers/convex-client-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -52,12 +50,15 @@ export default function RootLayout({
           sizes="<generated>"
         />
       </Head>
+
       <html lang="en">
         <AntdRegistry>
           <DarkModeProvider>
             <ImageProvider>
               <body className={`  ${inter.className}`}>
-                <Layout>{children}</Layout>
+                <ConvexClientProvider>
+                  <Layout>{children}</Layout>
+                </ConvexClientProvider>
               </body>
             </ImageProvider>
           </DarkModeProvider>

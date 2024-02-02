@@ -6,7 +6,8 @@ import { FaThemeco } from "react-icons/fa6";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { UserOutlined } from "@ant-design/icons";
-import { lightGreen } from "../../../theme/colors";
+import { lightGreen } from "../../../../theme/colors";
+import { UserButton } from "@clerk/nextjs";
 
 // import HeaderMenu from "@/components/HeaderMenu";
 const { Header } = Layout;
@@ -79,19 +80,20 @@ const MainHeader = ({ collapsed, mode, changeMode, onCollapsed }) => {
           <Dropdown
             menu={{
               onClick: (e) => {
-                return e.key === '2' ? changeMode() : null;
+                return e.key === "2" ? changeMode() : null;
               },
               items: items(mode),
             }}
             placement="bottomLeft"
           >
-            <Avatar
+            <UserButton />
+            {/* <Avatar
               style={{
                 backgroundColor: lightGreen,
                 cursor: "pointer",
               }}
               icon={<UserOutlined />}
-            />
+            /> */}
           </Dropdown>
         )}
       </div>

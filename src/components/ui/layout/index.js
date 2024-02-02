@@ -4,14 +4,14 @@ import React, { useState } from "react";
 import { Layout, Menu } from "antd";
 const { Footer, Sider, Content } = Layout;
 import { ConfigProvider, theme, Grid } from "antd";
-import customTheme from "../../../theme/themeConfig";
+import customTheme from "../../../../theme/themeConfig"; 
 import Link from "next/link";
 import useThemeSwicher from "@/components/hooks/useThemeSwicher";
 
 const { defaultAlgorithm, darkAlgorithm } = theme;
 import MainHeader from "./MainHeader";
 import MainFooter from "./MainFooter";
-import MainSider from "./MainSidebar";
+
 
 const { useBreakpoint } = Grid;
 const MainLayout = ({ children }) => {
