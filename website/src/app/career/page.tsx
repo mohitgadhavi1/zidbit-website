@@ -10,19 +10,19 @@ const Page: React.FC = () => {
   //   const [current, setCurrent] = useState("editing");
 
   return (
-    <div className="flex flex-col items-center  justify-center pb-4 px-4">
+    <div className="flex flex-col items-center  justify-center p-4">
       <Title level={2}>Work With Us</Title>
       <Text>
         Current Vacancy :
         {vacancy.reduce((sum, item) => sum + item.total_position, 0)}{" "}
       </Text>
 
-      <div className="w-full ">
+      <div className="w-full mt-4 ">
         {vacancy.map((item, index) => {
           if (index % 2 === 0 && index >= 0) {
             return (
               <Row key={index}>
-                <Col span={8}>
+                <Col span={12}>
                   {" "}
                   <Card
                     hoverable
@@ -63,7 +63,7 @@ const Page: React.FC = () => {
           } else {
             return (
               <Row key={index}>
-                <Col span={8} offset={16}>
+                <Col span={12} offset={12}>
                   <Card
                     hoverable
                     title={item.title}
