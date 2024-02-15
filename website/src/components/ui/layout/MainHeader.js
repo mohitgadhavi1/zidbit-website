@@ -1,4 +1,4 @@
-import { Avatar, Dropdown, Flex, Grid, Layout, theme } from "antd";
+import { Avatar, Dropdown, Flex, Grid, Layout, Typography, theme } from "antd";
 import { MoonIcon, SunIcon } from "@/components/Icons";
 import { Button } from "antd";
 import Logo from "@/components/Logo";
@@ -6,7 +6,7 @@ import { FaThemeco } from "react-icons/fa6";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { UserOutlined } from "@ant-design/icons";
-import { lightGreen } from "../../../../theme/colors";
+import { lightGreen, primaryBlue } from "../../../../theme/colors";
 import { UserButton } from "@clerk/nextjs";
 
 // import HeaderMenu from "@/components/HeaderMenu";
@@ -15,7 +15,7 @@ const { useBreakpoint } = Grid;
 const MainHeader = ({ collapsed, mode, changeMode, onCollapsed }) => {
   const screens = useBreakpoint();
   const pathname = usePathname();
-  console.log(pathname);
+
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -44,9 +44,16 @@ const MainHeader = ({ collapsed, mode, changeMode, onCollapsed }) => {
           }}
         /> */}
         {/* <div className="absolute left-[50%] top-1 translate-x-[-50%]"> */}
-
         <Logo />
-
+        <Typography.Link
+          target="_blank"
+          href={"/exchanges"}
+          underline
+          style={{ fontSize: 18 }}
+          strong
+        >
+          Exchanges
+        </Typography.Link>{" "}
         {/* </div> */}
         {/* <div className="bg-black w-1/2">
           <HeaderMenu />
