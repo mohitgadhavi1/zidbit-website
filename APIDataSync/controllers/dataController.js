@@ -1,11 +1,27 @@
 // controllers/dataController.js
 
-const DataModel = require("../models/CryptoData");
+const AssetModel = require("../models/AssetData");
+const ExchangeData = require("../models/ExchangeData");
 
-const fetchDataAndStore = async (req, res) => {
+const fetchExchanges = async (req, res) => {
   try {
     const dataToStore = req.apiData;
-    const savedData = await DataModel.create(dataToStore);
+    const savedData = await ExchangeData.create(dataToStore);
+
+    res.json({
+      message: "Data fetched and stored successfully",
+      data: savedData,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+const fetchAssets = async (req, res) => {
+  try {
+    const dataToStore = req.apiData;
+    const savedData = await AssetModel.create(dataToStore);
 
     res.json({
       message: "Data fetched and stored successfully",
@@ -18,5 +34,6 @@ const fetchDataAndStore = async (req, res) => {
 };
 
 module.exports = {
-  fetchDataAndStore,
+  fetchExchanges,
+  fetchAssets,
 };

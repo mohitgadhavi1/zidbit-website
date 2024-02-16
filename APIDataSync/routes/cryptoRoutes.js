@@ -1,11 +1,14 @@
 // routes/dataRoutes.js
 const express = require("express");
 const fetchDataMiddleware = require("../middlewares/fetchDataMiddleware");
-const { fetchDataAndStore } = require("../controllers/dataController");
+const {
+  fetchAssets,
+  fetchExchanges,
+} = require("../controllers/dataController");
 
 const router = express.Router();
 
-router.get("/storeAssets", fetchDataMiddleware, fetchDataAndStore);
-router.get("/storeExchanges", fetchDataMiddleware, fetchDataAndStore);
+router.get("/storeAssets", fetchDataMiddleware, fetchAssets);
+router.get("/storeExchanges", fetchDataMiddleware, fetchExchanges);
 
 module.exports = router;
