@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import connect from "@/db"
-import ExchangeModel from "@/models/CryptoData"
+import ExchangeModel from "@/models/ExchangeData"
 
 export const GET = async ()=>{
    

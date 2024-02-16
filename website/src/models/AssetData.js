@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 
 const DataSchema = new mongoose.Schema({
-  exchange_id: String,
-  website: String,
+  asset_id: String,
   name: String,
+  type_is_crypto: Number,
   data_quote_start: String,
   data_quote_end: String,
   data_orderbook_start: String,
@@ -14,13 +14,12 @@ const DataSchema = new mongoose.Schema({
   volume_1hrs_usd: Number,
   volume_1day_usd: Number,
   volume_1mth_usd: Number,
+  id_icon: String,
+  data_start: String,
+  data_end: String,
 });
 
-const IconModelSchema = new mongoose.Schema({
-  exchange_id: String,
-  url: String,
-});
-const ExchangeIconModel = mongoose.model("exchange_icons", IconModelSchema);
-const ExchangeModel = mongoose.model("exchanges", DataSchema);
+const AssetModel =
+  mongoose.model.assets || mongoose.model("assets", DataSchema);
 
-module.exports = { ExchangeModel, ExchangeIconModel };
+module.exports = AssetModel;

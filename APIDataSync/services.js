@@ -7,8 +7,17 @@ const coinAPI = {
   assets: function () {
     return `${this.base_url}assets`;
   },
+  symbols: function () {
+    return `${this.base_url}symbols`;
+  },
   exchanges: function () {
     return `${this.base_url}exchanges`;
+  },
+  assetIcons: function () {
+    return `${this.base_url}assets/icons/100`;
+  },
+  exchangeIcons: function () {
+    return `${this.base_url}exchanges/icons/100`;
   },
 };
 

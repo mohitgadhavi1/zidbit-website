@@ -7,7 +7,7 @@ import { notFound } from "next/navigation";
 const { Title, Text } = Typography;
 
 async function getData() {
-  const res = await fetch("http://localhost:3000/api/marketdata", {
+  const res = await fetch("http://localhost:3000/api/marketdata/assets", {
     cache: "no-cache",
   });
 
@@ -20,8 +20,14 @@ const page: React.FC = async () => {
   console.log(data);
   return (
     <div className="flex flex-col justify-center items-center ">
-      <Title level={2}>All Exchanges</Title>
-      <Table dataSource={data} columns={columns} size="small" />;
+      <Title level={2}>All Assets</Title>
+      <Table
+        dataSource={data}
+        columns={columns}
+        size="small"
+        pagination={{ defaultPageSize: 100, pageSizeOptions: [150, 200, 500] }}
+      />
+      ;
       <Divider />
     </div>
   );
@@ -39,10 +45,5 @@ const columns = [
     title: "Volume",
     dataIndex: "volume",
     key: "volume",
-  },
-  {
-    title: "Website",
-    dataIndex: "website",
-    key: "website",
   },
 ];

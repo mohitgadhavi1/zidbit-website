@@ -9,6 +9,12 @@ const fetchDataMiddleware = async (req, res, next) => {
     dynamicUrl = coinAPI.assets();
   } else if (req.route.path === "/storeExchanges") {
     dynamicUrl = coinAPI.exchanges();
+  } else if (req.route.path === "/assetIcons") {
+    dynamicUrl = coinAPI.assetIcons();
+  } else if (req.route.path === "/exchangeIcons") {
+    dynamicUrl = coinAPI.exchangeIcons();
+  } else if (req.route.path === "/storeSymbols") {
+    dynamicUrl = coinAPI.symbols();
   }
 
   try {
@@ -23,10 +29,11 @@ const fetchDataMiddleware = async (req, res, next) => {
     };
 
     const apiResponse = await axios(config);
+
     req.apiData = apiResponse.data;
     next();
   } catch (error) {
-    console.error(error);
+    console.error(error.response.data.errors);
     res
       .status(500)
       .json({ error: "Error fetching data from the third-party API" });

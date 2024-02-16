@@ -19,6 +19,12 @@ const DataSchema = new mongoose.Schema({
   data_end: String,
 });
 
-const AssetModel = mongoose.model("assets", DataSchema);
+const IconModelSchema = new mongoose.Schema({
+  asset_id: String,
+  url: String,
+});
 
-module.exports = AssetModel;
+const AssetModel = mongoose.model("assets", DataSchema);
+const AssetIconModel = mongoose.model("asset_icons", IconModelSchema);
+
+module.exports = { AssetModel, AssetIconModel };
