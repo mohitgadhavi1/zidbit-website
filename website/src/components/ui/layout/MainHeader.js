@@ -52,7 +52,34 @@ const MainHeader = ({ collapsed, mode, changeMode, onCollapsed }) => {
           style={{ fontSize: 18 }}
           strong
         >
-          Exchanges
+          Markets
+        </Typography.Link>{" "}
+        <Typography.Link
+          target="_blank"
+          href={"/exchanges"}
+          underline
+          style={{ fontSize: 18 }}
+          strong
+        >
+          Economies
+        </Typography.Link>{" "}
+        <Typography.Link
+          target="_blank"
+          href={"/exchanges"}
+          underline
+          style={{ fontSize: 18 }}
+          strong
+        >
+          Resources
+        </Typography.Link>{" "}
+        <Typography.Link
+          target="_blank"
+          href={"/exchanges"}
+          underline
+          style={{ fontSize: 18 }}
+          strong
+        >
+          Latest News
         </Typography.Link>{" "}
         {/* </div> */}
         {/* <div className="bg-black w-1/2">

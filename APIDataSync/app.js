@@ -1,9 +1,11 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 const dataRoutes = require("./routes/cryptoRoutes");
 
 const app = express();
+app.use(cors());
 const PORT = process.env.PORT || 3000;
 
 // Connect to MongoDB
@@ -13,7 +15,7 @@ mongoose.connect(process.env.MONGO_URL, {
 });
 
 // Use routes
-app.use("/", dataRoutes);
+app.use("/api/marketdata", dataRoutes);
 
 // Start the server
 app.listen(PORT, () => {

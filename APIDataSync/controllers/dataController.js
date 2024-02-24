@@ -4,7 +4,7 @@ const { AssetModel, AssetIconModel } = require("../models/AssetData");
 const { ExchangeModel, ExchangeIconModel } = require("../models/ExchangeData");
 const { SymbolModel } = require("../models/SymbolData");
 
-const fetchExchanges = async (req, res) => {
+const saveExchanges = async (req, res) => {
   try {
     const dataToStore = req.apiData;
     const savedData = await ExchangeModel.create(dataToStore);
@@ -19,7 +19,7 @@ const fetchExchanges = async (req, res) => {
   }
 };
 
-const fetchAssets = async (req, res) => {
+const saveAssets = async (req, res) => {
   try {
     const dataToStore = req.apiData;
     const savedData = await AssetModel.create(dataToStore);
@@ -34,7 +34,7 @@ const fetchAssets = async (req, res) => {
   }
 };
 
-const fetchAssetIcons = async (req, res) => {
+const saveAssetIcons = async (req, res) => {
   try {
     const dataToStore = req.apiData;
     const savedData = await AssetIconModel.create(dataToStore);
@@ -49,7 +49,7 @@ const fetchAssetIcons = async (req, res) => {
   }
 };
 
-const fetchExchangeIcons = async (req, res) => {
+const saveExchangeIcons = async (req, res) => {
   try {
     const dataToStore = req.apiData;
     const savedData = await ExchangeIconModel.create(dataToStore);
@@ -63,7 +63,7 @@ const fetchExchangeIcons = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
-const fetchSymbols = async (req, res) => {
+const saveSymbols = async (req, res) => {
   try {
     const dataToStore = req.apiData;
     // console.log(dataToStore);
@@ -83,9 +83,9 @@ const fetchSymbols = async (req, res) => {
 };
 
 module.exports = {
-  fetchSymbols,
-  fetchExchanges,
-  fetchAssets,
-  fetchExchangeIcons,
-  fetchAssetIcons,
+  saveExchanges,
+  saveAssets,
+  saveExchangeIcons,
+  saveAssetIcons,
+  saveSymbols,
 };

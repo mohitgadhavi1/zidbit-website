@@ -7,7 +7,7 @@ import { notFound } from "next/navigation";
 const { Title, Text } = Typography;
 
 async function getData() {
-  const res = await fetch("http://localhost:3000/api/marketdata/exchanges", {
+  const res = await fetch("http://localhost:3001/api/marketdata/exchanges", {
     cache: "no-cache",
   });
 

@@ -7,6 +7,9 @@ const coinAPI = {
   assets: function () {
     return `${this.base_url}assets`;
   },
+  assetsPrice: function (includeSupply = false) {
+    return `${this.base_url}assets?include_supply=${includeSupply}`;
+  },
   symbols: function () {
     return `${this.base_url}symbols`;
   },

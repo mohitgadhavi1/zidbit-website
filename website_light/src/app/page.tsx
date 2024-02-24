@@ -1,40 +1,45 @@
 "use client";
-import dynamic from "next/dynamic";
-import ImageUploader from "@/components/ImageUploader";
-import { useImageContext } from "@/context/imageContext";
-import { Button, Card, Col, Flex, Row, Statistic, Typography } from "antd";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
-// import TradingViewWidget from "@/components/charts/TradingViewWidget";
 
-const TradingViewWidget = dynamic(
-  () => import("@/components/charts/TradingViewWidget"),
-  {
-    ssr: false,
-  }
-);
+import { Button, Divider, Flex, Typography } from "antd";
+import ExchangeList from "@/components/widgets/ExchangeList";
+import TopCrypto from "@/components/widgets/TopCrypto";
+import LiveDataStrip from "@/components/widgets/LiveDataStrip";
+import TradingViewWidget from "@/components/charts/TradingViewWidget";
+import ChartView from "@/components/charts/ChartView";
 
-export default function Home() {
-  const router = useRouter();
-  const [image, setImage] = useImageContext();
-
-  useEffect(() => {
-    if (image.original) {
-      router.replace("/edit_image");
-    }
-  }, [image]);
-
+const page: React.FC = async () => {
   return (
     <main className="font-mont  flex flex-col    w-full h-full  min-h-[80vh]  items-center justify-center">
       <Hero />
-      {/* <ImageUploader /> */}
+      <Divider />
+      <ChartView />
+      <div className="w-1/2">
+        <Typography.Paragraph>
+          Cryptocurrency Prices Today By Market Cap The global cryptocurrency
+          market cap today is $2.04 Trillion, a -0.54% change in the last 24
+          hours. Total cryptocurrency trading volume in the last day is at
+          $96.53 Billion. Forbes is now tracking 12,840 cryptocurrencies.
+          Bitcoin dominance is at +49.22% and Ethereum dominance is at +17.16%.
+          Trending tokens today are Mantle Staked Ether (+1.41%) and Toncoin
+          (+0.64%).
+        </Typography.Paragraph>
+      </div>
+      <Divider />
+      <Flex gap={10} style={{ width: "100%" }}>
+        <ExchangeList />
+        <TopCrypto />
+      </Flex>
+      <Divider />
       <div className="my-4 overflow-auto ">
         <TradingViewWidget />
       </div>
+      <Divider />
+      <LiveDataStrip />
     </main>
   );
-}
+};
+
+export default page;
 
 function Hero() {
   return (
