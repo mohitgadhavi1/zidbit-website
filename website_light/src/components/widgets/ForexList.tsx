@@ -1,27 +1,17 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import {
-  Typography,
-  List,
-  Divider,
-  Collapse,
-  Table,
-  Card,
-  Flex,
-  Space,
-} from "antd";
+import { Typography, List, Divider, Collapse, Table, Card, Space } from "antd";
 import type { TableProps } from "antd";
 import { formatDollars } from "@/helper/currencyConvertion";
-import { coinAPI } from "@/services";
-
-import Image from "next/image";
+import { API_KEY, coinAPI } from "@/services";
 import useAssetData from "@/hooks/useAssetData";
+import Image from "next/image";
 
 const { Title, Text } = Typography;
 
-const ExchangeList: React.FC = () => {
-  const { data, loading } = useAssetData("crypto");
+const ForexList: React.FC = () => {
+  const { data, loading } = useAssetData("forex");
 
   return (
     <div className="flex flex-col justify-center items-center w-5/6  ">
@@ -30,7 +20,7 @@ const ExchangeList: React.FC = () => {
         loading={loading}
         style={{ cursor: "default", width: "100%" }}
       >
-        <Title level={2}>Top CryptoCurrency</Title>
+        <Title level={2}>Forex</Title>
         <Typography.Paragraph type="secondary">
           {" "}
           Updated: 21 February 2024 23:10 IST
@@ -41,7 +31,7 @@ const ExchangeList: React.FC = () => {
   );
 };
 
-export default ExchangeList;
+export default ForexList;
 
 interface DataType {
   key: string;

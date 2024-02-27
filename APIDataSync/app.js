@@ -6,7 +6,7 @@ const dataRoutes = require("./routes/cryptoRoutes");
 
 const app = express();
 app.use(cors());
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URL, {

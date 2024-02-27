@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Typography, List, Divider, Collapse, Table, Card } from "antd";
 import type { TableProps } from "antd";
 import { formatDollars } from "@/helper/currencyConvertion";
+import { coinAPI } from "@/services";
 const { Title, Text } = Typography;
 
 const API_KEY = "78879775-aef8-417b-8497-618dfd4ed916";
@@ -16,16 +17,13 @@ const ExchangeList: React.FC = () => {
     async function getData() {
       setLoading(true);
       try {
-        const res = await fetch(
-          "http://localhost:3000/api/marketdata/exchanges",
-          {
-            cache: "no-cache",
-            headers: {
-              "Content-Type": "application/json",
-              "x-api-key": API_KEY, // Add your custom header here
-            },
-          }
-        );
+        const res = await fetch(coinAPI.exchanges(), {
+          cache: "no-cache",
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key": API_KEY, // Add your custom header here
+          },
+        });
 
         if (!res.ok) {
           setLoading(false);
@@ -72,7 +70,7 @@ const ExchangeList: React.FC = () => {
   }, []);
 
   return (
-    <div className="flex flex-col justify-center items-center w-1/2">
+    <div className="flex flex-col justify-center items-center w-5/6">
       <Card
         hoverable
         loading={loading}

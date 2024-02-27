@@ -14,7 +14,8 @@ const DataSchema = new mongoose.Schema({
   volume_1hrs_usd: Number,
   volume_1day_usd: Number,
   volume_1mth_usd: Number,
-  id_icon: String,
+  icon_url: String,
+  id_icon50: String,
   data_start: String,
   data_end: String,
 });

@@ -30,7 +30,6 @@ const router = express.Router();
 router.get("/assets", validateApiKey, fetchAssets);
 router.get("/assetPrice", validateApiKey, assetPriceController);
 router.get("/assetIcons", validateApiKey, fetchAssetIcons);
-
 router.get("/exchanges", validateApiKey, fetchExchanges);
 router.get("/exchangeIcons", validateApiKey, fetchExchangeIcons);
 
