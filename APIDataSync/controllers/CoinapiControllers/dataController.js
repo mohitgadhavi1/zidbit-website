@@ -1,8 +1,11 @@
 const fs = require("fs");
 
-const { AssetModel, AssetIconModel } = require("../models/AssetData");
-const { ExchangeModel, ExchangeIconModel } = require("../models/ExchangeData");
-const { SymbolModel } = require("../models/SymbolData");
+const { AssetModel, AssetIconModel } = require("../../models/AssetData");
+const {
+  ExchangeModel,
+  ExchangeIconModel,
+} = require("../../models/ExchangeData");
+const { SymbolModel } = require("../../models/SymbolData");
 
 const saveExchanges = async (req, res) => {
   try {

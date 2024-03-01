@@ -8,6 +8,7 @@ import TradingViewWidget from "@/components/charts/TradingViewWidget";
 import ChartView from "@/components/charts/HeroBackground";
 import ForexList from "@/components/widgets/ForexList";
 import SerchAssets from "@/components/SearchAssets";
+import Dashboard from "@/components/Dashboard";
 
 const page: React.FC = async () => {
   return (
@@ -28,19 +29,20 @@ const page: React.FC = async () => {
         </Typography.Paragraph>
       </div>
       <Divider />
-      <div className="w-full flex flex-col items-center">
+      {/* <div className="w-full flex flex-col items-center">
         <ExchangeList />
         <br />
         <TopCrypto />
         <br />
         <ForexList />
-      </div>
+      </div> */}
       <Divider />
-      <div className="my-4 overflow-auto ">
+      {/* <div className="my-4 overflow-auto ">
         <TradingViewWidget />
-      </div>
+      </div> */}
       <Divider />
-      <LiveDataStrip />
+      <Dashboard />
+      {/* <LiveDataStrip /> */}
     </main>
   );
 };
@@ -54,7 +56,7 @@ function Hero() {
         <ChartView />
       </div>
       <div className="z-10 h-full">
-        <SerchAssets />
+        {/* <SerchAssets /> */}
         <Flex
           gap={24}
           style={{ height: "100%" }}

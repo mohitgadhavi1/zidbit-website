@@ -8,7 +8,7 @@ const apiDirectory = "api/marketdata/"
 export const API_KEY = "78879775-aef8-417b-8497-618dfd4ed916";
 export const coinAPI = {
 
-      assetPrice: function () {
+    assetPrice: function () {
       return `${baseurl}${apiDirectory}assetPrice`;
     },
     exchanges: function () {
@@ -20,6 +20,23 @@ export const coinAPI = {
     exchangeIcons: function () {
       return `${baseurl}${apiDirectory}exchangeIcons`;
     },
+    historicalData : function () {
+      return `${baseurl}${apiDirectory}exchangeIcons`;
+    }
+  };
+
+  export const coinRanking = {
+
+    assetList: function () {
+      return `${baseurl}${apiDirectory}assets`;
+    },
+    assetDetails: function (id: string,timePeriod: string) {
+      return `${baseurl}${apiDirectory}asset/${id}?period=${timePeriod}`;
+    },
+    assetHistory: function (id: string,timePeriod: string)  {
+      return `${baseurl}${apiDirectory}asset/${id}/history?period=${timePeriod}`;
+    },
+
   };
 
 

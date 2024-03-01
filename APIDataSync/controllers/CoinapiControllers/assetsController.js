@@ -1,4 +1,4 @@
-const { AssetModel, AssetIconModel } = require("../models/AssetData");
+const { AssetModel, AssetIconModel } = require("../../models/AssetData");
 
 const fetchAssets = async (req, res) => {
   try {

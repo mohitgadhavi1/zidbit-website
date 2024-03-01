@@ -1,6 +1,6 @@
 require("dotenv").config();
 const axios = require("axios");
-const coinAPI = require("../services");
+const coinAPI = require("../../services");
 
 const assetPriceController = async (req, res, next) => {
   try {

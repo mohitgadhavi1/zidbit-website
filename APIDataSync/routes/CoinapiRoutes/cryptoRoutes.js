@@ -3,13 +3,13 @@ const express = require("express");
 const {
   fetchAssets,
   fetchAssetIcons,
-} = require("../controllers/assetsController");
-const validateApiKey = require("../middlewares/apiKeyMiddleware");
+} = require("../../controllers/CoinapiControllers/assetsController");
+const validateApiKey = require("../../middlewares/apiKeyMiddleware");
 const {
   fetchExchanges,
   fetchExchangeIcons,
-} = require("../controllers/exchangeController");
-const assetPriceController = require("../controllers/assetPriceController");
+} = require("../../controllers/CoinapiControllers/exchangeController");
+const assetPriceController = require("../../controllers/CoinapiControllers/assetPriceController");
 
 const router = express.Router();
 // const fetchDataMiddleware = require("../middlewares/fetchDataMiddleware");

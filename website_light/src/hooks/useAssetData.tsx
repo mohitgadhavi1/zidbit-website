@@ -69,12 +69,13 @@ function formatData(data: any[], icons: any, type: string) {
 
 function useAssetData(type: string) {
   const [data, setData] = useState<DataType[] | undefined>([]);
-
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     async function getData() {
       setLoading(true);
+      setError(false);
 
       try {
         const [pricesResponse, iconsData] = await Promise.all([
@@ -84,6 +85,7 @@ function useAssetData(type: string) {
 
         if (!pricesResponse.ok || iconsData === null) {
           setLoading(false);
+          setError(true);
           console.error(
             `Failed to fetch data. Status: ${pricesResponse.status}`
           );
@@ -96,6 +98,8 @@ function useAssetData(type: string) {
         setData(filteredData);
         setLoading(false);
       } catch (error) {
+        setLoading(false);
+        setError(true);
         console.error("Error fetching data:", error);
       }
     }
@@ -103,7 +107,7 @@ function useAssetData(type: string) {
     getData();
   }, []);
 
-  return { data, loading };
+  return { data, loading, error };
 }
 
 export default useAssetData;

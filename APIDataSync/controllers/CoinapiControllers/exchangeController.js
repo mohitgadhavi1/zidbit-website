@@ -1,4 +1,7 @@
-const { ExchangeModel, ExchangeIconModel } = require("../models/ExchangeData");
+const {
+  ExchangeModel,
+  ExchangeIconModel,
+} = require("../../models/ExchangeData");
 
 const fetchExchanges = async (req, res) => {
   try {

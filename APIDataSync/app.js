@@ -2,7 +2,8 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const dataRoutes = require("./routes/cryptoRoutes");
+const coinApiRoutes = require("./routes/CoinapiRoutes/cryptoRoutes");
+const coinRankingRoutes = require("./routes/CoinrankingRoutes/routes");
 
 const app = express();
 app.use(cors());
@@ -15,7 +16,8 @@ mongoose.connect(process.env.MONGO_URL, {
 });
 
 // Use routes
-app.use("/api/marketdata", dataRoutes);
+app.use("/api/marketdata", coinApiRoutes);
+app.use("/api/marketdata", coinRankingRoutes);
 
 // Start the server
 app.listen(PORT, () => {

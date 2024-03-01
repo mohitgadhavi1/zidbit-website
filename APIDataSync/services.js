@@ -24,4 +24,25 @@ const coinAPI = {
   },
 };
 
-module.exports = coinAPI;
+const coinRanking = {
+  base_url: "https://coinranking1.p.rapidapi.com/",
+
+  assets: function () {
+    return `${this.base_url}coins`;
+  },
+  assetDetails: function (id) {
+    return `${this.base_url}coin/${id}`;
+  },
+
+  /**
+   * @param {string} referenceCurrencyUuid - currency default US:yhjMzLPhuIDl
+   * @param {string} timePeriod - 1h, 3h, 12h, 24h, 7d, 30d, 3m, 1y, 3y, 5y
+   * @returns {Promise<Object>} Response object
+   */
+
+  assetHistory: function (id) {
+    return `${this.base_url}coin/${id}/history`;
+  },
+};
+
+module.exports = { coinAPI, coinRanking };

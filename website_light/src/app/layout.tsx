@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { ImageProvider } from "@/context/imageContext";
 import { DarkModeProvider } from "@/context/darkModeContext";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import Layout from "@/components/ui/layout";
+import { StockSymbolProvider } from "@/context/StockContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,11 +23,11 @@ export default function RootLayout({
       <html lang="en">
         <AntdRegistry>
           <DarkModeProvider>
-            <ImageProvider>
+            <StockSymbolProvider>
               <body className={`  ${inter.className}`}>
                 <Layout>{children}</Layout>
               </body>
-            </ImageProvider>
+            </StockSymbolProvider>
           </DarkModeProvider>
         </AntdRegistry>
       </html>
