@@ -22,7 +22,7 @@ import { chartConfig } from "@/constants/config";
 import { useStockSymbolContext } from "@/context/StockContext";
 import CustomCard from "../ui/CustomCard";
 import { useDarkModeContext } from "@/context/darkModeContext";
-import useAssets from "@/hooks/useCryptoAssets";
+import useAssets from "@/hooks/useFetchData";
 import { coinRanking } from "@/services";
 import { timeStamp } from "console";
 

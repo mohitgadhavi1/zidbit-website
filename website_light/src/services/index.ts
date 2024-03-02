@@ -6,10 +6,14 @@ export const finnhubBaseURL = "https://finnhub.io/api/v1";
 const apiDirectory = "api/marketdata/"
 
 export const API_KEY = "78879775-aef8-417b-8497-618dfd4ed916";
+
 export const coinAPI = {
 
+    // assetPrice: function () {
+    //   return `${baseurl}${apiDirectory}assetPrice`;`
+    // },
     assetPrice: function () {
-      return `${baseurl}${apiDirectory}assetPrice`;
+      return `${baseurl}${apiDirectory}assets`;
     },
     exchanges: function () {
       return `${baseurl}${apiDirectory}exchanges`;
@@ -38,6 +42,8 @@ export const coinAPI = {
     },
 
   };
+
+  export const cryptoNews =()=> `${baseurl}api/crypto_news/coindesk`;
 
 
   //================================================================//

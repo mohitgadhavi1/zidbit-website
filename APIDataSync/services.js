@@ -45,4 +45,7 @@ const coinRanking = {
   },
 };
 
-module.exports = { coinAPI, coinRanking };
+const cryptoNewsApi = (source) =>
+  `https://cryptocurrency-news2.p.rapidapi.com/v1/${source}`;
+
+module.exports = { coinAPI, coinRanking, cryptoNewsApi };

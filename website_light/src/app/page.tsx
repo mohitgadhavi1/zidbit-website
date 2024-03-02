@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Divider, Flex, Typography } from "antd";
+import { Button, Divider, Flex, Row, Typography } from "antd";
 import ExchangeList from "@/components/widgets/ExchangeList";
 import TopCrypto from "@/components/widgets/TopCrypto";
 import LiveDataStrip from "@/components/widgets/LiveDataStrip";
@@ -9,13 +9,21 @@ import ChartView from "@/components/charts/HeroBackground";
 import ForexList from "@/components/widgets/ForexList";
 import SerchAssets from "@/components/SearchAssets";
 import Dashboard from "@/components/Dashboard";
+import HeroOverview from "@/components/HeroOverview";
+import Top5Gainer from "@/components/widgets/Top5Gainers";
+import Top5Losers from "@/components/widgets/Top5Losers";
+import Top5Gainers from "@/components/widgets/Top5Gainers";
+import LatestNews from "@/components/widgets/LatestNews";
 
 const page: React.FC = async () => {
   return (
     <main className="font-mont  flex flex-col    w-full h-full  min-h-[80vh]  items-center justify-center">
+      <HeroOverview />
       <Hero />
 
       <Divider />
+
+      <LatestNews />
 
       <div className="w-1/2">
         <Typography.Paragraph>
@@ -29,20 +37,24 @@ const page: React.FC = async () => {
         </Typography.Paragraph>
       </div>
       <Divider />
-      {/* <div className="w-full flex flex-col items-center">
+      <div className="w-full flex flex-col items-center">
         <ExchangeList />
         <br />
         <TopCrypto />
         <br />
         <ForexList />
-      </div> */}
+      </div>
       <Divider />
+      <Flex gap="middle" align="start">
+        <Top5Gainers />
+        <Top5Losers />
+      </Flex>
       {/* <div className="my-4 overflow-auto ">
         <TradingViewWidget />
       </div> */}
       <Divider />
-      <Dashboard />
-      {/* <LiveDataStrip /> */}
+      {/* <Dashboard /> */}
+      <LiveDataStrip />
     </main>
   );
 };

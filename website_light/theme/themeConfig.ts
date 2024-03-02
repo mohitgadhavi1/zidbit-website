@@ -5,7 +5,7 @@ const customTheme=(mode:string)=> ({
  
     // colorPrimaryBg: '#f5f5f5',
     //   colorLink: '#1890ff',
-    // colorPrimary: "#1b1b1b",
+    colorPrimary: "#4c43e3",
     // colorInfo: "#1b1b1b"
     // light: "#f5f5f5",
     // primary: "#B63E96", // 240,86,199

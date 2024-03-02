@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const coinApiRoutes = require("./routes/CoinapiRoutes/cryptoRoutes");
 const coinRankingRoutes = require("./routes/CoinrankingRoutes/routes");
+const cryptoNewsRoutes = require("./routes/cryptoNewsRoutes");
 
 const app = express();
 app.use(cors());
@@ -18,6 +19,7 @@ mongoose.connect(process.env.MONGO_URL, {
 // Use routes
 app.use("/api/marketdata", coinApiRoutes);
 app.use("/api/marketdata", coinRankingRoutes);
+app.use("/api", cryptoNewsRoutes);
 
 // Start the server
 app.listen(PORT, () => {

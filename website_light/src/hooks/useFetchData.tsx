@@ -1,7 +1,7 @@
 import { API_KEY } from "@/services";
 import { useState, useEffect } from "react";
 
-const useAssets = (url: any) => {
+const useFetchData = (url: any) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
@@ -36,4 +36,4 @@ const useAssets = (url: any) => {
   return { loading, error, data };
 };
 
-export default useAssets;
+export default useFetchData;

@@ -5,6 +5,7 @@ const nextConfig = {
       "images.unsplash.com",
       "s3.eu-central-1.amazonaws.com",
       "coinranking.com",
+      "coindesk.com",
     ],
   },
 };

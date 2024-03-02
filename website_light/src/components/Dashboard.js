@@ -7,7 +7,7 @@ import { useStockSymbolContext } from "../context/StockContext";
 // import { fetchStockDetails, fetchQuote } from "@/services/fetchServices";
 import ChartHeader from "./ChartHeader";
 import { useDarkModeContext } from "@/context/darkModeContext";
-import useAssets from "@/hooks/useCryptoAssets";
+import useAssets from "@/hooks/useFetchData";
 import { coinRanking } from "@/services";
 
 const Dashboard = () => {
