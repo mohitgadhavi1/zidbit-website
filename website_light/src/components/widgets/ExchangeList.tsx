@@ -57,7 +57,7 @@ const ExchangeList: React.FC = () => {
             rank: index + 1,
             volume_1day_usd: formatDollars(item.volume_1day_usd),
           }));
-        console.log(filteredData);
+
         setData(filteredData);
         setLoading(false);
       } catch (error) {

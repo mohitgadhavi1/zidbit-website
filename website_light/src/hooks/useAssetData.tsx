@@ -94,7 +94,7 @@ function useAssetData(type: string) {
 
         const pricesData = await pricesResponse.json();
         const filteredData = formatData(pricesData.data, iconsData, type);
-        console.log(filteredData);
+
         setData(filteredData);
         setLoading(false);
       } catch (error) {

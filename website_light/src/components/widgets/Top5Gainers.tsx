@@ -23,20 +23,18 @@ const Top5Gainers: React.FC = () => {
   const [loading, setLoading] = useState();
 
   return (
-    <div className="flex flex-col justify-center items-center w-5/6  ">
-      <Card
-        hoverable
-        loading={loading}
-        style={{ cursor: "default", width: "100%" }}
-      >
-        <Title level={2}>Top 5 Gainers</Title>
-        <Typography.Paragraph type="secondary">
-          {" "}
-          Updated: 21 February 2024 23:10 IST
-        </Typography.Paragraph>
-        <Table dataSource={data} columns={columns} size="small" />
-      </Card>
-    </div>
+    <Card
+      hoverable
+      loading={loading}
+      style={{ cursor: "default", width: "100%" }}
+    >
+      <Title level={2}>Top 5 Gainers</Title>
+      <Typography.Paragraph type="secondary">
+        {" "}
+        Updated: 21 February 2024 23:10 IST
+      </Typography.Paragraph>
+      <Table dataSource={data} columns={columns} size="small" />
+    </Card>
   );
 };
 
@@ -64,7 +62,6 @@ const columns: TableProps<DataType>["columns"] = [
     dataIndex: "name",
     key: "name",
     render: (_, { icon, name }) => {
-      console.log("icon", icon);
       return icon.length ? (
         <Space size="small">
           <Image width={20} height={20} alt="" src={icon} />

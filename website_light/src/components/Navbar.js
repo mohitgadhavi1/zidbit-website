@@ -151,7 +151,6 @@ function Navbar() {
             )}
           </button> */}
         </nav>
-        
       </div>
 
       {/* =================== Mobile Menu ====================================  */}
@@ -188,8 +187,6 @@ function Navbar() {
               title="Privacy Policy"
             />
           </nav>
-
-    
         </motion.div>
       ) : null}
 
@@ -197,7 +194,7 @@ function Navbar() {
         <Logo />
       </div>
       <nav className="flex items-center justify-center flex-wrap ">
-            {/* <motion.a
+        {/* <motion.a
               className="w-6 mx-3 bg-light  dark:bg-dark rounded-full"
               whileHover={{ y: -2 }}
               whileTap={{ scale: 0.9 }}
@@ -217,20 +214,20 @@ function Navbar() {
               <LinkedInIcon />
             </motion.a> */}
 
-            <button
-              className={`ml-3  flex items-center justify-center rounded-full  p-1
+        <button
+          className={`ml-3  flex items-center justify-center rounded-full  p-1
         ${mode === "light" ? "bg-dark text-light" : "bg-light text-dark"}
         
         `}
-              onClick={() => setMode(mode === "light" ? "dark" : "light")}
-            >
-              {mode === "dark" ? (
-                <SunIcon className={"fill-dark"} />
-              ) : (
-                <MoonIcon className={"fill-dark"} />
-              )}
-            </button>
-          </nav>
+          onClick={() => setMode(mode === "light" ? "dark" : "light")}
+        >
+          {mode === "dark" ? (
+            <SunIcon className={"fill-dark"} />
+          ) : (
+            <MoonIcon className={"fill-dark"} />
+          )}
+        </button>
+      </nav>
     </header>
   );
 }

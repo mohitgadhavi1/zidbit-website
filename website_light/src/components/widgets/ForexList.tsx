@@ -59,7 +59,6 @@ const columns: TableProps<DataType>["columns"] = [
     dataIndex: "name",
     key: "name",
     render: (_, { icon, name }) => {
-      console.log("icon", icon);
       return icon.length ? (
         <Space size="small">
           <Image width={20} height={20} alt="" src={icon} />

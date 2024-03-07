@@ -1,31 +1,60 @@
 "use client";
 
-import { Button, Divider, Flex, Row, Typography } from "antd";
-import ExchangeList from "@/components/widgets/ExchangeList";
+import { Button, Divider, Flex, Grid, Row, Typography } from "antd";
 import TopCrypto from "@/components/widgets/TopCrypto";
 import LiveDataStrip from "@/components/widgets/LiveDataStrip";
-import TradingViewWidget from "@/components/charts/TradingViewWidget";
 import ChartView from "@/components/charts/HeroBackground";
-import ForexList from "@/components/widgets/ForexList";
-import SerchAssets from "@/components/SearchAssets";
 import Dashboard from "@/components/Dashboard";
 import HeroOverview from "@/components/HeroOverview";
-import Top5Gainer from "@/components/widgets/Top5Gainers";
 import Top5Losers from "@/components/widgets/Top5Losers";
 import Top5Gainers from "@/components/widgets/Top5Gainers";
 import LatestNews from "@/components/widgets/LatestNews";
+import HighlighedAssets from "@/components/HighlighedAssets";
+import { SearchOutlined } from "@ant-design/icons";
 
-const page: React.FC = async () => {
+const Page: React.FC = () => {
+  const { useBreakpoint } = Grid;
+  const screens = useBreakpoint();
   return (
-    <main className="font-mont  flex flex-col    w-full h-full  min-h-[80vh]  items-center justify-center">
-      <HeroOverview />
+    <main className="font-mont  flex flex-col  w-full h-full  min-h-[80vh]  items-center justify-center">
       <Hero />
-
       <Divider />
-
-      <LatestNews />
-
-      <div className="w-1/2">
+      <Dashboard />
+      <Divider />
+      <div className="w-full flex flex-col items-center px-4">
+        <TopCrypto />
+      </div>
+      <Divider />
+      <Flex
+        style={{ width: "100%" }}
+        gap="middle"
+        justify="space-between"
+        align={screens.xs || !screens.xl ? "flex-start" : "center"}
+      >
+        {screens.xs || !screens.xl ? (
+          <div className="w-full m-5 ">
+            <div className="w-full flex flex-col gap-10">
+              <Top5Gainers />
+              <Top5Losers />
+            </div>
+            <div className="w-full ">
+              <LatestNews />
+            </div>
+          </div>
+        ) : (
+          <div className="flex flex-row-reverse w-full">
+            <div className="w-1/2">
+              <LatestNews />
+            </div>
+            <div className="w-1/2 flex flex-col gap-10">
+              <Top5Gainers />
+              <Top5Losers />
+            </div>
+          </div>
+        )}
+      </Flex>
+      <Divider />
+      <div className="w-2/3">
         <Typography.Paragraph>
           Cryptocurrency Prices Today By Market Cap The global cryptocurrency
           market cap today is $2.04 Trillion, a -0.54% change in the last 24
@@ -36,130 +65,115 @@ const page: React.FC = async () => {
           (+0.64%).
         </Typography.Paragraph>
       </div>
-      <Divider />
-      <div className="w-full flex flex-col items-center">
-        <ExchangeList />
-        <br />
-        <TopCrypto />
-        <br />
-        <ForexList />
-      </div>
-      <Divider />
-      <Flex gap="middle" align="start">
-        <Top5Gainers />
-        <Top5Losers />
-      </Flex>
-      {/* <div className="my-4 overflow-auto ">
-        <TradingViewWidget />
-      </div> */}
-      <Divider />
-      {/* <Dashboard /> */}
+
       <LiveDataStrip />
     </main>
   );
 };
 
-export default page;
+export default Page;
 
 function Hero() {
+  const { useBreakpoint } = Grid;
+  const screens = useBreakpoint();
+  console.log(screens);
   return (
-    <div className=" h-screen relative w-full">
+    <div className=" md:h-screen relative w-full">
       <div className="absolute z-0  w-full">
         <ChartView />
       </div>
-      <div className="z-10 h-full">
-        {/* <SerchAssets /> */}
-        <Flex
-          gap={24}
-          style={{ height: "100%" }}
-          align="center"
-          justify="center"
-        >
-          <div className=" px-4 flex flex-col justify-center items-center h-full z-10 ">
-            <Typography.Title
-              level={1}
-              style={{ textShadow: "2px 2px rgba(255, 255, 255, 0.33)" }}
-            >
-              Unlocking Insights, Empowering Decisions
-            </Typography.Title>
-            <Typography.Title
-              level={3}
-              style={{ textShadow: "2px 2px rgba(255, 255, 255, 0.33)" }}
-            >
-              Your Gateway to Global Markets and Crypto Realms
-            </Typography.Title>
-            <div className="flex justify-center my-10 ">
-              <Button size="large" type="primary" shape="round">
-                Checkout Assets{" "}
-              </Button>
-            </div>
 
-            {/* <Row>
-            <Col offset={20} span={4}>
-           
-            </Col>
-          </Row> */}
+      {screens.xs || !screens.xl ? (
+        <div className="z-10 h-full flex flex-col items-center justify-around ">
+          <div className="mt-5  w-full justify-center  flex flex-wrap    gap-5">
+            <HighlighedAssets />
+            <HighlighedAssets />
+            <HighlighedAssets />
+            <HighlighedAssets />
           </div>
-          {/* <Row gutter={[16, 16]} style={{ width: "50%" }}>
-          <Col span={10}>
-            <Card>
-              <Statistic
-                title="Bitcoin"
-                value={11.28}
-                precision={2}
-                valueStyle={{
-                  color: "#3f8600",
+          <div className="mt-5 flex flex-col w-full  justify-center items-center">
+            <div className="w-full  px-2 flex flex-col justify-center items-center  z-10 ">
+              <Typography.Title
+                level={2}
+                style={{
+                  textShadow: "2px 2px rgba(255, 255, 255, 0.33)",
+                  textAlign: "center",
+                  lineHeight: 1,
                 }}
-                prefix={<ArrowUpOutlined />}
-                suffix="%"
-              />
-            </Card>
-          </Col>
-          <Col span={10}>
-            <Card>
-              <Statistic
-                title="Etherium"
-                value={11.28}
-                precision={2}
-                valueStyle={{
-                  color: "#3f8600",
+              >
+                Unlocking Insights, Empowering Decisions
+              </Typography.Title>
+              <Typography.Title
+                level={4}
+                style={{
+                  lineHeight: 1,
+                  textShadow: "2px 2px rgba(255, 255, 255, 0.33)",
+                  textAlign: "center",
                 }}
-                prefix={<ArrowUpOutlined />}
-                suffix="%"
-              />
-            </Card>
-          </Col>
-          <Col span={10}>
-            <Card>
-              <Statistic
-                title="Tether"
-                value={11.28}
-                precision={2}
-                valueStyle={{
-                  color: "#3f8600",
-                }}
-                prefix={<ArrowUpOutlined />}
-                suffix="%"
-              />
-            </Card>
-          </Col>
-          <Col span={10}>
-            <Card>
-              <Statistic
-                title="Solana"
-                value={11.28}
-                precision={2}
-                valueStyle={{
-                  color: "#cf1322",
-                }}
-                prefix={<ArrowDownOutlined />}
-                suffix="%"
-              />
-            </Card>
-          </Col>
-        </Row> */}
-        </Flex>
-      </div>
+              >
+                Your Gateway to Global Markets and Crypto Realms
+              </Typography.Title>
+              <div className="flex justify-center my-10 ">
+                <Button
+                  size="large"
+                  type="primary"
+                  shape="round"
+                  icon={<SearchOutlined />}
+                >
+                  Search Assets
+                </Button>
+              </div>
+            </div>
+            <div className="w-full px-2">
+              <HeroOverview />
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="z-10 h-full ">
+          <div className="mt-20  w-full justify-center  flex absolute  gap-5">
+            <HighlighedAssets />
+            <HighlighedAssets />
+            <HighlighedAssets />
+            <HighlighedAssets />
+          </div>
+          <div className="flex w-full h-full justify-center items-center">
+            <div className="w-1/2">
+              <HeroOverview />
+            </div>
+            <div className="w-1/2  px-4 flex flex-col justify-center items-center h-full z-10 ">
+              <Typography.Title
+                level={1}
+                style={{ textShadow: "2px 2px rgba(255, 255, 255, 0.33)" }}
+              >
+                Unlocking Insights, Empowering Decisions
+              </Typography.Title>
+              <Typography.Title
+                level={3}
+                style={{ textShadow: "2px 2px rgba(255, 255, 255, 0.33)" }}
+              >
+                Your Gateway to Global Markets and Crypto Realms
+              </Typography.Title>
+              <div className="flex justify-center my-10 ">
+                <Button
+                  size="large"
+                  type="primary"
+                  shape="round"
+                  icon={<SearchOutlined />}
+                >
+                  Search Assets
+                </Button>
+              </div>
+
+              {/* <Row>
+                 <Col offset={20} span={4}>
+                
+                 </Col>
+               </Row> */}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

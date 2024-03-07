@@ -20,11 +20,11 @@ import useAssetData from "@/hooks/useAssetData";
 
 const { Title, Text } = Typography;
 
-const ExchangeList: React.FC = () => {
+const TopCrypto: React.FC = () => {
   const { data, loading } = useAssetData("crypto");
 
   return (
-    <div className="flex flex-col justify-center items-center w-5/6  ">
+    <div className="flex flex-col justify-center items-center w-full ">
       <Card
         hoverable
         loading={loading}
@@ -41,7 +41,7 @@ const ExchangeList: React.FC = () => {
   );
 };
 
-export default ExchangeList;
+export default TopCrypto;
 
 interface DataType {
   key: string;
@@ -69,7 +69,6 @@ const columns: TableProps<DataType>["columns"] = [
     dataIndex: "name",
     key: "name",
     render: (_, { icon, name }) => {
-      console.log("icon", icon);
       return icon.length ? (
         <Space size="small">
           <Image width={20} height={20} alt="" src={icon} />

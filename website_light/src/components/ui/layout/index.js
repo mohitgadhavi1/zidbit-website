@@ -3,8 +3,8 @@
 import React, { useState } from "react";
 import { Layout, Menu } from "antd";
 const { Footer, Sider, Content } = Layout;
-import { ConfigProvider, theme, Grid } from "antd";
-import customTheme from "../../../../theme/themeConfig"; 
+import { ConfigProvider, theme } from "antd";
+import customTheme from "../../../../theme/themeConfig";
 import Link from "next/link";
 import useThemeSwicher from "@/components/hooks/useThemeSwicher";
 
@@ -12,11 +12,7 @@ const { defaultAlgorithm, darkAlgorithm } = theme;
 import MainHeader from "./MainHeader";
 import MainFooter from "./MainFooter";
 
-
-const { useBreakpoint } = Grid;
 const MainLayout = ({ children }) => {
-  const screens = useBreakpoint();
-  // console.log(screens);
   const [mode, setMode] = useThemeSwicher();
   const [collapsed, setCollapsed] = useState(false);
 
@@ -54,11 +50,12 @@ export default MainLayout;
 function MainContent({ children, mode }) {
   return (
     <Content
-      style={{
-        // padding: "1%",
-
-        // backgroundColor: `${mode === "light" ? "#f5f5f5" : "#1b1b1b"}`,
-      }}
+      style={
+        {
+          // padding: "1%",
+          // backgroundColor: `${mode === "light" ? "#f5f5f5" : "#1b1b1b"}`,
+        }
+      }
     >
       {children}
     </Content>

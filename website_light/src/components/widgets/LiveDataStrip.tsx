@@ -20,7 +20,7 @@ const ExchangeList: React.FC = () => {
   const [loading, setLoading] = useState(false);
 
   return (
-    <div className="fixed bottom-0 h-[6vh] w-full bg-white dark:bg-gray-800  overflow-hidden ">
+    <div className="fixed bottom-0 h-[6vh] w-full bg-white border-t-1 dark:border-white/30 dark:bg-gray-800 z-40 overflow-hidden ">
       {/* <Flex gap={5} className="h-full  w-full  animate-slideShow "> */}
       <div className=" flex h-full  animate-slideShow hover:pause  ">
         {data?.map((item, index) => {

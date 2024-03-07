@@ -4,13 +4,14 @@ import { useDarkModeContext } from "@/context/darkModeContext";
 
 const CustomCard: React.FC<CardProps> = ({ children }) => {
   const [isDarkMode, setIsDarkMode] = useDarkModeContext();
+
   return (
     <div
-      className={`w-full h-full rounded-md relative p-8 border-2 ${
-        isDarkMode
-          ? "bg-gray-900 border-gray-800"
-          : "bg-white border-neutral-200"
-      }`}
+      className={`w-full h-full rounded-md relative p-8 border-2 
+      
+          dark:bg-gray-900 dark:border-gray-800
+           bg-white border-neutral-200"
+      `}
     >
       {children}
     </div>

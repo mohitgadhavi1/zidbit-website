@@ -42,7 +42,6 @@ const HeaderMenu: React.FC = () => {
   const [current, setCurrent] = useState("editing");
 
   const onClick: MenuProps["onClick"] = (e) => {
-    console.log("click ", e);
     setCurrent(e.key);
   };
 

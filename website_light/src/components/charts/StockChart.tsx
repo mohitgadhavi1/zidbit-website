@@ -30,9 +30,6 @@ const StockChart = () => {
   const [isDarkMode] = useDarkModeContext();
   const [filter, setFilter] = useState("1W");
 
-  console.log(isDarkMode);
-  //   const { darkMode } = useContext(ThemeContext);
-
   const [stockSymbol] = useStockSymbolContext();
 
   const {
@@ -41,7 +38,6 @@ const StockChart = () => {
     data: btcData,
   } = useAssets(coinRanking.assetHistory("Qwsogvtv82FCd", "1h"));
 
-  console.log("btcData", btcData);
   const [data, setData] = useState(mockHistoricalData);
 
   const formatData = (data) => {
@@ -86,6 +82,15 @@ const StockChart = () => {
 
     updateChartData();
   }, [stockSymbol, filter]);
+
+  // Override console.error
+  // This is a hack to suppress the warning about missing defaultProps in recharts library as of version 2.12
+  // @link https://github.com/recharts/recharts/issues/3615
+  const error2 = console.error;
+  console.error = (...args: any) => {
+    if (/defaultProps/.test(args[0])) return;
+    error2(...args);
+  };
 
   return (
     <CustomCard>

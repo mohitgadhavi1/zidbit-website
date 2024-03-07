@@ -7,8 +7,6 @@ import SearchResults from "./SearchResults";
 import { SearchIcon, XIcon } from "@heroicons/react/solid";
 
 const Search = () => {
-  const darkMode = true;
-
   const [input, setInput] = useState("");
 
   const [bestMatches, setBestMatches] = useState([]);
@@ -33,15 +31,15 @@ const Search = () => {
 
   return (
     <div
-      className={`flex items-center my-4 border-2 rounded-md relative z-50 w-96 ${
-        darkMode ? "bg-gray-900 border-gray-800" : "bg-white border-neutral-200"
+      className={`flex items-center my-4 border-2 rounded-md relative z-50 w-96 
+         dark:bg-gray-900 dark:border-gray-800  bg-white border-neutral-200
       }`}
     >
       <input
         type="text"
         value={input}
-        className={`w-full px-4 py-2 focus:outline-none rounded-md ${
-          darkMode ? "bg-gray-900" : null
+        className={`w-full px-4 py-2 focus:outline-none rounded-md 
+         dark:bg-gray-900
         }`}
         placeholder="Search stock..."
         onChange={(event) => setInput(event.target.value)}
