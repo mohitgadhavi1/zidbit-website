@@ -22,30 +22,22 @@ import { chartConfig } from "@/constants/config";
 import { useStockSymbolContext } from "@/context/StockContext";
 import CustomCard from "../ui/CustomCard";
 import { useDarkModeContext } from "@/context/darkModeContext";
-import useAssets from "@/hooks/useFetchData";
-import { coinRanking } from "@/services";
-import { timeStamp } from "console";
 
-const StockChart = () => {
+const StockChart = ({ chartData }) => {
   const [isDarkMode] = useDarkModeContext();
-  const [filter, setFilter] = useState("1W");
+  const [filter, setFilter] = useState("5Y");
 
   const [stockSymbol] = useStockSymbolContext();
 
-  const {
-    loading,
-    error,
-    data: btcData,
-  } = useAssets(coinRanking.assetHistory("Qwsogvtv82FCd", "1h"));
-
-  const [data, setData] = useState(mockHistoricalData);
+  const [data, setData] = useState([]);
 
   const formatData = (data) => {
-    return data?.history
+    return data
       ?.sort((a, b) => a.timestamp - b.timestamp)
+      ?.filter((item) => Number(item.price) > 0)
       ?.map((item, index) => {
         return {
-          value: Number(item.price).toFixed(2),
+          value: Number(Number(item.price).toFixed(2)),
           date: convertUnixTimestampToDate(item.timestamp),
         };
       });
@@ -67,21 +59,22 @@ const StockChart = () => {
       try {
         const { startTimestampUnix, endTimestampUnix } = getDateRange();
         const resolution = chartConfig[filter].resolution;
+
         // const result = await fetchHistoricalData(
         //   stockSymbol,
         //   resolution,
         //   startTimestampUnix,
         //   endTimestampUnix
         // );
-        // setData(formatData(result));
+        setData(formatData(chartData));
       } catch (error) {
         setData([]);
         console.log(error);
       }
     };
 
-    updateChartData();
-  }, [stockSymbol, filter]);
+    // updateChartData();
+  }, [stockSymbol, filter, chartData]);
 
   // Override console.error
   // This is a hack to suppress the warning about missing defaultProps in recharts library as of version 2.12
@@ -109,7 +102,7 @@ const StockChart = () => {
       </ul>
 
       <ResponsiveContainer>
-        <AreaChart data={formatData(btcData)}>
+        <AreaChart data={formatData(chartData)}>
           <defs>
             <linearGradient id="chartColor" x1="0" y1="0" x2="0" y2="1">
               <stop
@@ -138,7 +131,7 @@ const StockChart = () => {
             strokeWidth={0.5}
           />
           <XAxis dataKey="date" />
-          <YAxis domain={["dataMin", "dataMax"]} />
+          <YAxis dataKey={"value"} domain={["dataMin", "dataMax"]} />
         </AreaChart>
       </ResponsiveContainer>
     </CustomCard>

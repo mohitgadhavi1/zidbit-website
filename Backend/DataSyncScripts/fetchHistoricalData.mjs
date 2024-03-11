@@ -56,7 +56,7 @@ async function fetchData() {
         // Store the data in the 'history' collection
         await historyCollection.insertOne({
           uuid,
-          data: history,
+          history,
         });
 
         console.log(

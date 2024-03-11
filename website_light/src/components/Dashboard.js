@@ -2,21 +2,14 @@ import React, { useState } from "react";
 import Overview from "./Overview";
 import Details from "./Details";
 import StockChart from "./charts/StockChart";
-
-import { useStockSymbolContext } from "../context/StockContext";
-
 import ChartHeader from "./ChartHeader";
-
-import useAssets from "@/hooks/useFetchData";
-import { coinRanking } from "@/services";
-import useThemeSwicher from "./hooks/useThemeSwicher";
+import useFetchData from "@/hooks/useFetchData";
+import { coinAPI } from "@/services";
 
 const Dashboard = () => {
-  const {
-    loading: btcLoading,
-    error: btcError,
-    data: btcData,
-  } = useAssets(coinRanking.assetDetails("Qwsogvtv82FCd", "24h"));
+  const { loading, error, data } = useFetchData(
+    coinAPI.historicalData("Qwsogvtv82FCd", "24h")
+  );
 
   const [stockDetails, setStockDetails] = useState({});
 
@@ -29,22 +22,22 @@ const Dashboard = () => {
         dark:text-gray-300    `}
     >
       <div className="col-span-1 md:col-span-2 xl:col-span-3 row-span-1 flex justify-start items-center">
-        <ChartHeader name={btcData?.coin?.name} />
+        <ChartHeader name={data?.coin?.name} />
       </div>
       <div className="col-span-1 md:col-span-2 row-span-4">
-        <StockChart />
+        <StockChart chartData={data} />
       </div>
       <div>
         <Overview
-          symbol={btcData?.coin?.coinrankingUrl}
-          price={Number(btcData?.coin?.price)?.toFixed(2)}
+          symbol={data?.coin?.coinrankingUrl}
+          price={Number(data?.coin?.price)?.toFixed(2)}
           change={quote.d}
-          changePercent={Number(btcData?.coin?.change)}
+          changePercent={Number(data?.coin?.change)}
           currency={stockDetails.currency}
         />
       </div>
       <div className="row-span-2 xl:row-span-3">
-        <Details details={btcData?.coin} />
+        <Details details={data?.coin} />
       </div>
     </div>
   );

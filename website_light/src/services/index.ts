@@ -8,10 +8,13 @@ const apiDirectory = "api/marketdata/"
 export const API_KEY = "78879775-aef8-417b-8497-618dfd4ed916";
 
 export const coinAPI = {
+  cryptoState: function () {
+    return `${baseurl}${apiDirectory}stats`;
+  },
 
-    // assetPrice: function () {
-    //   return `${baseurl}${apiDirectory}assetPrice`;`
-    // },
+    assets: function () {
+      return `${baseurl}${apiDirectory}assets`;
+    },
     assetPrice: function () {
       return `${baseurl}${apiDirectory}assets`;
     },
@@ -24,19 +27,13 @@ export const coinAPI = {
     exchangeIcons: function () {
       return `${baseurl}${apiDirectory}exchangeIcons`;
     },
-    historicalData : function () {
-      return `${baseurl}${apiDirectory}exchangeIcons`;
+    historicalData : function (id: string,timePeriod: string) {
+      return `${baseurl}${apiDirectory}asset/${id}/history?period=${timePeriod}`;
     }
   };
 
   export const coinRanking = {
 
-    assetList: function () {
-      return `${baseurl}${apiDirectory}assets`;
-    },
-    assetDetails: function (id: string,timePeriod: string) {
-      return `${baseurl}${apiDirectory}asset/${id}?period=${timePeriod}`;
-    },
     assetHistory: function (id: string,timePeriod: string)  {
       return `${baseurl}${apiDirectory}asset/${id}/history?period=${timePeriod}`;
     },

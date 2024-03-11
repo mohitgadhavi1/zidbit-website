@@ -11,6 +11,8 @@ import Top5Gainers from "@/components/widgets/Top5Gainers";
 import LatestNews from "@/components/widgets/LatestNews";
 import HighlighedAssets from "@/components/HighlighedAssets";
 import { SearchOutlined } from "@ant-design/icons";
+import useFetchData from "@/hooks/useFetchData";
+import { coinAPI } from "@/services";
 
 const Page: React.FC = () => {
   const { useBreakpoint } = Grid;
@@ -76,7 +78,7 @@ export default Page;
 function Hero() {
   const { useBreakpoint } = Grid;
   const screens = useBreakpoint();
-  console.log(screens);
+
   return (
     <div className=" md:h-screen relative w-full">
       <div className="absolute z-0  w-full">

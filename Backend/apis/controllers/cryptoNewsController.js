@@ -22,8 +22,11 @@ const cryptoNewsController = async (req, res, next) => {
 
     res.json(apiResponse.data);
   } catch (error) {
-    console.error(error.response.data);
-    res.status(500).json({ error: error.response });
+    console.error(error.stack);
+    const errorResponse = error.response
+      ? JSON.stringify(error.response.data)
+      : "Unknown error";
+    res.status(500).json({ error: "internal server error" });
   }
 };
 

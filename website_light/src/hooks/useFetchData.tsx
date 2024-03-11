@@ -1,7 +1,7 @@
 import { API_KEY } from "@/services";
 import { useState, useEffect } from "react";
 
-const useFetchData = (url: any) => {
+const useFetchData = (url: string) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
@@ -22,7 +22,10 @@ const useFetchData = (url: any) => {
         }
 
         const resData = await response.json();
-        setData(resData.data);
+
+        const res = resData.length ? resData[0].data : resData.data[0];
+
+        setData(res);
       } catch (error) {
         setError(error.message);
       } finally {

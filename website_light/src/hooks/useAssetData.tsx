@@ -33,36 +33,41 @@ function formatData(data: any[], icons: any, type: string) {
   return data
     .filter(
       (item: {
-        price_usd: number;
+        volume: any;
+        price: number;
         type_is_crypto: number;
         volume_1day_usd: number;
-      }) =>
-        (type === "crypto"
-          ? item.type_is_crypto === 1
-          : item.type_is_crypto === 0) &&
-        item.volume_1day_usd !== 0 &&
-        Number(item.price_usd) > 0.00001
-    )
-    .sort(
-      (a: { volume_1day_usd: string }, b: { volume_1day_usd: string }) =>
-        parseFloat(b.volume_1day_usd) - parseFloat(a.volume_1day_usd)
+        uuid: string;
+      }) => {
+        return (
+          (type === "crypto"
+            ? item.type_is_crypto === 1
+            : item.type_is_crypto === 0) &&
+          item.uuid &&
+          item.volume.volume_1day_usd !== 0 &&
+          Number(item.price) > 0.00001
+        );
+      }
     )
     .map(
       (
         item: {
+          volume: any;
           volume_1day_usd: any;
-          price_usd: any;
+          price: any;
           asset_id: any;
         },
         index: number
-      ) => ({
-        ...item,
-        key: `item-${index + 1}`,
-        rank: index + 1,
-        volume_1day_usd: formatDollars(item.volume_1day_usd),
-        price_usd: Number(item.price_usd).toFixed(4),
-        icon: findIconUrl(icons, item),
-      })
+      ) => {
+        return {
+          ...item,
+          key: `item-${index + 1}`,
+          rank: index + 1,
+          volume_1day_usd: formatDollars(item.volume.volume_1day_usd),
+          price_usd: Number(item.price).toFixed(4),
+          icon: findIconUrl(icons, item),
+        };
+      }
     )
     .filter((item: { icon: string }) => item.icon.length > 0);
 }
@@ -79,11 +84,11 @@ function useAssetData(type: string) {
 
       try {
         const [pricesResponse, iconsData] = await Promise.all([
-          fetchData(coinAPI.assetPrice()),
+          fetchData(coinAPI.assets()),
           fetchIcons(),
         ]);
 
-        if (!pricesResponse.ok || iconsData === null) {
+        if (!pricesResponse.ok) {
           setLoading(false);
           setError(true);
           console.error(
@@ -120,3 +125,18 @@ interface DataType {
   volume_1day_usd: number;
   price: number;
 }
+
+// .sort(
+//   (
+//     a: {
+//       volume: any;
+//       volume_1day_usd: string;
+//     },
+//     b: {
+//       volume: any;
+//       volume_1day_usd: string;
+//     }
+//   ) =>
+//     parseFloat(b.volume.volume_1day_usd) -
+//     parseFloat(a.volume.volume_1day_usd)
+// )

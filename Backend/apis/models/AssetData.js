@@ -25,7 +25,17 @@ const IconModelSchema = new mongoose.Schema({
   url: String,
 });
 
+const DataHistoryModelSchema = new mongoose.Schema({
+  uuid: String,
+  data: Array,
+});
+
 const AssetModel = mongoose.model("assets", DataSchema);
 const AssetIconModel = mongoose.model("asset_icons", IconModelSchema);
+const AssetHistoryModel = mongoose.model(
+  "history",
+  DataHistoryModelSchema,
+  "history"
+);
 
-module.exports = { AssetModel, AssetIconModel };
+module.exports = { AssetModel, AssetIconModel, AssetHistoryModel };

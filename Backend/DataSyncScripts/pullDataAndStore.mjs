@@ -6,12 +6,12 @@ dotenv.config();
 const uri = process.env.MONGO_URL;
 const apiUrl = "https://coinranking1.p.rapidapi.com/coins";
 const databaseName = "crypto_market";
-const collectionName = "stats";
+const collectionName = "assets";
+
 
 async function fetchData() {
   try {
     const period = "5y";
-
     let config = {
       method: "get",
       maxBodyLength: Infinity,
@@ -45,10 +45,10 @@ async function fetchData() {
     });
 
     try {
-      const db = client.db(databaseName);
-      const collection = db.collection(collectionName);
-      await collection.insertMany([stats]);
-      console.log('Inserted API data into the "Stats" collection');
+    //   const db = client.db(databaseName);
+    //   const collection = db.collection(collectionName);
+    //   await collection.insertMany([stats]);
+    //   console.log('Inserted API data into the "Stats" collection');
 
       //   for (const apiItem of coins) {
       //     const { symbol, name, ...restOfData } = apiItem;

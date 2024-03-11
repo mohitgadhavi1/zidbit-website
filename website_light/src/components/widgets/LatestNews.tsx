@@ -1,15 +1,12 @@
 import React from "react";
 import { Card, Col, Empty, Flex, Image, Row, Typography } from "antd";
-import useFetchData from "@/hooks/useFetchData";
-import { cryptoNews } from "@/services";
 import { LinkOutlined } from "@ant-design/icons";
 import Link from "next/link";
 
 const { Meta } = Card;
 
 const LatestNews: React.FC = () => {
-  const { loading, error, data } = useFetchData(cryptoNews());
-
+  const data = [];
   if (data.length) {
     return (
       <div>
