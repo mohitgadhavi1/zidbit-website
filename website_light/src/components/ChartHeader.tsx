@@ -1,15 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import SerchAssets from "./SearchAssets";
 
-const ChartHeader = ({ name }) => {
-  return (
-    <>
-      <div className="xl:px-32">
-        <h1 className="text-5xl">{name || "hello world"}</h1>
-        <SerchAssets />
-      </div>
-    </>
-  );
+const ChartHeader = ({ data, selectedDataDetails }) => {
+  const [assetDetails, setAssetDetails] = useState(null);
+  return <></>;
 };
 
 export default ChartHeader;

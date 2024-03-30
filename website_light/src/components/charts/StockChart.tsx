@@ -32,7 +32,7 @@ const StockChart = ({ chartData }) => {
   const [data, setData] = useState([]);
 
   const formatData = (data) => {
-    return data
+    return data?.data
       ?.sort((a, b) => a.timestamp - b.timestamp)
       ?.filter((item) => Number(item.price) > 0)
       ?.map((item, index) => {
@@ -69,7 +69,6 @@ const StockChart = ({ chartData }) => {
         setData(formatData(chartData));
       } catch (error) {
         setData([]);
-        console.log(error);
       }
     };
 
@@ -88,7 +87,7 @@ const StockChart = ({ chartData }) => {
   return (
     <CustomCard>
       <ul className="flex absolute top-2 right-2 z-40">
-        {Object.keys(chartConfig).map((item) => (
+        {Object.keys(chartConfig).map((item, index) => (
           <li key={item}>
             <ChartFilter
               text={item}

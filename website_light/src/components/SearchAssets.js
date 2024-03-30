@@ -1,73 +1,42 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
+import { AutoComplete, Input } from "antd";
 
-import SearchResults from "./SearchResults";
-import { CloseOutlined, SearchOutlined } from "@ant-design/icons";
-
-const SearchAssets = () => {
-  const [input, setInput] = useState("");
-
-  const [bestMatches, setBestMatches] = useState([]);
-
-  const updateBestMatches = async () => {
-    // try {
-    //   if (input) {
-    //     const searchResults = await searchSymbol(input);
-    //     const result = searchResults.result;
-    //     setBestMatches(result);
-    //   }
-    // } catch (error) {
-    //   setBestMatches([]);
-    //   console.log(error);
-    // }
+const SearchAssets = ({ data, selectedData }) => {
+  console.log(data);
+  const [options, setOptions] = useState([]);
+  const handleSearch = (value) => {
+    setOptions(value ? searchResult(value, data) : []);
   };
-
-  const clear = () => {
-    setInput("");
-    setBestMatches([]);
+  const onSelect = (value, option) => {
+    selectedData(option);
   };
 
   return (
-    <div
-      className={`flex items-center my-4 border-2 rounded-md relative w-80  md:w-96 
-    
-          dark:bg-gray-900 dark:border-gray-800
-          bg-white border-neutral-200
-      `}
+    <AutoComplete
+      popupMatchSelectWidth={252}
+      style={{
+        width: 400,
+        marginTop: 15,
+        marginBottom: 15,
+      }}
+      options={options}
+      onSelect={onSelect}
+      onSearch={handleSearch}
     >
-      <input
-        type="text"
-        value={input}
-        className={`w-full px-4 py-2 focus:outline-none rounded-md 
-          dark:bg-gray-900
-        `}
-        placeholder="Search stock..."
-        onChange={(event) => {
-          setInput(event.target.value);
-
-          updateBestMatches();
-        }}
-        // onKeyPress={(event) => {
-        //   if (event.key === "Enter") {
-        //     updateBestMatches();
-        //   }
-        // }}
-      />
-      {input && (
-        <button onClick={clear} className="m-1">
-          <CloseOutlined className="h-4 w-4 fill-gray-500" />
-        </button>
-      )}
-      <button
-        onClick={updateBestMatches}
-        className="h-8 w-8 bg-indigo-600 rounded-md flex justify-center items-center m-1 p-2 transition duration-300 hover:ring-2 ring-indigo-400"
-      >
-        <SearchOutlined style={{ color: "white" }} />
-      </button>
-      {input && bestMatches.length > 0 ? (
-        <SearchResults results={bestMatches} />
-      ) : null}
-    </div>
+      <Input.Search size="large" placeholder="search Assets" enterButton />
+    </AutoComplete>
   );
 };
 
 export default SearchAssets;
+
+const searchResult = (query, data) => {
+  const showData = data.filter((item) =>
+    item.name.toLowerCase().includes(query.toLowerCase())
+  );
+  return showData.map((item) => ({
+    value: item.name,
+    label: item.name,
+    ...item,
+  }));
+};

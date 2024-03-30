@@ -6,13 +6,13 @@ const Details = ({ details }) => {
   const darkMode = true;
 
   const detailsList = {
-    name: "Name",
-    country: "Country",
+    volume_1day_usd: "Volume(24H)",
+    listedAt: "Listed On ",
     currency: "Currency",
     exchange: "Exchange",
     ipo: "IPO Date",
     marketCap: "Market Capitalization",
-    finnhubIndustry: "Industry",
+    contractAddresses: "Contract Addresses",
   };
 
   const convertMillionToBillion = (number) => {
@@ -31,9 +31,9 @@ const Details = ({ details }) => {
             <li key={item} className="flex-1 flex justify-between items-center">
               <span>{detailsList[item]}</span>
               <span className="font-bold">
-                {/* {item === "marketCapitalization"
-                  ? `${convertMillionToBillion(details[item] || "")}B`
-                  : details[item] || ""} */}
+                {item === "marketCapitalization"
+                  ? `${convertMillionToBillion(Number(details?.[item]) || "")}B`
+                  : details?.[item] || ""}
               </span>
             </li>
           );

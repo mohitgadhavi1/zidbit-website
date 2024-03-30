@@ -1,23 +1,59 @@
-"use client";
-
-import React, { useEffect, useRef, useState } from "react";
-import {
-  Typography,
-  List,
-  Divider,
-  Collapse,
-  Table,
-  Card,
-  Flex,
-  Carousel,
-} from "antd";
+import React, { useEffect, useState } from "react";
+import { Typography, Divider } from "antd";
 import type { TableProps } from "antd";
+import useStreamingData from "@/hooks/useStreamingData";
+import { streamurl } from "@/services";
 
 const { Title, Text } = Typography;
 
 const ExchangeList: React.FC = () => {
-  const [data, setData] = useState<DataType[] | undefined>(liveData);
-  const [loading, setLoading] = useState(false);
+  const { receivedMessage, error } = useStreamingData(streamurl);
+
+  const [data, setData] = useState([
+    { name: "Bitcoin", price: 0 },
+    { name: "Etherium", price: 0 },
+    { name: "Solana", price: 0 },
+    { name: "Tether", price: 0 },
+    { name: "Shiba Inu", price: 0 },
+    { name: "Dogecoin", price: 0 },
+    { name: "Ripple", price: 0 },
+    { name: "USDT", price: 0 },
+    { name: "Tron", price: 0 },
+    { name: "Binance Coin", price: 0 },
+    { name: "Bitcoin", price: 0 },
+    { name: "Etherium", price: 0 },
+    { name: "Solana", price: 0 },
+    { name: "Tether", price: 0 },
+    { name: "Shiba Inu", price: 0 },
+    { name: "Dogecoin", price: 0 },
+    { name: "Ripple", price: 0 },
+    { name: "USDT", price: 0 },
+    { name: "Tron", price: 0 },
+    { name: "Binance Coin", price: 0 },
+  ]);
+
+  useEffect(() => {
+    if (receivedMessage.product_id) {
+      if (receivedMessage.product_id === "BTC-USD") {
+        setData((prevData) =>
+          prevData.map((item) =>
+            item.name === "Bitcoin"
+              ? { ...item, price: receivedMessage.price }
+              : item
+          )
+        );
+      }
+      if (receivedMessage.product_id === "ETH-USD") {
+        setData((prevData) =>
+          prevData.map((item) =>
+            item.name === "ETH-USD"
+              ? { ...item, price: receivedMessage.price }
+              : item
+          )
+        );
+      }
+    }
+  }, [receivedMessage]);
 
   return (
     <div className="fixed bottom-0 h-[6vh] w-full bg-white border-t-1 dark:border-white/30 dark:bg-gray-800 z-40 overflow-hidden ">
@@ -69,101 +105,3 @@ const contentStyle: React.CSSProperties = {
   textAlign: "center",
   background: "#364d79",
 };
-
-const liveData: DataType[] = [
-  {
-    key: 1,
-    name: "Bitcoin",
-    price: 52333,
-  },
-  {
-    key: 2,
-    name: "Bitcoin",
-    price: 52333,
-  },
-  {
-    key: 3,
-    name: "Bitcoin",
-    price: 52333,
-  },
-  {
-    key: 4,
-    name: "Bitcoin",
-    price: 52333,
-  },
-  {
-    key: 5,
-    name: "Bitcoin",
-    price: 52333,
-  },
-  {
-    key: 6,
-    name: "Bitcoin",
-    price: 52333,
-  },
-  {
-    key: 7,
-    name: "Bitcoin",
-    price: 52333,
-  },
-  {
-    key: 8,
-    name: "Bitcoin",
-    price: 52333,
-  },
-  {
-    key: 9,
-    name: "Bitcoin",
-    price: 52333,
-  },
-  {
-    key: 10,
-    name: "Bitcoin",
-    price: 52333,
-  },
-  {
-    key: 11,
-    name: "Bitcoin",
-    price: 52333,
-  },
-  {
-    key: 12,
-    name: "Bitcoin",
-    price: 52333,
-  },
-  {
-    key: 13,
-    name: "Bitcoin",
-    price: 52333,
-  },
-  {
-    key: 13,
-    name: "Bitcoin",
-    price: 52333,
-  },
-  {
-    key: 13,
-    name: "Bitcoin",
-    price: 52333,
-  },
-  {
-    key: 13,
-    name: "Bitcoin",
-    price: 52333,
-  },
-  {
-    key: 13,
-    name: "Bitcoin",
-    price: 52333,
-  },
-  {
-    key: 13,
-    name: "Bitcoin",
-    price: 52333,
-  },
-  {
-    key: 13,
-    name: "Bitcoin",
-    price: 52333,
-  },
-];

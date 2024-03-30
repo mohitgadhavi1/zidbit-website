@@ -14,7 +14,6 @@ const HeroOverview: React.FC = () => {
   const screens = useBreakpoint();
   const { data, error, loading } = useFetchData(coinAPI.cryptoState());
 
-  console.log(data);
   if (screens.xs) {
     return (
       <Row gutter={[16, 16]} justify={"space-around"}>
@@ -261,8 +260,6 @@ const HeroOverview: React.FC = () => {
               }
               value={data?.totalMarkets}
               valueStyle={{ fontSize: 16 }}
-
-              // suffix={<Typography.Text type="success">+1.06%</Typography.Text>}
             />
           </Card>
         </Col>

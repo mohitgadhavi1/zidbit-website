@@ -6,25 +6,28 @@ import LiveDataStrip from "@/components/widgets/LiveDataStrip";
 import ChartView from "@/components/charts/HeroBackground";
 import Dashboard from "@/components/Dashboard";
 import HeroOverview from "@/components/HeroOverview";
-import Top5Losers from "@/components/widgets/Top5Losers";
 import Top5Gainers from "@/components/widgets/Top5Gainers";
 import LatestNews from "@/components/widgets/LatestNews";
 import HighlighedAssets from "@/components/HighlighedAssets";
 import { SearchOutlined } from "@ant-design/icons";
 import useFetchData from "@/hooks/useFetchData";
 import { coinAPI } from "@/services";
+import useAssetData from "@/hooks/useAssetData";
+import { useEffect, useState } from "react";
+import Link from "next/link";
 
-const Page: React.FC = () => {
+const Page = () => {
+  const { data, loading } = useAssetData("crypto");
   const { useBreakpoint } = Grid;
   const screens = useBreakpoint();
   return (
     <main className="font-mont  flex flex-col  w-full h-full  min-h-[80vh]  items-center justify-center">
-      <Hero />
+      <Hero data={data} />
       <Divider />
-      <Dashboard />
+      <Dashboard assetData={data} assetsloading={loading} />
       <Divider />
       <div className="w-full flex flex-col items-center px-4">
-        <TopCrypto />
+        <TopCrypto data={data} loading={loading} />
       </div>
       <Divider />
       <Flex
@@ -36,8 +39,8 @@ const Page: React.FC = () => {
         {screens.xs || !screens.xl ? (
           <div className="w-full m-5 ">
             <div className="w-full flex flex-col gap-10">
-              <Top5Gainers />
-              <Top5Losers />
+              <Top5Gainers type="gainer" />
+              <Top5Gainers type="looser" />
             </div>
             <div className="w-full ">
               <LatestNews />
@@ -49,8 +52,8 @@ const Page: React.FC = () => {
               <LatestNews />
             </div>
             <div className="w-1/2 flex flex-col gap-10">
-              <Top5Gainers />
-              <Top5Losers />
+              <Top5Gainers type="gainer" />
+              <Top5Gainers type="looser" />
             </div>
           </div>
         )}
@@ -75,9 +78,48 @@ const Page: React.FC = () => {
 
 export default Page;
 
-function Hero() {
+function Hero({ data }) {
   const { useBreakpoint } = Grid;
   const screens = useBreakpoint();
+  const [assets, setAssets] = useState([
+    {
+      icon: "",
+      title: "Bitcoin",
+      value: 0,
+      asset_id: "BTC",
+    },
+    {
+      icon: "",
+      title: "Etherium",
+      value: 0,
+      asset_id: "ETH",
+    },
+    {
+      icon: "",
+      title: "Ripple",
+      value: 0,
+      asset_id: "XRP",
+    },
+    {
+      icon: "",
+      title: "Tether",
+      value: 0,
+      asset_id: "USDT",
+    },
+  ]);
+
+  useEffect(() => {
+    data.forEach((item) => {
+      const index = assets.findIndex(
+        (asset) => asset.asset_id === item.asset_id
+      );
+      if (index !== -1) {
+        const updatedAssets = [...assets];
+        updatedAssets[index].icon = item.icon;
+        setAssets(updatedAssets);
+      }
+    });
+  }, [data]);
 
   return (
     <div className=" md:h-screen relative w-full">
@@ -88,10 +130,14 @@ function Hero() {
       {screens.xs || !screens.xl ? (
         <div className="z-10 h-full flex flex-col items-center justify-around ">
           <div className="mt-5  w-full justify-center  flex flex-wrap    gap-5">
-            <HighlighedAssets />
-            <HighlighedAssets />
-            <HighlighedAssets />
-            <HighlighedAssets />
+            {assets.map((item, index) => (
+              <HighlighedAssets
+                key={index}
+                icon={item.icon}
+                title={item.title}
+                value={item.value}
+              />
+            ))}
           </div>
           <div className="mt-5 flex flex-col w-full  justify-center items-center">
             <div className="w-full  px-2 flex flex-col justify-center items-center  z-10 ">
@@ -121,6 +167,7 @@ function Hero() {
                   type="primary"
                   shape="round"
                   icon={<SearchOutlined />}
+                  href="#chartSection"
                 >
                   Search Assets
                 </Button>
@@ -134,10 +181,14 @@ function Hero() {
       ) : (
         <div className="z-10 h-full ">
           <div className="mt-20  w-full justify-center  flex absolute  gap-5">
-            <HighlighedAssets />
-            <HighlighedAssets />
-            <HighlighedAssets />
-            <HighlighedAssets />
+            {assets.map((item, index) => (
+              <HighlighedAssets
+                key={index}
+                icon={item.icon}
+                title={item.title}
+                value={item.value}
+              />
+            ))}
           </div>
           <div className="flex w-full h-full justify-center items-center">
             <div className="w-1/2">
@@ -162,6 +213,7 @@ function Hero() {
                   type="primary"
                   shape="round"
                   icon={<SearchOutlined />}
+                  href="#chartSection"
                 >
                   Search Assets
                 </Button>

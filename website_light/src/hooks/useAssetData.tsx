@@ -18,13 +18,11 @@ async function fetchIcons() {
   try {
     const res = await fetchData(coinAPI.assetIcons());
     if (!res.ok) {
-      console.error(`Failed to fetch icons. Status: ${res.status}`);
       return null;
     }
     const responseData = await res.json();
     return responseData.data;
   } catch (error) {
-    console.error("Error fetching icons:", error);
     return null;
   }
 }
@@ -91,9 +89,7 @@ function useAssetData(type: string) {
         if (!pricesResponse.ok) {
           setLoading(false);
           setError(true);
-          console.error(
-            `Failed to fetch data. Status: ${pricesResponse.status}`
-          );
+
           return;
         }
 
@@ -105,7 +101,6 @@ function useAssetData(type: string) {
       } catch (error) {
         setLoading(false);
         setError(true);
-        console.error("Error fetching data:", error);
       }
     }
 

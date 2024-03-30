@@ -19,7 +19,7 @@ const ChartView: React.FC = () => {
       {/* <Segmented
         options={["1H", "24H", "7D", "3M", "6M", "1Y", "ALL"]}
         onChange={(value) => {
-          console.log(value); // string
+  
         }}
       /> */}
       {/* <RangePicker showTime /> */}

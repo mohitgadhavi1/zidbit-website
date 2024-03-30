@@ -23,7 +23,7 @@ const useFetchData = (url: string) => {
 
         const resData = await response.json();
 
-        const res = resData.length ? resData[0].data : resData.data[0];
+        const res = resData.data;
 
         setData(res);
       } catch (error) {

@@ -12,17 +12,12 @@ import {
   Space,
 } from "antd";
 import type { TableProps } from "antd";
-import { formatDollars } from "@/helper/currencyConvertion";
-import { coinAPI } from "@/services";
 
 import Image from "next/image";
-import useAssetData from "@/hooks/useAssetData";
 
 const { Title, Text } = Typography;
 
-const TopCrypto: React.FC = () => {
-  const { data, loading } = useAssetData("crypto");
-
+const TopCrypto: React.FC = ({ data, loading }) => {
   return (
     <div className="flex flex-col justify-center items-center w-full ">
       <Card

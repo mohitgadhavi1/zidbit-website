@@ -28,7 +28,7 @@ const ExchangeList: React.FC = () => {
         if (!res.ok) {
           setLoading(false);
           // Handle non-ok response (e.g., 404, 500, etc.)
-          console.error(`Failed to fetch data. Status: ${res.status}`);
+
           return null;
         }
 
@@ -62,7 +62,6 @@ const ExchangeList: React.FC = () => {
         setLoading(false);
       } catch (error) {
         // Handle network errors or JSON parsing errors
-        console.error("Error fetching data:", error);
       }
     }
 
