@@ -1,10 +1,16 @@
 import { API_KEY } from "@/services";
 import { useState, useEffect } from "react";
 
-const useFetchData = (url: string) => {
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [data, setData] = useState([]);
+interface FetchDataResult<T> {
+  loading: boolean;
+  error: string | null;
+  data: T[];
+}
+
+const useFetchData = <T,>(url: string): FetchDataResult<T> => {
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null); // Specify type here
+  const [data, setData] = useState<T[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,10 +29,10 @@ const useFetchData = (url: string) => {
 
         const resData = await response.json();
 
-        const res = resData.data;
+        const res: T[] = resData.data;
 
         setData(res);
-      } catch (error) {
+      } catch (error: any) {
         setError(error.message);
       } finally {
         setLoading(false);

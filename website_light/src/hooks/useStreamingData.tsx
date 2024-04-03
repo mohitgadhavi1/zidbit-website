@@ -1,10 +1,9 @@
-"use client";
 import { useEffect, useState } from "react";
 
-const useStreamingData = (url) => {
-  const [ws, setWs] = useState(null);
-  const [receivedMessage, setReceivedMessage] = useState({});
-  const [error, setError] = useState(null);
+const useStreamingData = (url: string) => {
+  const [ws, setWs] = useState<WebSocket | null>(null);
+  const [receivedMessage, setReceivedMessage] = useState<any>({});
+  const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     const socket = new WebSocket(url);
@@ -18,7 +17,7 @@ const useStreamingData = (url) => {
     };
 
     socket.onerror = (error) => {
-      setError(error);
+      setError(error as any);
     };
 
     socket.onclose = () => {
@@ -28,7 +27,6 @@ const useStreamingData = (url) => {
     };
 
     // Cleanup function to close WebSocket when component unmounts
-
     return () => {
       if (
         socket.readyState === WebSocket.OPEN ||

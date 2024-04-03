@@ -1,29 +1,41 @@
-"use client";
-
-import React, { useEffect, useState } from "react";
-import {
-  Typography,
-  List,
-  Divider,
-  Collapse,
-  Table,
-  Card,
-  Flex,
-  Space,
-} from "antd";
+import React from "react";
+import { Typography, Table, Card, Flex } from "antd";
 import type { TableProps } from "antd";
 
-import Image from "next/image";
-import useAssetData from "@/hooks/useAssetData";
 import useFetchData from "@/hooks/useFetchData";
 import { coinAPI } from "@/services";
 
 const { Title, Text } = Typography;
 
-const Top5Gainers: React.FC = ({ type }) => {
+interface DataType {
+  key: string;
+  Rank: string;
+  Coin: string;
+  exchange_id: string;
+  volume_1day_usd: string;
+  Price: string;
+  Symbol: string;
+  "Drop 24hr": string;
+  "Rise 24hr": string;
+}
+
+interface DataObject {
+  "Top Gainers": DataType[];
+  "Top Losers": DataType[];
+}
+
+const Top5Gainers: React.FC<{ type: "gainer" | "loser" }> = ({ type }) => {
   const { data, loading, error } = useFetchData(
     coinAPI.cryptoTopGainerLoosers()
   );
+
+  // Check if data has the expected structure before type assertion
+  if (!data || !("Top Gainers" in data) || !("Top Losers" in data)) {
+    return null; // Or handle the case where data doesn't have the expected structure
+  }
+
+  // If data has the expected structure, perform type assertion
+  const specificData = data as DataObject;
 
   return (
     <Card
@@ -32,15 +44,17 @@ const Top5Gainers: React.FC = ({ type }) => {
       style={{ cursor: "default", width: "100%" }}
     >
       <Title level={2}>
-        {type === "gainer" ? "Top 5 Gainers" : "Top 5 Loosers"}
+        {type === "gainer" ? "Top 5 Gainers" : "Top 5 Losers"}
       </Title>
       <Typography.Paragraph type="secondary">
         {" "}
         Updated: 21 February 2024 23:10 IST
       </Typography.Paragraph>
-      <Table
+      <Table<DataType>
         dataSource={
-          type === "gainer" ? data["Top Gainers"] : data["Top Losers"]
+          type === "gainer"
+            ? specificData["Top Gainers"]
+            : specificData["Top Losers"]
         }
         columns={columns}
         size="small"
@@ -50,18 +64,6 @@ const Top5Gainers: React.FC = ({ type }) => {
 };
 
 export default Top5Gainers;
-
-interface DataType {
-  key: string;
-  "#": string;
-  Coin: string;
-  exchange_id: string;
-  volume_1day_usd: string;
-  price: string;
-  Symbol: string;
-  "Drop 24hr": string;
-  "Rise 24hr": string;
-}
 
 const columns: TableProps<DataType>["columns"] = [
   {
@@ -77,11 +79,11 @@ const columns: TableProps<DataType>["columns"] = [
     render: (_, { Symbol, Coin }) => {
       return Symbol.length ? (
         <Flex vertical>
-          <Typography.Text>{Coin}</Typography.Text>
-          <Typography.Text type="secondary">{Symbol}</Typography.Text>
+          <Text>{Coin}</Text>
+          <Text type="secondary">{Symbol}</Text>
         </Flex>
       ) : (
-        <Typography.Paragraph>{Coin}</Typography.Paragraph>
+        <Text>{Coin}</Text>
       );
     },
   },

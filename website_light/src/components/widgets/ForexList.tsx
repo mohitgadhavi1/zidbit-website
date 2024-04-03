@@ -1,12 +1,10 @@
-"use client";
-
-import React, { useEffect, useState } from "react";
-import { Typography, List, Divider, Collapse, Table, Card, Space } from "antd";
-import type { TableProps } from "antd";
+import React from "react";
+import { Typography, Table, Card, Space } from "antd";
 import { formatDollars } from "@/helper/currencyConvertion";
 import { API_KEY, coinAPI } from "@/services";
 import useAssetData from "@/hooks/useAssetData";
 import Image from "next/image";
+import type { TableProps } from "antd";
 
 const { Title, Text } = Typography;
 
@@ -14,18 +12,15 @@ const ForexList: React.FC = () => {
   const { data, loading } = useAssetData("forex");
 
   return (
-    <div className="flex flex-col justify-center items-center w-5/6  ">
+    <div className="flex flex-col justify-center items-center w-5/6">
       <Card
         hoverable
         loading={loading}
         style={{ cursor: "default", width: "100%" }}
       >
         <Title level={2}>Forex</Title>
-        <Typography.Paragraph type="secondary">
-          {" "}
-          Updated: 21 February 2024 23:10 IST
-        </Typography.Paragraph>
-        <Table dataSource={data} columns={columns} size="small" />
+        <Text type="secondary">Updated: 21 February 2024 23:10 IST</Text>
+        <Table dataSource={data} columns={columns as any} size="small" />
       </Card>
     </div>
   );
@@ -35,11 +30,11 @@ export default ForexList;
 
 interface DataType {
   key: string;
-  "#": number;
+  rank: number;
+  asset_id: number;
   name: string;
-  exchange_id: number;
   volume_1day_usd: number;
-  price: number;
+  price_usd: number;
   icon: string;
 }
 
@@ -58,11 +53,10 @@ const columns: TableProps<DataType>["columns"] = [
     title: "Name",
     dataIndex: "name",
     key: "name",
-    render: (_, { icon, name }) => {
-      return icon.length ? (
+    render: (_: any, { icon, name }: DataType) => {
+      return icon ? (
         <Space size="small">
           <Image width={20} height={20} alt="" src={icon} />
-
           <Typography.Text>{name}</Typography.Text>
         </Space>
       ) : (

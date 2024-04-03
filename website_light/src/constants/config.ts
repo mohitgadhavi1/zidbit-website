@@ -1,4 +1,4 @@
-export const chartConfig = {
+export const chartConfig: ChartConfig  = {
 
   "1H": { resolution: "1", days: 1, weeks: 0, months: 0, years: 0 },
     "1D": { resolution: "1", days: 1, weeks: 0, months: 0, years: 0 },
@@ -8,3 +8,14 @@ export const chartConfig = {
     "5Y": { resolution: "D", days: 0, weeks: 0, months: 0, years: 1 },
 
   };
+
+
+  interface ChartConfig {
+    [key: string]: {
+      resolution: string;
+      days: number;
+      weeks: number;
+      months: number;
+      years: number;
+    };
+  }

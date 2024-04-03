@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Overview from "./Overview";
 import Details from "./Details";
 import StockChart from "./charts/StockChart";
-import ChartHeader from "./ChartHeader";
 import useFetchData from "@/hooks/useFetchData";
 import { coinAPI } from "@/services";
 import SearchAssets from "./SearchAssets";

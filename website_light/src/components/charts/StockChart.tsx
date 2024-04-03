@@ -23,24 +23,37 @@ import { useStockSymbolContext } from "@/context/StockContext";
 import CustomCard from "../ui/CustomCard";
 import { useDarkModeContext } from "@/context/darkModeContext";
 
-const StockChart = ({ chartData }) => {
+interface StockData {
+  value: number;
+  date: string;
+}
+
+interface ChartConfig {
+  [key: string]: {
+    days: number;
+    weeks: number;
+    months: number;
+    years: number;
+    resolution: string;
+  };
+}
+
+const StockChart: React.FC<{ chartData: any }> = ({ chartData }) => {
   const [isDarkMode] = useDarkModeContext();
-  const [filter, setFilter] = useState("5Y");
-
+  const [filter, setFilter] = useState<string>("5Y");
   const [stockSymbol] = useStockSymbolContext();
+  const [data, setData] = useState<StockData[]>([]);
 
-  const [data, setData] = useState([]);
-
-  const formatData = (data) => {
-    return data?.data
-      ?.sort((a, b) => a.timestamp - b.timestamp)
-      ?.filter((item) => Number(item.price) > 0)
-      ?.map((item, index) => {
-        return {
+  const formatData = (data: any): StockData[] => {
+    return (
+      data?.data
+        ?.sort((a: any, b: any) => a.timestamp - b.timestamp)
+        ?.filter((item: any) => Number(item.price) > 0)
+        ?.map((item: any) => ({
           value: Number(Number(item.price).toFixed(2)),
           date: convertUnixTimestampToDate(item.timestamp),
-        };
-      });
+        })) || []
+    );
   };
 
   useEffect(() => {
@@ -117,8 +130,8 @@ const StockChart = ({ chartData }) => {
             </linearGradient>
           </defs>
           <Tooltip
-            contentStyle={isDarkMode ? { backgroundColor: "#111827" } : null}
-            itemStyle={isDarkMode ? { color: "#818cf8" } : null}
+            contentStyle={isDarkMode ? { backgroundColor: "#111827" } : {}}
+            itemStyle={isDarkMode ? { color: "#818cf8" } : {}}
           />
 
           <Area
@@ -138,48 +151,3 @@ const StockChart = ({ chartData }) => {
 };
 
 export default StockChart;
-
-// const data = [
-//   {
-//     name: "Page A",
-//     uv: 4000,
-//     pv: 2400,
-//     amt: 2400,
-//   },
-//   {
-//     name: "Page B",
-//     uv: 3000,
-//     pv: 1398,
-//     amt: 2210,
-//   },
-//   {
-//     name: "Page C",
-//     uv: 2000,
-//     pv: 9800,
-//     amt: 2290,
-//   },
-//   {
-//     name: "Page D",
-//     uv: 2780,
-//     pv: 3908,
-//     amt: 2000,
-//   },
-//   {
-//     name: "Page E",
-//     uv: 1890,
-//     pv: 4800,
-//     amt: 2181,
-//   },
-//   {
-//     name: "Page F",
-//     uv: 2390,
-//     pv: 3800,
-//     amt: 2500,
-//   },
-//   {
-//     name: "Page G",
-//     uv: 3490,
-//     pv: 4300,
-//     amt: 2100,
-//   },
-// ];

@@ -1,12 +1,21 @@
 import React from "react";
-import { Card, Col, Empty, Flex, Image, Row, Typography } from "antd";
+import { Card, Col, Empty, Image, Row, Typography } from "antd";
 import { LinkOutlined } from "@ant-design/icons";
 import Link from "next/link";
 
 const { Meta } = Card;
 
+interface NewsItem {
+  createdAt: string;
+  url: string;
+  thumbnail: string;
+  title: string;
+  description: string;
+}
+
 const LatestNews: React.FC = () => {
-  const data = [];
+  const data: NewsItem[] = []; // Assuming data is an array of NewsItem objects
+
   if (data.length) {
     return (
       <div>
@@ -42,7 +51,7 @@ const LatestNews: React.FC = () => {
                       }}
                       title={
                         <Typography.Title
-                          style={{ textWrap: "wrap" }}
+                          style={{ textOverflow: "ellipsis" }}
                           ellipsis
                           level={5}
                         >
@@ -64,6 +73,8 @@ const LatestNews: React.FC = () => {
                   </Card>
                 </Col>
               );
+            } else {
+              return null; // Need to return something from map, so return null for items beyond index 9
             }
           })}
         </Row>
@@ -71,7 +82,7 @@ const LatestNews: React.FC = () => {
     );
   } else {
     return (
-      <div className="flex justify-center items-center  h-full">
+      <div className="flex justify-center items-center h-full">
         <Empty description={false} />
       </div>
     );
@@ -90,7 +101,7 @@ function formatTimestamp(timestamp: string | number | Date) {
     month: "short",
     year: "numeric",
   };
-  const formattedDate = dateObj.toLocaleDateString("en-US", options);
+  const formattedDate = dateObj.toLocaleDateString("en-US", options as any);
 
   return formattedDate;
 }

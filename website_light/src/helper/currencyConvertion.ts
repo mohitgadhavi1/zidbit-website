@@ -1,4 +1,4 @@
-export function formatDollars(amount: number) {
+export function formatDollars(amount: number): string {
     if (amount >= 1000000000000) {
         return (amount / 1000000000000).toFixed(2) + 'T $';
     } else if (amount >= 1000000000) {

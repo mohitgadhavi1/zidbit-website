@@ -9,7 +9,7 @@ function convertTimestampToReadable(timestamp: string | number | Date, timezone:
       timeZone: timezone === "IST" ? 'Asia/Kolkata' : 'UTC'
     };
   
-    const formattedDate = new Date(timestamp).toLocaleString('en-US', options);
+    const formattedDate = new Date(timestamp).toLocaleString('en-US', options as object);
     return formattedDate;
   }
 
